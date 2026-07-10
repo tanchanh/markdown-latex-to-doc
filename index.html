@@ -57,8 +57,8 @@
             --toolbar-text: #475569;
             --btn-border: #cbcbcb;
             --btn-hover-bg: #eef2ff;
-            --code-color: #ef4444;
-            --code-bg: #f1f5f9;
+            --code-color: #000000; /* CHUYỂN TOÀN BỘ MÀU CHỮ SANG ĐEN #000000 */
+            --code-bg: rgba(0, 0, 0, 0.05); /* NỀN XÁM NHẸ CHIẾM ĐÚNG 5% TRÊN MÀN HÌNH */
             --divider-color: #e2e8f0;
         }
 
@@ -180,7 +180,7 @@
             display: inline-block;
         }
 
-        /* --- MỤC CẢI TIẾN: CĂN LỀ NÚT TRONG HỘP THOẠI CHUẨN XÁC, THẲNG HÀNG TĂM TẮP --- */
+        /* --- CĂN LỀ NÚT TRONG HỘP THOẠI CHUẨN XÁC --- */
         .modal-btn {
             display: flex !important;
             align-items: center !important;
@@ -265,13 +265,39 @@
             margin-bottom: 1.0rem;
         }
 
-        .markdown-body code {
-            background-color: var(--code-bg);
-            padding: 0.2rem 0.4rem;
-            border-radius: 0.3rem;
-            font-family: monospace;
-            font-size: 0.9rem;
-            color: var(--code-color);
+        /* --- MỤC CẢI TIẾN: SỬA LỖI CÚ PHÁP PHÂN TÁCH INLINE CODE VÀ BLOCK CODE CHUẨN GITHUB & WORD --- */
+
+        /* 1. Chỉ áp dụng cho inline code thường (ví dụ: `E=mc^2`) */
+        .markdown-body :not(pre) > code {
+            background-color: var(--code-bg) !important; /* Xám nhẹ 5% */
+            color: var(--code-color) !important; /* Màu đen tuyền #000000 */
+            padding: 0.2rem 0.4rem !important;
+            border-radius: 0.3rem !important;
+            font-family: "Consolas", "Monaco", "Courier New", monospace !important; /* Ưu tiên Consolas */
+            font-size: 0.95em !important;
+            border: 1px solid rgba(0, 0, 0, 0.08) !important; /* Khung viền siêu mịn */
+        }
+
+        /* 2. Áp dụng cho khối Block Code trong pre (Ví dụ: khối phiếu tính lương) */
+        .markdown-body pre {
+            background-color: var(--code-bg) !important; /* Xám nhẹ 5% */
+            padding: 1.0rem !important;
+            border-radius: 0.4rem !important;
+            border: 1px solid #cbd5e1 !important; /* Khung viền border xám bao quanh chống lệch chữ */
+            overflow-x: auto !important;
+            margin-bottom: 1.0rem !important;
+        }
+
+        .markdown-body pre code {
+            background-color: transparent !important; /* Xoá nền sọc trùng lặp */
+            padding: 0 !important;
+            border-radius: 0 !important;
+            border: none !important;
+            color: var(--code-color) !important; /* Màu đen tuyền #000000 */
+            font-family: "Consolas", "Monaco", "Courier New", monospace !important; /* Ưu tiên Consolas */
+            font-size: 0.95rem !important;
+            line-height: 1.5 !important;
+            white-space: pre !important; /* Giữ nguyên toàn bộ khoảng trắng thụt lề */
         }
 
         /* --- MathJax Fixes --- */
@@ -280,7 +306,7 @@
             vertical-align: middle !important;
         }
 
-        /* --- MỤC 4: CSS KHẮC PHỤC TRÀN VIỀN CÔNG THỨC KHỐI TRÊN MÀN HÌNH --- */
+        /* --- CSS KHẮC PHỤC TRÀN VIỀN CÔNG THỨC KHỐI TRÊN MÀN HÌNH --- */
         mjx-container[display="true"] {
             display: block !important;
             margin: 1.5rem 0 !important;
@@ -470,18 +496,18 @@
             <div class="toolbar">
                 <div class="toolbar-group">
                     <span>Soạn Thảo:</span>
-                    <!-- Nút Xoá với ID cụ thể -->
-                    <button onclick="clearInput()" id="btn-clear" class="btn" title="Xóa toàn bộ nội dung">
+                    <!-- Nút Xoá chuẩn chính tả mới -->
+                    <button onclick="clearInput()" id="btn-clear" class="btn" title="Xoá toàn bộ nội dung">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                         </svg>
-                        <span>Xóa</span>
+                        <span>Xoá</span>
                     </button>
                 </div>
                 <div class="toolbar-group">
-                    <!-- NÚT PHÓNG TO SOẠN THẢO MỚI (ĐỐI XỨNG HOÀN MỸ) -->
+                    <!-- NÚT PHÓNG TO SOẠN THẢO (ĐỐI XỨNG HOÀN MỸ) -->
                     <button onclick="toggleEditorFullscreen()" id="btn-editor-fullscreen" class="btn" title="Phóng to / Thu nhỏ khung soạn thảo">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" id="editor-fullscreen-icon">
@@ -1025,7 +1051,7 @@ ${cleanContent}
             }
         }
 
-        // --- CHỨC NĂNG PHÓNG TO KHUNG SOẠN THẢO MỚI ĐỐI XỨNG HỒN TOÀN ---
+        // --- CHỨC NĂNG PHÓNG TO KHUNG SOẠN THẢO MỚI ---
         function toggleEditorFullscreen() {
             const bodyEl = document.body;
             const btn = document.getElementById('btn-editor-fullscreen');
@@ -1086,7 +1112,7 @@ ${cleanContent}
                         canvas.width = width;
                         canvas.height = height;
                         const ctx = canvas.getContext("2d");
-                        ctx.clearRect(0, 0, width, height); // LUÔN GIỮ DẤU PHẨY ĐỂ KHÔNG BỊ TREO TRÌNH DUYỆT
+                        ctx.clearRect(0, 0, width, height); // LUÔN ĐÚNG DẤU PHẨY, SỬA TRIỆT ĐỂ LỖI CÚ PHÁP
                         ctx.drawImage(img, 0, 0, width, height);
                         URL.revokeObjectURL(url);
                         resolve(canvas.toDataURL("image/png"));

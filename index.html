@@ -277,9 +277,9 @@
             background-color: var(--code-bg) !important; /* Xám nhẹ 5% */
             color: var(--code-color) !important; /* Màu đen tuyền #000000 */
             padding: 0.2rem 0.4rem !important;
-            border-radius: 0.3rem !important;
+            border-radius: 4px !important; /* MỤC CẢI TIẾN: Giao diện Web bo góc mềm mại thanh lịch */
             font-family: "Consolas", "Monaco", "Courier New", monospace !important; /* Ưu tiên Consolas */
-            font-size: 0.95em !important;
+            font-size: 12pt !important; /* MỤC CẢI TIẾN: Cỡ chữ 12pt chuẩn xác theo yêu cầu */
             border: 1px solid rgba(0, 0, 0, 0.08) !important; /* Khung viền siêu mịn */
         }
 
@@ -287,7 +287,7 @@
         .markdown-body pre {
             background-color: var(--code-bg) !important; /* Xám nhẹ 5% */
             padding: 1.0rem !important;
-            border-radius: 0.4rem !important;
+            border-radius: 4px !important; /* MỤC CẢI TIẾN: Giao diện Web bo góc mềm mại thanh lịch */
             border: 1px solid #cbd5e1 !important; /* Khung viền border xám bao quanh chống lệch chữ */
             overflow-x: auto !important;
             margin-bottom: 1.0rem !important;
@@ -300,9 +300,37 @@
             border: none !important;
             color: var(--code-color) !important; /* Màu đen tuyền #000000 */
             font-family: "Consolas", "Monaco", "Courier New", monospace !important; /* Ưu tiên Consolas */
-            font-size: 0.95rem !important;
+            font-size: 12pt !important; /* MỤC CẢI TIẾN: Cỡ chữ 12pt chuẩn xác theo yêu cầu */
             line-height: 1.5 !important;
             white-space: pre !important; /* Giữ nguyên toàn bộ khoảng trắng thụt lề */
+        }
+
+        /* --- CSS KIẾN TẠO KHUNG BẢNG TOÁN HỌC CHUẨN ĐẸP TRÊN WEB --- */
+        .markdown-body table {
+            border-collapse: collapse; /* Khít cạnh viền không bị hở kép */
+            width: 100%;
+            margin-top: 0;
+            margin-bottom: 1.0rem;
+            font-size: 1.0rem;
+        }
+
+        .markdown-body th {
+            font-weight: bold;
+            background-color: var(--toolbar-bg); /* Xám nhạt của thanh toolbar */
+            border: 1px solid #cbd5e1; /* Đường kẻ viền mỏng xám */
+            padding: 0.6rem 1.0rem;
+            text-align: left;
+        }
+
+        .markdown-body td {
+            border: 1px solid #cbd5e1; /* Đường kẻ viền mỏng xám */
+            padding: 0.6rem 1.0rem;
+            text-align: left;
+        }
+
+        /* Đổ màu sọc dòng xen kẽ (Zebra Striping) tạo sự chuyên nghiệp */
+        .markdown-body tr:nth-child(even) {
+            background-color: rgba(0, 0, 0, 0.02); /* Đổ bóng 2% siêu nhẹ */
         }
 
         /* --- MathJax Fixes --- */
@@ -311,7 +339,7 @@
             vertical-align: middle !important;
         }
 
-        /* --- CSS KHẮC PHỤC TRÀN VIỀN CÔNG THỨC KHỐI TRÊN MÀN HÌNH --- */
+        /* --- CSS KHẰC PHỤC TRÀN VIỀN CÔNG THỨC KHỐI TRÊN MÀN HÌNH --- */
         mjx-container[display="true"] {
             display: block !important;
             margin: 1.5rem 0 !important;
@@ -1120,9 +1148,55 @@ ${cleanContent}
             }
 
             // Ép phông chữ của toàn bộ code inline và code block sang Consolas (MỤC NÂNG CẤP GDOCS)
-            const codeEls = tempDiv.querySelectorAll('code, pre');
+            const codeEls = tempDiv.querySelectorAll('code');
             codeEls.forEach(el => {
                 el.style.fontFamily = "Consolas, 'Courier New', monospace";
+                el.style.fontSize = "12pt";
+                el.style.color = "#000000";
+                el.style.borderRadius = "0px"; // Ép góc vuông đồng bộ chuẩn Word
+
+                if (el.parentNode.tagName === 'PRE') {
+                    const pre = el.parentNode;
+                    pre.style.backgroundColor = '#f1f5f9'; // Nền xám 10%
+                    pre.style.border = '1px solid #cbd5e1';
+                    pre.style.padding = '12px';
+                    pre.style.borderRadius = '0px'; // Ép góc vuông đồng bộ chuẩn Word
+                    pre.style.fontFamily = "Consolas, 'Courier New', monospace";
+                    pre.style.fontSize = '12pt';
+                    pre.style.color = '#000000';
+                    pre.style.whiteSpace = 'pre-wrap';
+                    pre.style.wordBreak = 'break-all';
+                    pre.style.marginBottom = '12px';
+                } else {
+                    el.style.backgroundColor = '#f1f5f9';
+                    el.style.padding = '2px 4px';
+                    el.style.border = '1px solid rgba(0,0,0,0.08)';
+                }
+            });
+
+            // MỤC NÂNG CẤP BẢNG BIỂU GDOCS: Định dạng kẻ viền đen khít lề khi chép vào Google Docs
+            const tables = tempDiv.querySelectorAll('table');
+            tables.forEach(table => {
+                table.setAttribute('border', '1');
+                table.setAttribute('cellspacing', '0');
+                table.setAttribute('cellpadding', '6');
+                table.style.borderCollapse = 'collapse';
+                table.style.border = '1px solid #000000'; // Đen tuyền (#0) theo đúng yêu cầu
+                table.style.width = '100%';
+            });
+
+            const ths = tempDiv.querySelectorAll('th');
+            ths.forEach(th => {
+                th.style.border = '1px solid #000000'; // Đen tuyền (#0)
+                th.style.padding = '6px 10px';
+                th.style.backgroundColor = '#f1f5f9';
+                th.style.fontWeight = 'bold';
+            });
+
+            const tds = tempDiv.querySelectorAll('td');
+            tds.forEach(td => {
+                td.style.border = '1px solid #000000'; // Đen tuyền (#0)
+                td.style.padding = '6px 10px';
             });
 
             const realSvgs = tempDiv.querySelectorAll('mjx-container svg');
@@ -1194,22 +1268,130 @@ ${cleanContent}
                 await MathJax.typesetPromise([tempDiv]);
             }
 
-            // Ép phông chữ của toàn bộ code inline và code block sang Consolas (MỤC NÂNG CẤP WORD THEO ĐỀ XUẤT)
-            const codeEls = tempDiv.querySelectorAll('code, pre');
+            // Ép phông chữ Consolas cỡ 12pt và nền xám 10% vuông góc cho code block khi dán vào Word
+            const codeEls = tempDiv.querySelectorAll('code');
             codeEls.forEach(el => {
                 el.style.fontFamily = "Consolas, 'Courier New', monospace";
+                el.style.fontSize = "12pt";
+                el.style.color = "#000000";
+                el.style.borderRadius = "0px"; // Ép góc vuông chuẩn Word
+
+                if (el.parentNode.tagName === 'PRE') {
+                    const pre = el.parentNode;
+                    pre.style.backgroundColor = '#f1f5f9'; // Nền xám 10%
+                    pre.style.border = '1px solid #cbd5e1';
+                    pre.style.padding = '12px';
+                    pre.style.borderRadius = '0px'; // Ép góc vuông chuẩn Word
+                    pre.style.fontFamily = "Consolas, 'Courier New', monospace";
+                    pre.style.fontSize = '12pt';
+                    pre.style.color = '#000000';
+                    pre.style.whiteSpace = 'pre-wrap';
+                    pre.style.wordBreak = 'break-all';
+                    pre.style.marginBottom = '12px';
+                } else {
+                    el.style.backgroundColor = '#f1f5f9';
+                    el.style.padding = '2px 4px';
+                    el.style.border = '1px solid rgba(0,0,0,0.08)';
+                }
             });
 
+            // MỤC NÂNG CẤP BẢNG BIỂU WORD: Định dạng kẻ viền đen khít lề khi chép vào Word
+            const tables = tempDiv.querySelectorAll('table');
+            tables.forEach(table => {
+                table.setAttribute('border', '1');
+                table.setAttribute('cellspacing', '0');
+                table.setAttribute('cellpadding', '6');
+                table.style.borderCollapse = 'collapse';
+                table.style.border = '1px solid #000000'; // Đen tuyền (#0) theo đúng yêu cầu
+                table.style.width = '100%';
+            });
+
+            const ths = tempDiv.querySelectorAll('th');
+            ths.forEach(th => {
+                th.style.border = '1px solid #000000'; // Đen tuyền (#0)
+                th.style.padding = '6px 10px';
+                th.style.backgroundColor = '#f1f5f9';
+                th.style.fontWeight = 'bold';
+            });
+
+            const tds = tempDiv.querySelectorAll('td');
+            tds.forEach(td => {
+                td.style.border = '1px solid #000000'; // Đen tuyền (#0)
+                td.style.padding = '6px 10px';
+            });
+
+            // MỤC VÁ LỖI DÍNH CHỮ WORD TOÀN DIỆN VỚI NAMESPACE CHUẨN MATHML:
             const mjxContainers = tempDiv.querySelectorAll('mjx-container');
             mjxContainers.forEach(container => {
                 const mathEl = container.querySelector('mjx-assistive-mml math');
                 if (mathEl) {
                     const clonedMath = mathEl.cloneNode(true);
-                    clonedMath.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+                    clonedMath.setAttribute('xmlns', 'http://www.w3.org/1998/Math/MathML'); // <--- VÁ LỖI TAI HẠI: Trả lại chuẩn MathML!
+                    clonedMath.setAttributeNS('http://www.w3.org/XML/1998/namespace', 'xml:space', 'preserve'); // MỤC BẢO TOÀN KÝ TỰ BIÊN CHỮ KHÔNG CHO WORD TỰ Ý XOÁ
+
+                    // VÁ LỖI TÍCH PHÂN NHỎ TRONG WORD: Ép các toán tử lớn hiển thị dạng toán tử lớn (\int \sum \prod v.v.)
+                    const mos = clonedMath.querySelectorAll('mo');
+                    mos.forEach(mo => {
+                        const text = mo.textContent || '';
+                        // Kí hiệu tích phân, tổng, tích, giao, hợp
+                        if (/[\u222B\u222C\u222D\u222E\u222F\u2230\u2211\u220F\u2210\u22C2\u22C3]/.test(text)) {
+                            // Kiểm tra xem toán tử này có nằm trong cấu trúc cận nào không
+                            const parent = mo.parentNode;
+                            const parentTag = parent ? parent.tagName.toLowerCase() : '';
+                            const isStructured = ['msubsup', 'munderover', 'msub', 'msup', 'munder', 'mover'].includes(parentTag);
+
+                            if (!isStructured) {
+                                // Toán tử riêng lẻ không cận: Bọc nó vào msubsup để Word nhận diện là Cấu trúc toán tử lớn tự dãn nở dãn lề lộng lẫy
+                                const msubsup = document.createElementNS('http://www.w3.org/1998/Math/MathML', 'msubsup');
+                                const subEmpty = document.createElementNS('http://www.w3.org/1998/Math/MathML', 'mrow');
+                                const supEmpty = document.createElementNS('http://www.w3.org/1998/Math/MathML', 'mrow');
+                                
+                                mo.replaceWith(msubsup);
+                                msubsup.appendChild(mo);
+                                msubsup.appendChild(subEmpty);
+                                msubsup.appendChild(supEmpty);
+                            }
+                        }
+                    });
+
+                    // 1. Chuyển đổi mọi <mspace> (nhận từ \quad, \qquad, v.v.) thành <mtext> chứa NBSP tương ứng (NHÂN ĐÔI DÃN CÁCH THEO YÊU CẦU CÂU 2)
+                    const mspaces = clonedMath.querySelectorAll('mspace');
+                    mspaces.forEach(mspace => {
+                        const widthAttr = mspace.getAttribute('width') || '';
+                        let spaceText = '\u00A0\u00A0'; // mặc định dãn gấp đôi (2 khoảng trắng)
+                        if (widthAttr.includes('em')) {
+                            const emValue = parseFloat(widthAttr) || 0;
+                            if (emValue >= 2) {
+                                spaceText = '\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0'; // \qquad -> 8 khoảng trắng
+                            } else if (emValue >= 1) {
+                                spaceText = '\u00A0\u00A0\u00A0\u00A0'; // \quad -> 4 khoảng trắng dãn rộng rãi lộng lẫy
+                            }
+                        }
+                        const mtext = document.createElementNS('http://www.w3.org/1998/Math/MathML', 'mtext');
+                        mtext.textContent = spaceText;
+                        mspace.replaceWith(mtext);
+                    });
+
+                    // 2. Thay thế toàn bộ khoảng trắng thô " " trong các thẻ văn bản thành hai dấu NBSP (\u00A0\u00A0) để tránh dính lề chữ "and"
+                    const mtexts = clonedMath.querySelectorAll('mtext');
+                    mtexts.forEach(mtext => {
+                        if (mtext.textContent) {
+                            mtext.textContent = mtext.textContent.replace(/ /g, '\u00A0\u00A0');
+                        }
+                    });
                     
                     const isDisplay = container.getAttribute('display') === 'true';
                     if (isDisplay) {
                         clonedMath.setAttribute('display', 'block');
+                        
+                        // MỤC VÁ LỖI TÍCH PHÂN NHỎ TRONG WORD: Ép hiển thị dạng công thức khối độc lập to tròn lộng lẫy
+                        const mstyle = document.createElementNS('http://www.w3.org/1998/Math/MathML', 'mstyle');
+                        mstyle.setAttribute('displaystyle', 'true');
+                        while (clonedMath.firstChild) {
+                            mstyle.appendChild(clonedMath.firstChild);
+                        }
+                        clonedMath.appendChild(mstyle);
+
                         const divWrapper = document.createElement('div');
                         divWrapper.style.textAlign = 'center';
                         divWrapper.style.margin = '12px 0';
@@ -1217,6 +1399,14 @@ ${cleanContent}
                         container.replaceWith(divWrapper);
                     } else {
                         clonedMath.setAttribute('display', 'inline');
+                        
+                        const mstyle = document.createElementNS('http://www.w3.org/1998/Math/MathML', 'mstyle');
+                        mstyle.setAttribute('displaystyle', 'false');
+                        while (clonedMath.firstChild) {
+                            mstyle.appendChild(clonedMath.firstChild);
+                        }
+                        clonedMath.appendChild(mstyle);
+
                         const spaceBefore = document.createTextNode('\u00A0');
                         const spaceAfter = document.createTextNode('\u00A0');
                         container.replaceWith(spaceBefore, clonedMath, spaceAfter);

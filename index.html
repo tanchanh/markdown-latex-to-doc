@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Markdown & LaTeX To Word / Docs - D.T.Chánh</title>
+    <title>Chép câu trả lời của Gemini/ChatGPT (Markdown/LaTeX) dùng cho Word / Docs - D.T.Chánh</title>
 
     <!-- Thư viện Marked (Xử lý Markdown) -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -57,8 +57,10 @@
             --toolbar-text: #475569;
             --btn-border: #cbcbcb;
             --btn-hover-bg: #eef2ff;
-            --code-color: #000000; /* CHUYỂN TOÀN BỘ MÀU CHỮ SANG ĐEN #000000 */
-            --code-bg: rgba(0, 0, 0, 0.05); /* NỀN XÁM NHẸ CHIẾM ĐÚNG 5% TRÊN MÀN HÌNH */
+            --code-color: #000000;
+            /* CHUYỂN TOÀN BỘ MÀU CHỮ SANG ĐEN #000000 */
+            --code-bg: rgba(0, 0, 0, 0.05);
+            /* NỀN XÁM NHẸ CHIẾM ĐÚNG 5% TRÊN MÀN HÌNH */
             --divider-color: #e2e8f0;
         }
 
@@ -191,7 +193,7 @@
             padding: 0 1.2rem !important;
             border-radius: 0.4rem !important;
         }
-        
+
         .modal-btn svg {
             margin-right: 0.8rem !important;
             width: 1.3rem !important;
@@ -268,36 +270,46 @@
         /* --- MỤC CẢI TIẾN: SỬA LỖI CÚ PHÁP PHÂN TÁCH INLINE CODE VÀ BLOCK CODE CHUẨN GITHUB & WORD --- */
 
         /* 1. Chỉ áp dụng cho inline code thường (ví dụ: `E=mc^2`) */
-        .markdown-body :not(pre) > code {
-            background-color: var(--code-bg) !important; /* Xám nhẹ 5% */
-            color: var(--code-color) !important; /* Màu đen tuyền #000000 */
+        .markdown-body :not(pre)>code {
+            background-color: var(--code-bg) !important;
+            /* Xám nhẹ 5% */
+            color: var(--code-color) !important;
+            /* Màu đen tuyền #000000 */
             padding: 0.2rem 0.4rem !important;
             border-radius: 0.3rem !important;
-            font-family: "Consolas", "Monaco", "Courier New", monospace !important; /* Ưu tiên Consolas */
+            font-family: "Consolas", "Monaco", "Courier New", monospace !important;
+            /* Ưu tiên Consolas */
             font-size: 0.95em !important;
-            border: 1px solid rgba(0, 0, 0, 0.08) !important; /* Khung viền siêu mịn */
+            border: 1px solid rgba(0, 0, 0, 0.08) !important;
+            /* Khung viền siêu mịn */
         }
 
         /* 2. Áp dụng cho khối Block Code trong pre (Ví dụ: khối phiếu tính lương) */
         .markdown-body pre {
-            background-color: var(--code-bg) !important; /* Xám nhẹ 5% */
+            background-color: var(--code-bg) !important;
+            /* Xám nhẹ 5% */
             padding: 1.0rem !important;
             border-radius: 0.4rem !important;
-            border: 1px solid #cbd5e1 !important; /* Khung viền border xám bao quanh chống lệch chữ */
+            border: 1px solid #cbd5e1 !important;
+            /* Khung viền border xám bao quanh chống lệch chữ */
             overflow-x: auto !important;
             margin-bottom: 1.0rem !important;
         }
 
         .markdown-body pre code {
-            background-color: transparent !important; /* Xoá nền sọc trùng lặp */
+            background-color: transparent !important;
+            /* Xoá nền sọc trùng lặp */
             padding: 0 !important;
             border-radius: 0 !important;
             border: none !important;
-            color: var(--code-color) !important; /* Màu đen tuyền #000000 */
-            font-family: "Consolas", "Monaco", "Courier New", monospace !important; /* Ưu tiên Consolas */
+            color: var(--code-color) !important;
+            /* Màu đen tuyền #000000 */
+            font-family: "Consolas", "Monaco", "Courier New", monospace !important;
+            /* Ưu tiên Consolas */
             font-size: 0.95rem !important;
             line-height: 1.5 !important;
-            white-space: pre !important; /* Giữ nguyên toàn bộ khoảng trắng thụt lề */
+            white-space: pre !important;
+            /* Giữ nguyên toàn bộ khoảng trắng thụt lề */
         }
 
         /* --- MathJax Fixes --- */
@@ -434,57 +446,79 @@
             <path stroke-linecap="round" stroke-linejoin="round"
                 d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
         </svg>
-        <h1>Markdown & LaTeX &nbsp; To &nbsp; Word / Docs</h1>
+        <h1>Chép câu trả lời của Gemini/ChatGPT (Markdown/LaTeX) dùng cho Word / Docs</h1>
         <div class="author">D.T.Chánh</div>
     </header>
 
     <!-- HỘP THOẠI LỰA CHỌN PHƯƠNG THỨC SAO CHÉP (MODAL OVERLAY) -->
-    <div id="copy-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 2000; align-items: center; justify-content: center; backdrop-filter: blur(2px);">
-        <div style="background: white; padding: 2.0rem; border-radius: 0.8rem; box-shadow: 0 1.0rem 2.0rem rgba(0,0,0,0.15); border: 2px solid var(--border-color); max-width: 25rem; width: 90%;">
-            <h3 style="margin: 0 0 1.5rem 0; font-size: 1.2rem; color: var(--primary-color); font-weight: bold; text-align: center;">Chọn định dạng sao chép</h3>
+    <div id="copy-modal"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 2000; align-items: center; justify-content: center; backdrop-filter: blur(2px);">
+        <div
+            style="background: white; padding: 2.0rem; border-radius: 0.8rem; box-shadow: 0 1.0rem 2.0rem rgba(0,0,0,0.15); border: 2px solid var(--border-color); max-width: 25rem; width: 90%;">
+            <h3
+                style="margin: 0 0 1.5rem 0; font-size: 1.2rem; color: var(--primary-color); font-weight: bold; text-align: center;">
+                Chọn định dạng sao chép</h3>
             <div style="display: flex; flex-direction: column; gap: 0.8rem;">
                 <button onclick="executeCopy('markdown')" class="btn modal-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="color:#475569;">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" style="color:#475569;">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
                     </svg>
                     <span>1. Markdown</span>
                 </button>
                 <button onclick="executeCopy('gdocs')" class="btn modal-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="color:#2563eb;">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" style="color:#2563eb;">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
                     </svg>
                     <span>2. Google Docs (Ảnh PNG)</span>
                 </button>
                 <button onclick="executeCopy('word')" class="btn modal-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="color:#16a34a;">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" style="color:#16a34a;">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
                     </svg>
                     <span>3. MS Word (Công thức gốc)</span>
                 </button>
             </div>
-            <button onclick="closeCopyModal()" class="btn" style="width: 100%; margin-top: 1.2rem; background-color: #f1f5f9; border-color: #cbd5e1; color: #475569; justify-content: center;">Hủy bỏ</button>
+            <button onclick="closeCopyModal()" class="btn"
+                style="width: 100%; margin-top: 1.2rem; background-color: #f1f5f9; border-color: #cbd5e1; color: #475569; justify-content: center;">Hủy
+                bỏ</button>
         </div>
     </div>
 
     <!-- HỘP THOẠI LỰA CHỌN PHƯƠNG THỨC TẢI VỀ (MODAL OVERLAY) -->
-    <div id="download-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 2000; align-items: center; justify-content: center; backdrop-filter: blur(2px);">
-        <div style="background: white; padding: 2.0rem; border-radius: 0.8rem; box-shadow: 0 1.0rem 2.0rem rgba(0,0,0,0.15); border: 2px solid var(--border-color); max-width: 25rem; width: 90%;">
-            <h3 style="margin: 0 0 1.5rem 0; font-size: 1.2rem; color: var(--primary-color); font-weight: bold; text-align: center;">Chọn định dạng tải về</h3>
+    <div id="download-modal"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 2000; align-items: center; justify-content: center; backdrop-filter: blur(2px);">
+        <div
+            style="background: white; padding: 2.0rem; border-radius: 0.8rem; box-shadow: 0 1.0rem 2.0rem rgba(0,0,0,0.15); border: 2px solid var(--border-color); max-width: 25rem; width: 90%;">
+            <h3
+                style="margin: 0 0 1.5rem 0; font-size: 1.2rem; color: var(--primary-color); font-weight: bold; text-align: center;">
+                Chọn định dạng tải về</h3>
             <div style="display: flex; flex-direction: column; gap: 0.8rem;">
                 <button onclick="executeDownload('md')" class="btn modal-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="color:#475569;">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" style="color:#475569;">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
                     </svg>
                     <span>1. Markdown (.md)</span>
                 </button>
                 <button onclick="executeDownload('html')" class="btn modal-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="color:#ea580c;">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" style="color:#ea580c;">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
                     </svg>
                     <span>2. HTML (.html)</span>
                 </button>
             </div>
-            <button onclick="closeDownloadModal()" class="btn" style="width: 100%; margin-top: 1.2rem; background-color: #f1f5f9; border-color: #cbd5e1; color: #475569; justify-content: center;">Hủy bỏ</button>
+            <button onclick="closeDownloadModal()" class="btn"
+                style="width: 100%; margin-top: 1.2rem; background-color: #f1f5f9; border-color: #cbd5e1; color: #475569; justify-content: center;">Hủy
+                bỏ</button>
         </div>
     </div>
 
@@ -508,7 +542,8 @@
                 </div>
                 <div class="toolbar-group">
                     <!-- NÚT PHÓNG TO SOẠN THẢO (ĐỐI XỨNG HOÀN MỸ) -->
-                    <button onclick="toggleEditorFullscreen()" id="btn-editor-fullscreen" class="btn" title="Phóng to / Thu nhỏ khung soạn thảo">
+                    <button onclick="toggleEditorFullscreen()" id="btn-editor-fullscreen" class="btn"
+                        title="Phóng to / Thu nhỏ khung soạn thảo">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" id="editor-fullscreen-icon">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -559,7 +594,8 @@ $$
                 </div>
                 <div class="toolbar-group">
                     <!-- Nút Phóng To Kết Quả -->
-                    <button onclick="toggleFullscreen()" id="btn-fullscreen" class="btn" title="Phóng to / Thu nhỏ kết quả">
+                    <button onclick="toggleFullscreen()" id="btn-fullscreen" class="btn"
+                        title="Phóng to / Thu nhỏ kết quả">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" id="fullscreen-icon">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -874,7 +910,7 @@ $$
                 if (mathEl) {
                     const clonedMath = mathEl.cloneNode(true);
                     clonedMath.setAttribute('xmlns', 'http://www.w3.org/1998/Math/MathML');
-                    
+
                     const isDisplay = container.getAttribute('display') === 'true';
                     if (isDisplay) {
                         clonedMath.setAttribute('display', 'block');
@@ -885,7 +921,7 @@ $$
                         container.replaceWith(divWrapper);
                     } else {
                         clonedMath.setAttribute('display', 'inline');
-                        
+
                         // SỬA LỖI DÍNH CHỮ: Chèn thêm đệm khoảng trắng không ngắt (\u00A0) xung quanh thẻ MathML
                         const spaceBefore = document.createTextNode('\u00A0');
                         const spaceAfter = document.createTextNode('\u00A0');
@@ -923,13 +959,13 @@ $$
         // --- HÀM XUẤT HTML VÁ LỖI IN ẤN VÀ LOẠI BỎ CHỮ ẨN ---
         function saveHtml() {
             const content = document.getElementById('latex-output').innerHTML;
-            
+
             // DÙNG REGEX XOÁ SẠCH CHỮ ẨN LẶP AN TOÀN 100%
             const cleanContent = content.replace(/<mjx-assistive-mml[\s\S]*?<\/mjx-assistive-mml>/gi, '');
 
             const styleTags = Array.from(document.querySelectorAll('style'))
-                                 .map(s => s.outerHTML)
-                                 .join('\n');
+                .map(s => s.outerHTML)
+                .join('\n');
 
             const html = `<!DOCTYPE html>
 <html lang="vi">
@@ -1031,12 +1067,12 @@ ${cleanContent}
             const bodyEl = document.body;
             const btn = document.getElementById('btn-fullscreen');
             const icon = document.getElementById('fullscreen-icon');
-            
+
             // Tự động tắt phóng to soạn thảo nếu đang mở
             if (bodyEl.classList.contains('editor-fullscreen-active')) {
                 toggleEditorFullscreen();
             }
-            
+
             const isFullscreen = bodyEl.classList.toggle('fullscreen-active');
 
             if (isFullscreen) {
@@ -1056,12 +1092,12 @@ ${cleanContent}
             const bodyEl = document.body;
             const btn = document.getElementById('btn-editor-fullscreen');
             const icon = document.getElementById('editor-fullscreen-icon');
-            
+
             // Tự động tắt phóng to kết quả nếu đang mở
             if (bodyEl.classList.contains('fullscreen-active')) {
                 toggleFullscreen();
             }
-            
+
             const isFullscreen = bodyEl.classList.toggle('editor-fullscreen-active');
 
             if (isFullscreen) {

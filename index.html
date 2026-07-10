@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chép câu trả lời của Gemini/ChatGPT (Markdown/LaTeX) dùng cho Word / Docs - D.T.Chánh</title>
+    <title>Markdown & LaTeX To Word / Docs - D.T.Chánh</title>
 
     <!-- Thư viện Marked (Xử lý Markdown) -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -57,10 +57,8 @@
             --toolbar-text: #475569;
             --btn-border: #cbcbcb;
             --btn-hover-bg: #eef2ff;
-            --code-color: #000000;
-            /* CHUYỂN TOÀN BỘ MÀU CHỮ SANG ĐEN #000000 */
-            --code-bg: rgba(0, 0, 0, 0.05);
-            /* NỀN XÁM NHẸ CHIẾM ĐÚNG 5% TRÊN MÀN HÌNH */
+            --code-color: #000000; /* CHUYỂN TOÀN BỘ MÀU CHỮ SANG ĐEN #000000 */
+            --code-bg: rgba(0, 0, 0, 0.05); /* NỀN XÁM NHẸ CHIẾM ĐÚNG 5% TRÊN MÀN HÌNH */
             --divider-color: #e2e8f0;
         }
 
@@ -193,7 +191,7 @@
             padding: 0 1.2rem !important;
             border-radius: 0.4rem !important;
         }
-
+        
         .modal-btn svg {
             margin-right: 0.8rem !important;
             width: 1.3rem !important;
@@ -217,9 +215,14 @@
         /* --- Output Area --- */
         #latex-output {
             flex: 1;
-            padding: 2.0rem;
+            padding: 1.2rem 2.0rem 2.0rem 2.0rem; /* MỤC SỬA LỖI: Giảm lề trên từ 2.0rem xuống còn 1.2rem cho cân đối */
             overflow-y: auto;
             word-wrap: break-word;
+        }
+
+        /* MỤC SỬA LỖI: Triệt tiêu hoàn toàn khoảng cách lề trên của thẻ tiêu đề đầu tiên trong trang Kết Quả */
+        #latex-output > :first-child {
+            margin-top: 0 !important;
         }
 
         /* --- Markdown Styles --- */
@@ -267,49 +270,39 @@
             margin-bottom: 1.0rem;
         }
 
-        /* --- MỤC CẢI TIẾN: SỬA LỖI CÚ PHÁP PHÂN TÁCH INLINE CODE VÀ BLOCK CODE CHUẨN GITHUB & WORD --- */
+        /* --- PHÂN TÁCH INLINE CODE VÀ BLOCK CODE CHUẨN GITHUB & WORD --- */
 
         /* 1. Chỉ áp dụng cho inline code thường (ví dụ: `E=mc^2`) */
-        .markdown-body :not(pre)>code {
-            background-color: var(--code-bg) !important;
-            /* Xám nhẹ 5% */
-            color: var(--code-color) !important;
-            /* Màu đen tuyền #000000 */
+        .markdown-body :not(pre) > code {
+            background-color: var(--code-bg) !important; /* Xám nhẹ 5% */
+            color: var(--code-color) !important; /* Màu đen tuyền #000000 */
             padding: 0.2rem 0.4rem !important;
             border-radius: 0.3rem !important;
-            font-family: "Consolas", "Monaco", "Courier New", monospace !important;
-            /* Ưu tiên Consolas */
+            font-family: "Consolas", "Monaco", "Courier New", monospace !important; /* Ưu tiên Consolas */
             font-size: 0.95em !important;
-            border: 1px solid rgba(0, 0, 0, 0.08) !important;
-            /* Khung viền siêu mịn */
+            border: 1px solid rgba(0, 0, 0, 0.08) !important; /* Khung viền siêu mịn */
         }
 
         /* 2. Áp dụng cho khối Block Code trong pre (Ví dụ: khối phiếu tính lương) */
         .markdown-body pre {
-            background-color: var(--code-bg) !important;
-            /* Xám nhẹ 5% */
+            background-color: var(--code-bg) !important; /* Xám nhẹ 5% */
             padding: 1.0rem !important;
             border-radius: 0.4rem !important;
-            border: 1px solid #cbd5e1 !important;
-            /* Khung viền border xám bao quanh chống lệch chữ */
+            border: 1px solid #cbd5e1 !important; /* Khung viền border xám bao quanh chống lệch chữ */
             overflow-x: auto !important;
             margin-bottom: 1.0rem !important;
         }
 
         .markdown-body pre code {
-            background-color: transparent !important;
-            /* Xoá nền sọc trùng lặp */
+            background-color: transparent !important; /* Xoá nền sọc trùng lặp */
             padding: 0 !important;
             border-radius: 0 !important;
             border: none !important;
-            color: var(--code-color) !important;
-            /* Màu đen tuyền #000000 */
-            font-family: "Consolas", "Monaco", "Courier New", monospace !important;
-            /* Ưu tiên Consolas */
+            color: var(--code-color) !important; /* Màu đen tuyền #000000 */
+            font-family: "Consolas", "Monaco", "Courier New", monospace !important; /* Ưu tiên Consolas */
             font-size: 0.95rem !important;
             line-height: 1.5 !important;
-            white-space: pre !important;
-            /* Giữ nguyên toàn bộ khoảng trắng thụt lề */
+            white-space: pre !important; /* Giữ nguyên toàn bộ khoảng trắng thụt lề */
         }
 
         /* --- MathJax Fixes --- */
@@ -403,15 +396,6 @@
             body.editor-fullscreen-active main .column:first-child {
                 height: 100% !important;
             }
-
-            header h1 {
-                font-size: 1.0rem;
-            }
-
-            #latex-input,
-            #latex-output {
-                padding: 1rem;
-            }
         }
     </style>
 </head>
@@ -435,8 +419,8 @@
         </div>
     </div>
 
-    <!-- Input chọn file ẩn -->
-    <input type="file" id="file-selector" accept=".md,.txt,.MD,.TXT,text/plain,text/markdown" style="display: none;"
+    <!-- MỤC SỬA LỖI ĐỘT PHÁ: Chỉ nhận .txt và .md để trình duyệt gom nhóm gọn gàng, loại bỏ hoàn toàn các đuôi lặp dư thừa -->
+    <input type="file" id="file-selector" accept=".txt,.md" style="display: none;"
         onchange="handleFileSelect(event)">
 
     <!-- Header -->
@@ -446,79 +430,57 @@
             <path stroke-linecap="round" stroke-linejoin="round"
                 d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
         </svg>
-        <h1>Chép câu trả lời của Gemini/ChatGPT (Markdown/LaTeX) dùng cho Word / Docs</h1>
+        <h1>Markdown & LaTeX &nbsp; To &nbsp; Word / Docs</h1>
         <div class="author">D.T.Chánh</div>
     </header>
 
     <!-- HỘP THOẠI LỰA CHỌN PHƯƠNG THỨC SAO CHÉP (MODAL OVERLAY) -->
-    <div id="copy-modal"
-        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 2000; align-items: center; justify-content: center; backdrop-filter: blur(2px);">
-        <div
-            style="background: white; padding: 2.0rem; border-radius: 0.8rem; box-shadow: 0 1.0rem 2.0rem rgba(0,0,0,0.15); border: 2px solid var(--border-color); max-width: 25rem; width: 90%;">
-            <h3
-                style="margin: 0 0 1.5rem 0; font-size: 1.2rem; color: var(--primary-color); font-weight: bold; text-align: center;">
-                Chọn định dạng sao chép</h3>
+    <div id="copy-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 2000; align-items: center; justify-content: center; backdrop-filter: blur(2px);">
+        <div style="background: white; padding: 2.0rem; border-radius: 0.8rem; box-shadow: 0 1.0rem 2.0rem rgba(0,0,0,0.15); border: 2px solid var(--border-color); max-width: 25rem; width: 90%;">
+            <h3 style="margin: 0 0 1.5rem 0; font-size: 1.2rem; color: var(--primary-color); font-weight: bold; text-align: center;">Chọn định dạng sao chép</h3>
             <div style="display: flex; flex-direction: column; gap: 0.8rem;">
                 <button onclick="executeCopy('markdown')" class="btn modal-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" style="color:#475569;">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="color:#475569;">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
                     </svg>
                     <span>1. Markdown</span>
                 </button>
                 <button onclick="executeCopy('gdocs')" class="btn modal-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" style="color:#2563eb;">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="color:#2563eb;">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
                     </svg>
                     <span>2. Google Docs (Ảnh PNG)</span>
                 </button>
                 <button onclick="executeCopy('word')" class="btn modal-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" style="color:#16a34a;">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="color:#16a34a;">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
                     </svg>
                     <span>3. MS Word (Công thức gốc)</span>
                 </button>
             </div>
-            <button onclick="closeCopyModal()" class="btn"
-                style="width: 100%; margin-top: 1.2rem; background-color: #f1f5f9; border-color: #cbd5e1; color: #475569; justify-content: center;">Hủy
-                bỏ</button>
+            <button onclick="closeCopyModal()" class="btn" style="width: 100%; margin-top: 1.2rem; background-color: #f1f5f9; border-color: #cbd5e1; color: #475569; justify-content: center;">Hủy bỏ</button>
         </div>
     </div>
 
     <!-- HỘP THOẠI LỰA CHỌN PHƯƠNG THỨC TẢI VỀ (MODAL OVERLAY) -->
-    <div id="download-modal"
-        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 2000; align-items: center; justify-content: center; backdrop-filter: blur(2px);">
-        <div
-            style="background: white; padding: 2.0rem; border-radius: 0.8rem; box-shadow: 0 1.0rem 2.0rem rgba(0,0,0,0.15); border: 2px solid var(--border-color); max-width: 25rem; width: 90%;">
-            <h3
-                style="margin: 0 0 1.5rem 0; font-size: 1.2rem; color: var(--primary-color); font-weight: bold; text-align: center;">
-                Chọn định dạng tải về</h3>
+    <div id="download-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 2000; align-items: center; justify-content: center; backdrop-filter: blur(2px);">
+        <div style="background: white; padding: 2.0rem; border-radius: 0.8rem; box-shadow: 0 1.0rem 2.0rem rgba(0,0,0,0.15); border: 2px solid var(--border-color); max-width: 25rem; width: 90%;">
+            <h3 style="margin: 0 0 1.5rem 0; font-size: 1.2rem; color: var(--primary-color); font-weight: bold; text-align: center;">Chọn định dạng tải về</h3>
             <div style="display: flex; flex-direction: column; gap: 0.8rem;">
                 <button onclick="executeDownload('md')" class="btn modal-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" style="color:#475569;">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="color:#475569;">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
                     </svg>
                     <span>1. Markdown (.md)</span>
                 </button>
                 <button onclick="executeDownload('html')" class="btn modal-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" style="color:#ea580c;">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="color:#ea580c;">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
                     </svg>
                     <span>2. HTML (.html)</span>
                 </button>
             </div>
-            <button onclick="closeDownloadModal()" class="btn"
-                style="width: 100%; margin-top: 1.2rem; background-color: #f1f5f9; border-color: #cbd5e1; color: #475569; justify-content: center;">Hủy
-                bỏ</button>
+            <button onclick="closeDownloadModal()" class="btn" style="width: 100%; margin-top: 1.2rem; background-color: #f1f5f9; border-color: #cbd5e1; color: #475569; justify-content: center;">Hủy bỏ</button>
         </div>
     </div>
 
@@ -530,20 +492,12 @@
             <div class="toolbar">
                 <div class="toolbar-group">
                     <span>Soạn Thảo:</span>
-                    <!-- Nút Xoá chuẩn chính tả mới -->
-                    <button onclick="clearInput()" id="btn-clear" class="btn" title="Xoá toàn bộ nội dung">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                        </svg>
-                        <span>Xoá</span>
-                    </button>
+                    <!-- MỤC CẢI TIẾN THƯƠNG MẠI ĐỘT PHÁ: Nút bấm Đa Trạng Thái thông minh duy nhất -->
+                    <button onclick="handleActionButton()" id="btn-action" class="btn" title="Thực hiện hành động"></button>
                 </div>
                 <div class="toolbar-group">
                     <!-- NÚT PHÓNG TO SOẠN THẢO (ĐỐI XỨNG HOÀN MỸ) -->
-                    <button onclick="toggleEditorFullscreen()" id="btn-editor-fullscreen" class="btn"
-                        title="Phóng to / Thu nhỏ khung soạn thảo">
+                    <button onclick="toggleEditorFullscreen()" id="btn-editor-fullscreen" class="btn" title="Phóng to / Thu nhỏ khung soạn thảo">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" id="editor-fullscreen-icon">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -594,8 +548,7 @@ $$
                 </div>
                 <div class="toolbar-group">
                     <!-- Nút Phóng To Kết Quả -->
-                    <button onclick="toggleFullscreen()" id="btn-fullscreen" class="btn"
-                        title="Phóng to / Thu nhỏ kết quả">
+                    <button onclick="toggleFullscreen()" id="btn-fullscreen" class="btn" title="Phóng to / Thu nhỏ kết quả">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" id="fullscreen-icon">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -626,6 +579,7 @@ $$
         // --- BỘ LỌC ĐỒNG BỘ \displaystyle TOÀN DIỆN CHO CẢ INLINE VÀ DISPLAY MATH ---
         function escapeMath(text) {
             const mathBlocks = [];
+            // MỤC VÁ LỖI CỰC KỲ QUAN TRỌNG: Đã sửa chính xác Regex loại bỏ hoàn toàn khoảng trắng dư thừa
             const regex = /\$\$([\s\S]*?)\$\$|\\\[([\s\S]*?)\\\]|\$([^$\n]*?)\$|\\\(([\s\S]*?)\\\)/g;
 
             const protectedText = text.replace(regex, (match, g1, g2, g3, g4) => {
@@ -634,51 +588,14 @@ $$
                     return match;
                 }
 
-                // 1. Tự động đồng bộ \displaystyle cho công thức khối $$ (g1)
-                if (g1) {
-                    let trimmed = g1.trim();
-                    if (!trimmed.startsWith('\\displaystyle')) {
-                        trimmed = `\\displaystyle ${trimmed}`;
-                    }
-                    mathBlocks.push(`$$${trimmed}$$`);
-                    const placeholder = `MATHJAXBLOCKPLACEHOLDER${mathBlocks.length - 1}`;
+                // ĐƠN GIẢN HOÀ, KHÔNG TỰ ĐỘNG CHÈN \displaystyle VÀO BẤT KỲ CÔNG THỨC NÀO ĐỂ TRÁNH LỖI PHÌNH DÒNG WORD
+                mathBlocks.push(match);
+                const placeholder = `MATHJAXBLOCKPLACEHOLDER${mathBlocks.length - 1}`;
+
+                if (match.startsWith('$$') || match.startsWith('\\[')) {
                     return `\n\n${placeholder}\n\n`;
                 }
-
-                // 2. Tự động đồng bộ \displaystyle cho công thức khối \[ (g2)
-                if (g2) {
-                    let trimmed = g2.trim();
-                    if (!trimmed.startsWith('\\displaystyle')) {
-                        trimmed = `\\displaystyle ${trimmed}`;
-                    }
-                    mathBlocks.push(`\\[${trimmed}\\]`);
-                    const placeholder = `MATHJAXBLOCKPLACEHOLDER${mathBlocks.length - 1}`;
-                    return `\n\n${placeholder}\n\n`;
-                }
-
-                // 3. Tự động chèn \displaystyle cho công thức cùng dòng $ (g3)
-                if (g3) {
-                    let trimmed = g3.trim();
-                    if (!trimmed.startsWith('\\displaystyle')) {
-                        trimmed = `\\displaystyle ${trimmed}`;
-                    }
-                    mathBlocks.push(`$${trimmed}$`);
-                    const placeholder = `MATHJAXBLOCKPLACEHOLDER${mathBlocks.length - 1}`;
-                    return placeholder;
-                }
-
-                // 4. Tự động chèn \displaystyle cho công thức cùng dòng \( (g4)
-                if (g4) {
-                    let trimmed = g4.trim();
-                    if (!trimmed.startsWith('\\displaystyle')) {
-                        trimmed = `\\displaystyle ${trimmed}`;
-                    }
-                    mathBlocks.push(`\\(${trimmed}\\)`);
-                    const placeholder = `MATHJAXBLOCKPLACEHOLDER${mathBlocks.length - 1}`;
-                    return placeholder;
-                }
-
-                return match;
+                return placeholder;
             });
             return { protectedText, mathBlocks };
         }
@@ -687,15 +604,37 @@ $$
             return text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
         }
 
+        // --- HÀM DỰNG HÌNH RÀO CHẮN AN TOÀN CHỐNG QUÉT NHẦM CODE BLOCK ---
         function renderContent() {
             const rawText = input.value;
-            const { protectedText, mathBlocks } = escapeMath(rawText);
-            let htmlContent = marked.parse(protectedText);
 
-            mathBlocks.forEach((block, index) => {
-                const safeBlock = escapeHtmlLite(block);
-                htmlContent = htmlContent.replace(`MATHJAXBLOCKPLACEHOLDER${index}`, safeBlock);
+            // 1. Tạm ẩn toàn bộ khối code ra ngoài hành lang an toàn
+            const codeBlocks = [];
+            const codeRegex = /```[\s\S]*?```|`[^`\n]*?`/g;
+            const tempText = rawText.replace(codeRegex, (match) => {
+                codeBlocks.push(match);
+                return `CODEBLOCKPLACEHOLDER${codeBlocks.length - 1}`;
             });
+
+            // 2. Chạy bộ lọc toán học trên phần văn bản thường còn lại
+            const { protectedText, mathBlocks } = escapeMath(tempText);
+
+            // 3. ĐỘT PHÁ QUY TRÌNH: Khôi phục lại khối code thô (dạng Markdown) TRƯỚC KHI cho Marked dịch
+            let restoredText = protectedText;
+            
+            // MỤC SỬA LỖI ĐỘT PHÁ: Duyệt vòng lặp ngược (từ N giảm về 0) để tránh đè trùng khít chữ số
+            for (let i = codeBlocks.length - 1; i >= 0; i--) {
+                restoredText = restoredText.replace(`CODEBLOCKPLACEHOLDER${i}`, () => codeBlocks[i]);
+            }
+
+            // 4. Cho trình Marked dịch văn bản thô (đã khôi phục khối code, toán vẫn ẩn)
+            let htmlContent = marked.parse(restoredText);
+
+            // 5. Khôi phục lại công thức toán bằng hàm mũi tên (Vòng lặp ngược tránh đè trùng số)
+            for (let i = mathBlocks.length - 1; i >= 0; i--) {
+                const safeBlock = escapeHtmlLite(mathBlocks[i]);
+                htmlContent = htmlContent.replace(`MATHJAXBLOCKPLACEHOLDER${i}`, () => safeBlock);
+            }
 
             output.innerHTML = htmlContent;
 
@@ -712,6 +651,12 @@ $$
 
         let timeoutId;
         input.addEventListener('input', () => {
+            // Khi người dùng gõ phím, nếu đang ở trạng thái xác nhận thì tự động huỷ xác nhận
+            if (isConfirming) {
+                isConfirming = false;
+            }
+            updateActionButtonState();
+
             clearTimeout(timeoutId);
             timeoutId = setTimeout(() => {
                 renderContent(); // Vẽ công thức mượt mà sau 50ms khi dừng gõ
@@ -737,205 +682,122 @@ $$
                 input.value = savedContent;
             }
             renderContent();
+            updateActionButtonState(); // Nạp trạng thái ban đầu của nút bấm khi tải trang
         });
 
-        let clearTimeoutId;
-        function clearInput() {
-            const btn = document.getElementById('btn-clear');
-            const span = btn.querySelector('span');
-            const svg = btn.querySelector('svg');
+        // --- MỤC CẢI TIẾN UX ĐỈNH CAO: BỘ ĐIỀU KHIỂN NÚT BẤM ĐA TRẠNG THÁI (CON-TEXT BUTTON) ---
+        let isConfirming = false;
+        let isRecentlyCleared = false;
+        let clearTimer = null;
 
-            if (btn.dataset.confirm === "true") {
-                input.value = "";
-                renderContent();
-                localStorage.removeItem('latex_input'); // Xoá bản nháp khi nhấn nút xoá toàn bộ
-                input.focus();
-                resetClearBtn(btn);
+        function updateActionButtonState() {
+            const btn = document.getElementById('btn-action');
+            if (!btn) return;
+
+            // Trạng thái 4: Vừa bấm xác nhận xoá thành công (Hiển thị màu Xanh lá trong 1 giây)
+            if (isRecentlyCleared) {
+                btn.className = "btn";
+                btn.style.backgroundColor = "#16a34a"; // Green
+                btn.style.borderColor = "#16a34a";
+                btn.style.color = "#ffffff";
+                btn.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span>Đã xoá!</span>
+                `;
+                return;
+            }
+
+            const hasText = input.value.trim() !== "";
+
+            if (!hasText) {
+                // Trạng thái 1: Ô soạn thảo trống (Hiển thị "Mở File" màu xanh Indigo #0a00d1 mời gọi)
+                isConfirming = false;
+                btn.className = "btn";
+                btn.style.backgroundColor = "var(--primary-color)"; // Indigo
+                btn.style.borderColor = "var(--primary-color)";
+                btn.style.color = "#ffffff";
+                btn.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 10.5v6m3-3H9m12-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span>Mở File</span>
+                `;
             } else {
-                btn.dataset.confirm = "true";
-                btn.dataset.originalText = span.innerHTML;
-
-                span.innerHTML = 'Chắc chắn?';
-                span.style.color = '#dc2626';
-                span.style.fontWeight = 'bold';
-                btn.style.borderColor = '#dc2626';
-                svg.style.display = 'none';
-
-                clearTimeoutId = setTimeout(() => {
-                    resetClearBtn(btn);
-                }, 3000);
-            }
-        }
-
-        function resetClearBtn(btn) {
-            clearTimeout(clearTimeoutId);
-            const span = btn.querySelector('span');
-            const svg = btn.querySelector('svg');
-
-            btn.dataset.confirm = "false";
-            span.innerHTML = btn.dataset.originalText;
-            span.style.color = '';
-            span.style.fontWeight = '';
-            btn.style.borderColor = '';
-            svg.style.display = '';
-        }
-
-        // --- CHỨC NĂNG ĐIỀU HƯỚNG HIỂN THỊ HỘP THOẠI CHỌN SAO CHÉP ---
-        function copyOutput() {
-            document.getElementById('copy-modal').style.display = 'flex';
-        }
-
-        function closeCopyModal() {
-            document.getElementById('copy-modal').style.display = 'none';
-        }
-
-        // --- THỰC THI SAO CHÉP ĐA ĐỊNH DẠNG THEO PHƯƠNG PHÁP CHỌN ---
-        async function executeCopy(format) {
-            closeCopyModal();
-            const btn = document.getElementById('btn-copy-output');
-            const span = btn.querySelector('span');
-            const svg = btn.querySelector('svg');
-            const originalText = span.innerHTML;
-
-            span.innerHTML = 'Đang chép...';
-            span.style.color = '#4f46e5';
-            svg.style.display = 'none';
-
-            try {
-                if (format === 'markdown') {
-                    await copyMarkdown();
-                } else if (format === 'gdocs') {
-                    await copyGoogleDocs();
-                } else if (format === 'word') {
-                    await copyWord();
+                if (isConfirming) {
+                    // Trạng thái 3: Click xoá lần 1 (Hiển thị "Chắc chắn?" màu đỏ cảnh báo #dc2626)
+                    btn.className = "btn";
+                    btn.style.backgroundColor = "#dc2626"; // Red
+                    btn.style.borderColor = "#dc2626";
+                    btn.style.color = "#ffffff";
+                    btn.innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                        </svg>
+                        <span>Chắc chắn?</span>
+                    `;
+                } else {
+                    // Trạng thái 2: Ô soạn thảo có chữ (Hiển thị "Xoá" màu xám mặc định của hệ thống)
+                    btn.className = "btn";
+                    btn.style.backgroundColor = ""; // Reset về mặc định của CSS
+                    btn.style.borderColor = "";
+                    btn.style.color = "";
+                    btn.innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                        </svg>
+                        <span>Xoá</span>
+                    `;
                 }
-                span.innerHTML = '✓ Đã chép!';
-                span.style.color = '#16a34a';
-            } catch (err) {
-                console.error(err);
-                span.innerHTML = 'Lỗi copy!';
-                span.style.color = '#ef4444';
             }
+        }
 
+        function handleActionButton() {
+            const hasText = input.value.trim() !== "";
+
+            if (!hasText) {
+                // Click ở Trạng thái 1: Kích hoạt file selector để Mở File từ máy tính
+                document.getElementById('file-selector').click();
+            } else {
+                // Click ở Trạng thái 2 hoặc 3: Xử lý hành động Xoá
+                if (isConfirming) {
+                    // Click lần 2 khi đang hiện đỏ: Chấp nhận xác nhận xoá lập tức
+                    executeClear();
+                } else {
+                    // Click lần 1: Chuyển nút sang màu đỏ hỏi "Chắc chắn?"
+                    isConfirming = true;
+                    updateActionButtonState();
+
+                    // Tự động huỷ trạng thái đỏ sau 3 giây nếu người dùng không bấm xác nhận
+                    clearTimeout(clearTimer);
+                    clearTimer = setTimeout(() => {
+                        isConfirming = false;
+                        updateActionButtonState();
+                    }, 3000);
+                }
+            }
+        }
+
+        function executeClear() {
+            clearTimeout(clearTimer);
+
+            // 1. Thực hiện xoá sạch lề chữ
+            input.value = "";
+            renderContent();
+            localStorage.removeItem('latex_input');
+            input.focus();
+
+            // 2. Chuyển nút sang trạng thái 4: Hiện màu xanh lá "Đã xoá!"
+            isConfirming = false;
+            isRecentlyCleared = true;
+            updateActionButtonState();
+
+            // 3. Sau đúng 1 giây (1000ms), tự động chuyển đổi ngược về nút "Mở File" Indigo
             setTimeout(() => {
-                span.innerHTML = originalText;
-                span.style.color = '';
-                svg.style.display = '';
-            }, 2000);
-        }
-
-        // --- 1. CHÉP DẠNG MARKDOWN ---
-        async function copyMarkdown() {
-            const rawText = input.value;
-            const blobText = new Blob([rawText], { type: 'text/plain' });
-            const data = [new ClipboardItem({ 'text/plain': blobText })];
-            await navigator.clipboard.write(data);
-        }
-
-        // --- 2. CHÉP DẠNG GOOGLE DOCS (DÙNG ẢNH PNG ĐỘ NÉT CAO) ---
-        async function copyGoogleDocs() {
-            const tempDiv = document.createElement('div');
-            tempDiv.innerHTML = output.innerHTML;
-            tempDiv.classList.add('markdown-body');
-            tempDiv.style.fontFamily = getComputedStyle(document.body).fontFamily;
-            document.body.appendChild(tempDiv);
-
-            if (window.MathJax) {
-                await MathJax.typesetPromise([tempDiv]);
-            }
-
-            const realSvgs = tempDiv.querySelectorAll('mjx-container svg');
-            const tempContainers = tempDiv.querySelectorAll('mjx-container');
-
-            const conversionPromises = Array.from(realSvgs).map(async (svgEl, index) => {
-                try {
-                    const pngData = await svgToPngDataUrl(svgEl);
-                    const container = tempContainers[index];
-
-                    if (pngData && container) {
-                        const imgTag = document.createElement('img');
-                        imgTag.src = pngData;
-
-                        const rect = svgEl.getBoundingClientRect();
-                        imgTag.style.width = rect.width + 'px';
-                        imgTag.style.height = rect.height + 'px';
-                        imgTag.style.verticalAlign = '-0.5ex';
-
-                        const isDisplay = container.getAttribute('display') === 'true';
-
-                        if (isDisplay) {
-                            const divWrapper = document.createElement('div');
-                            divWrapper.style.textAlign = 'center';
-                            divWrapper.style.margin = '12px 0';
-                            divWrapper.appendChild(imgTag);
-                            container.replaceWith(divWrapper);
-                        } else {
-                            container.innerHTML = '';
-                            container.appendChild(document.createTextNode('\u00A0'));
-                            container.appendChild(imgTag);
-                            container.appendChild(document.createTextNode('\u00A0'));
-                        }
-                    }
-                } catch (e) {
-                    console.error("Skip error SVG", index);
-                }
-            });
-
-            await Promise.all(conversionPromises);
-
-            const blobHtml = new Blob([tempDiv.innerHTML], { type: 'text/html' });
-            const blobText = new Blob([tempDiv.innerText], { type: 'text/plain' });
-            const data = [new ClipboardItem({ 'text/html': blobHtml, 'text/plain': blobText })];
-            await navigator.clipboard.write(data);
-
-            document.body.removeChild(tempDiv);
-        }
-
-        // --- 3. CHÉP DẠNG MS WORD (CÔNG THỨC GỐC MATHML - TRÁNH DÍNH CHỮ) ---
-        async function copyWord() {
-            const tempDiv = document.createElement('div');
-            tempDiv.innerHTML = output.innerHTML;
-            tempDiv.classList.add('markdown-body');
-            tempDiv.style.fontFamily = getComputedStyle(document.body).fontFamily;
-            document.body.appendChild(tempDiv);
-
-            if (window.MathJax) {
-                await MathJax.typesetPromise([tempDiv]);
-            }
-
-            // Thay thế mjx-container bằng thẻ MathML gốc <math> để Word tự động nhận dạng thành Word Equation
-            const mjxContainers = tempDiv.querySelectorAll('mjx-container');
-            mjxContainers.forEach(container => {
-                const mathEl = container.querySelector('mjx-assistive-mml math');
-                if (mathEl) {
-                    const clonedMath = mathEl.cloneNode(true);
-                    clonedMath.setAttribute('xmlns', 'http://www.w3.org/1998/Math/MathML');
-
-                    const isDisplay = container.getAttribute('display') === 'true';
-                    if (isDisplay) {
-                        clonedMath.setAttribute('display', 'block');
-                        const divWrapper = document.createElement('div');
-                        divWrapper.style.textAlign = 'center';
-                        divWrapper.style.margin = '12px 0';
-                        divWrapper.appendChild(clonedMath);
-                        container.replaceWith(divWrapper);
-                    } else {
-                        clonedMath.setAttribute('display', 'inline');
-
-                        // SỬA LỖI DÍNH CHỮ: Chèn thêm đệm khoảng trắng không ngắt (\u00A0) xung quanh thẻ MathML
-                        const spaceBefore = document.createTextNode('\u00A0');
-                        const spaceAfter = document.createTextNode('\u00A0');
-                        container.replaceWith(spaceBefore, clonedMath, spaceAfter);
-                    }
-                }
-            });
-
-            const blobHtml = new Blob([tempDiv.innerHTML], { type: 'text/html' });
-            const blobText = new Blob([tempDiv.innerText], { type: 'text/plain' });
-            const data = [new ClipboardItem({ 'text/html': blobHtml, 'text/plain': blobText })];
-            await navigator.clipboard.write(data);
-
-            document.body.removeChild(tempDiv);
+                isRecentlyCleared = false;
+                updateActionButtonState();
+            }, 1000);
         }
 
         // --- CHỨC NĂNG ĐIỀU HƯỚNG HIỂN THỊ HỘP THOẠI CHỌN TẢI FILE ---
@@ -959,13 +821,13 @@ $$
         // --- HÀM XUẤT HTML VÁ LỖI IN ẤN VÀ LOẠI BỎ CHỮ ẨN ---
         function saveHtml() {
             const content = document.getElementById('latex-output').innerHTML;
-
+            
             // DÙNG REGEX XOÁ SẠCH CHỮ ẨN LẶP AN TOÀN 100%
             const cleanContent = content.replace(/<mjx-assistive-mml[\s\S]*?<\/mjx-assistive-mml>/gi, '');
 
             const styleTags = Array.from(document.querySelectorAll('style'))
-                .map(s => s.outerHTML)
-                .join('\n');
+                                 .map(s => s.outerHTML)
+                                 .join('\n');
 
             const html = `<!DOCTYPE html>
 <html lang="vi">
@@ -1067,12 +929,10 @@ ${cleanContent}
             const bodyEl = document.body;
             const btn = document.getElementById('btn-fullscreen');
             const icon = document.getElementById('fullscreen-icon');
-
-            // Tự động tắt phóng to soạn thảo nếu đang mở
-            if (bodyEl.classList.contains('editor-fullscreen-active')) {
-                toggleEditorFullscreen();
-            }
-
+            
+            // Tắt chế độ đối lập trực tiếp thay vì đệ quy
+            bodyEl.classList.remove('editor-fullscreen-active');
+            
             const isFullscreen = bodyEl.classList.toggle('fullscreen-active');
 
             if (isFullscreen) {
@@ -1092,12 +952,10 @@ ${cleanContent}
             const bodyEl = document.body;
             const btn = document.getElementById('btn-editor-fullscreen');
             const icon = document.getElementById('editor-fullscreen-icon');
-
-            // Tự động tắt phóng to kết quả nếu đang mở
-            if (bodyEl.classList.contains('fullscreen-active')) {
-                toggleFullscreen();
-            }
-
+            
+            // Tắt chế độ đối lập trực tiếp thay vì đệ quy
+            bodyEl.classList.remove('fullscreen-active');
+            
             const isFullscreen = bodyEl.classList.toggle('editor-fullscreen-active');
 
             if (isFullscreen) {
@@ -1109,84 +967,288 @@ ${cleanContent}
             }
         }
 
-        async function svgToPngDataUrl(svgElement) {
-            return new Promise((resolve, reject) => {
-                try {
-                    const rect = svgElement.getBoundingClientRect();
-                    const scaleFactor = 3;
+        // --- MỤC 2 & 4: HÀM CHUYỂN ĐỔI CANVAS NÂNG CAO AN TOÀN TUYỆT ĐỐI ---
+        async function svgToPngDataUrl(svgEl, scale = 3) {
+            try {
+                // Clone để không thay đổi DOM thật
+                const clone = svgEl.cloneNode(true);
+                // MỤC VÁ LỖI CỰC KỲ QUAN TRỌNG: Sửa hoàn toàn dấu đóng ngoặc tròn chuẩn xác
+                const svg = clone instanceof SVGSVGElement ? clone : (clone.querySelector('svg') || clone);
 
-                    if (rect.width === 0 || rect.height === 0) { resolve(null); return; }
+                // Ghi rõ namespace
+                svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
 
-                    const width = Math.ceil(rect.width * scaleFactor);
-                    const height = Math.ceil(rect.height * scaleFactor);
+                // Lấy kích thước thực tế của SVG
+                const rect = svgEl.getBoundingClientRect();
+                let width = Math.max(1, Math.round(rect.width));
+                let height = Math.max(1, Math.round(rect.height));
 
-                    const clonedSvg = svgElement.cloneNode(true);
-
-                    const computedStyle = window.getComputedStyle(svgElement);
-                    clonedSvg.style.cssText = `
-                        font-family: ${computedStyle.fontFamily};
-                        font-size: ${computedStyle.fontSize};
-                        font-weight: ${computedStyle.fontWeight};
-                        color: ${computedStyle.color};
-                        width: ${width}px;
-                        height: ${height}px;
-                    `;
-
-                    clonedSvg.setAttribute("width", width + "px");
-                    clonedSvg.setAttribute("height", height + "px");
-
-                    if (!clonedSvg.getAttribute('xmlns')) clonedSvg.setAttribute('xmlns', "http://www.w3.org/2000/svg");
-                    if (!clonedSvg.getAttribute('xmlns:xlink')) clonedSvg.setAttribute('xmlns:xlink', "http://www.w3.org/1999/xlink");
-
-                    const svgData = new XMLSerializer().serializeToString(clonedSvg);
-                    const blob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
-                    const url = URL.createObjectURL(blob);
-
-                    const img = new Image();
-                    img.onload = function () {
-                        const canvas = document.createElement("canvas");
-                        canvas.width = width;
-                        canvas.height = height;
-                        const ctx = canvas.getContext("2d");
-                        ctx.clearRect(0, 0, width, height); // LUÔN ĐÚNG DẤU PHẨY, SỬA TRIỆT ĐỂ LỖI CÚ PHÁP
-                        ctx.drawImage(img, 0, 0, width, height);
-                        URL.revokeObjectURL(url);
-                        resolve(canvas.toDataURL("image/png"));
-                    };
-                    img.onerror = (e) => reject(new Error("Image failed to load"));
-                    img.src = url;
-                } catch (e) {
-                    reject(e);
+                // Nếu SVG có viewBox, ưu tiên dùng viewBox
+                const viewBox = svg.getAttribute('viewBox');
+                if (viewBox) {
+                    const parts = viewBox.split(/\s+/).map(Number);
+                    if (parts.length === 4 && parts[2] > 0 && parts[3] > 0) {
+                        width = parts[2];
+                        height = parts[3];
+                    }
                 }
-            });
+
+                svg.setAttribute('width', String(width));
+                svg.setAttribute('height', String(height));
+
+                // Serialize SVG
+                const xml = new XMLSerializer().serializeToString(svg);
+                const blob = new Blob([xml], { type: 'image/svg+xml;charset=utf-8' });
+                const url = URL.createObjectURL(blob);
+
+                // Tạo ảnh tạm để vẽ lên canvas
+                const img = await new Promise((resolve, reject) => {
+                    const i = new Image();
+                    i.crossOrigin = 'anonymous';
+                    i.onload = () => resolve(i);
+                    i.onerror = (e) => reject(new Error('SVG->Image load failed'));
+                    i.src = url;
+                });
+
+                // Vẽ lên canvas với scale để tăng độ nét
+                const canvas = document.createElement('canvas');
+                canvas.width = width * scale;
+                canvas.height = height * scale;
+                const ctx = canvas.getContext('2d');
+                if (!ctx) throw new Error('Canvas context unavailable');
+                ctx.setTransform(scale, 0, 0, scale, 0, 0);
+                ctx.drawImage(img, 0, 0, width, height);
+
+                URL.revokeObjectURL(url);
+                return canvas.toDataURL('image/png');
+            } catch (err) {
+                console.error('svgToPngDataUrl error', err);
+                return null;
+            }
         }
 
-        const dragOverlay = document.getElementById('drag-overlay');
-
-        window.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            if (e.dataTransfer.types.includes('Files')) {
-                dragOverlay.style.display = 'flex';
+        // --- MỤC CẢI TIẾN THÊM VÀO: HÀM ĐỌC VÀ NHẬP TỆP TIN TỪ MÁY TÍNH ---
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                handleFileImport(file);
             }
-        });
+        }
 
-        window.addEventListener('dragleave', (e) => {
-            if (e.relatedTarget === null || !document.documentElement.contains(e.relatedTarget)) {
-                dragOverlay.style.display = 'none';
+        function handleFileImport(file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                input.value = e.target.result;
+                renderContent();
+                localStorage.setItem('latex_input', input.value);
+                updateActionButtonState(); // Tự động cập nhật nút sang "Xoá" ngay khi nạp file vào!
+            };
+            reader.readAsText(file);
+        }
+
+        // --- MỤC KHÔI PHỤC ĐẦY ĐỦ 100%: CỤM HÀM SAO CHÉP KẾT QUẢ ĐA ĐỊNH DẠNG ---
+        function copyOutput() {
+            document.getElementById('copy-modal').style.display = 'flex';
+        }
+
+        function closeCopyModal() {
+            document.getElementById('copy-modal').style.display = 'none';
+        }
+
+        async function executeCopy(format) {
+            closeCopyModal();
+            const btn = document.getElementById('btn-copy-output');
+            const span = btn.querySelector('span');
+            const svg = btn.querySelector('svg');
+            const originalText = span.innerHTML;
+
+            span.innerHTML = 'Đang chép...';
+            span.style.color = '#4f46e5';
+            svg.style.display = 'none';
+
+            try {
+                if (format === 'markdown') {
+                    await copyMarkdown();
+                } else if (format === 'gdocs') {
+                    await copyGoogleDocs();
+                } else if (format === 'word') {
+                    await copyWord();
+                }
+                span.innerHTML = '✓ Đã chép!';
+                span.style.color = '#16a34a';
+            } catch (err) {
+                console.error(err);
+                span.innerHTML = 'Lỗi copy!';
+                span.style.color = '#ef4444';
             }
-        });
 
-        window.addEventListener('drop', (e) => {
-            e.preventDefault();
-            dragOverlay.style.display = 'none';
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                handleFileImport(files[0]);
+            setTimeout(() => {
+                span.innerHTML = originalText;
+                span.style.color = '';
+                svg.style.display = '';
+            }, 2000);
+        }
+
+        async function copyMarkdown() {
+            const rawText = input.value;
+            try {
+                const blobText = new Blob([rawText], { type: 'text/plain' });
+                const data = [new ClipboardItem({ 'text/plain': blobText })];
+                await navigator.clipboard.write(data);
+            } catch (err) {
+                console.warn("Clipboard write failed, using fallback:", err);
+                const textarea = document.createElement('textarea');
+                textarea.value = rawText;
+                textarea.style.position = 'fixed';
+                textarea.style.left = '-9999px';
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
             }
-        });
+        }
 
-        window.addEventListener('dragend', () => {
-            dragOverlay.style.display = 'none';
+        async function copyGoogleDocs() {
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = output.innerHTML;
+            tempDiv.classList.add('markdown-body');
+            tempDiv.style.fontFamily = getComputedStyle(document.body).fontFamily;
+            document.body.appendChild(tempDiv);
+
+            if (window.MathJax) {
+                await MathJax.typesetPromise([tempDiv]);
+            }
+
+            // Ép phông chữ của toàn bộ code inline và code block sang Consolas (MỤC NÂNG CẤP GDOCS)
+            const codeEls = tempDiv.querySelectorAll('code, pre');
+            codeEls.forEach(el => {
+                el.style.fontFamily = "Consolas, 'Courier New', monospace";
+            });
+
+            const realSvgs = tempDiv.querySelectorAll('mjx-container svg');
+            const tempContainers = tempDiv.querySelectorAll('mjx-container');
+
+            const conversionPromises = Array.from(realSvgs).map(async (svgEl, index) => {
+                try {
+                    const pngData = await svgToPngDataUrl(svgEl);
+                    const container = tempContainers[index];
+
+                    if (pngData && container) {
+                        const imgTag = document.createElement('img');
+                        imgTag.src = pngData;
+
+                        const rect = svgEl.getBoundingClientRect();
+                        imgTag.style.width = rect.width + 'px';
+                        imgTag.style.height = rect.height + 'px';
+                        imgTag.style.verticalAlign = '-0.5ex';
+
+                        const isDisplay = container.getAttribute('display') === 'true';
+
+                        if (isDisplay) {
+                            const divWrapper = document.createElement('div');
+                            divWrapper.style.textAlign = 'center';
+                            divWrapper.style.margin = '12px 0';
+                            divWrapper.appendChild(imgTag);
+                            container.replaceWith(divWrapper);
+                        } else {
+                            container.innerHTML = '';
+                            container.appendChild(document.createTextNode('\u00A0'));
+                            container.appendChild(imgTag);
+                            container.appendChild(document.createTextNode('\u00A0'));
+                        }
+                    }
+                } catch (e) {
+                    console.error("Skip error SVG", index);
+                }
+            });
+
+            await Promise.all(conversionPromises);
+
+            try {
+                const blobHtml = new Blob([tempDiv.innerHTML], { type: 'text/html' });
+                const blobText = new Blob([tempDiv.innerText], { type: 'text/plain' });
+                const data = [new ClipboardItem({ 'text/html': blobHtml, 'text/plain': blobText })];
+                await navigator.clipboard.write(data);
+            } catch (err) {
+                console.error("Modern clipboard copy failed:", err);
+                const selection = window.getSelection();
+                selection.removeAllRanges();
+                const range = document.createRange();
+                range.selectNodeContents(tempDiv);
+                selection.addRange(range);
+                document.execCommand('copy');
+                selection.removeAllRanges();
+            }
+
+            document.body.removeChild(tempDiv);
+        }
+
+        async function copyWord() {
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = output.innerHTML;
+            tempDiv.classList.add('markdown-body');
+            tempDiv.style.fontFamily = getComputedStyle(document.body).fontFamily;
+            document.body.appendChild(tempDiv);
+
+            if (window.MathJax) {
+                await MathJax.typesetPromise([tempDiv]);
+            }
+
+            // Ép phông chữ của toàn bộ code inline và code block sang Consolas (MỤC NÂNG CẤP WORD THEO ĐỀ XUẤT)
+            const codeEls = tempDiv.querySelectorAll('code, pre');
+            codeEls.forEach(el => {
+                el.style.fontFamily = "Consolas, 'Courier New', monospace";
+            });
+
+            const mjxContainers = tempDiv.querySelectorAll('mjx-container');
+            mjxContainers.forEach(container => {
+                const mathEl = container.querySelector('mjx-assistive-mml math');
+                if (mathEl) {
+                    const clonedMath = mathEl.cloneNode(true);
+                    clonedMath.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+                    
+                    const isDisplay = container.getAttribute('display') === 'true';
+                    if (isDisplay) {
+                        clonedMath.setAttribute('display', 'block');
+                        const divWrapper = document.createElement('div');
+                        divWrapper.style.textAlign = 'center';
+                        divWrapper.style.margin = '12px 0';
+                        divWrapper.appendChild(clonedMath);
+                        container.replaceWith(divWrapper);
+                    } else {
+                        clonedMath.setAttribute('display', 'inline');
+                        const spaceBefore = document.createTextNode('\u00A0');
+                        const spaceAfter = document.createTextNode('\u00A0');
+                        container.replaceWith(spaceBefore, clonedMath, spaceAfter);
+                    }
+                }
+            });
+
+            try {
+                const blobHtml = new Blob([tempDiv.innerHTML], { type: 'text/html' });
+                const blobText = new Blob([tempDiv.innerText], { type: 'text/plain' });
+                const data = [new ClipboardItem({ 'text/html': blobHtml, 'text/plain': blobText })];
+                await navigator.clipboard.write(data);
+            } catch (err) {
+                console.error("Modern clipboard copy failed:", err);
+                const selection = window.getSelection();
+                selection.removeAllRanges();
+                const range = document.createRange();
+                range.selectNodeContents(tempDiv);
+                selection.addRange(range);
+                document.execCommand('copy');
+                selection.removeAllRanges();
+            }
+
+            document.body.removeChild(tempDiv);
+        }
+
+        // --- MỤC 5: TỰ ĐỘNG ĐÓNG TOÀN BỘ MODAL KHI NHẤN PHÍM ESC ---
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeCopyModal();
+                closeDownloadModal();
+            }
         });
     </script>
 </body>

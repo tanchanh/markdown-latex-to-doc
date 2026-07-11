@@ -671,7 +671,7 @@ $$
         // --- BỘ LỌC ĐỒNG BỘ \displaystyle TOÀN DIỆN CHO CẢ INLINE VÀ DISPLAY MATH ---
         function escapeMath(text) {
             const mathBlocks = [];
-            const correctRegex = /\$$([\s\S]*?)\$\$|\\\[([\s\S]*?)\\\]|\$([^$\n]*?)\$|\\\(([\s\S]*?)\\\)/g;
+            const correctRegex = /\$\$([\s\S]*?)\$\$|\\\[([\s\S]*?)\\\]|\$([^$\n]*?)\$|\\\(([\s\S]*?)\\\)/g;
 
             const protectedText = text.replace(correctRegex, (match, g1, g2, g3, g4) => {
                 const content = g1 || g2 || g3 || g4;
@@ -1084,6 +1084,32 @@ $$
             document.body.removeChild(tempDiv);
         }
 
+        // --- ĐỆ QUY DỌN SẠCH THUỘC TÍNH RÁC MATHML ĐỂ WORD ĐỌC MTABLE/CASES PHẲNG PHIU CHUẨN XÁC ---
+        function cleanMathMLForWord(element) {
+            if (!element || element.nodeType !== 1) return;
+
+            // Danh sách các thuộc tính MathML tiêu chuẩn được Word hỗ trợ cực tốt
+            const allowedAttrs = [
+                'xmlns', 'display', 'width', 'height', 'depth', 'align', 
+                'rowalign', 'columnalign', 'fence', 'form', 'separator', 
+                'stretchy', 'symmetric', 'largeop', 'movablelimits', 'accent'
+            ];
+
+            // Lấy danh sách tất cả thuộc tính hiện tại của thẻ
+            const attrs = Array.from(element.attributes);
+            attrs.forEach(attr => {
+                // Xoá sạch mọi thuộc tính không nằm trong danh sách an toàn (như class, style, id, data-*)
+                if (!allowedAttrs.includes(attr.name.toLowerCase())) {
+                    element.removeAttribute(attr.name);
+                }
+            });
+
+            // Đệ quy dọn dẹp tất cả các thẻ con bên trong
+            Array.from(element.children).forEach(child => {
+                cleanMathMLForWord(child);
+            });
+        }
+
         // --- 3. CHÉP DẠNG MS WORD (CÔNG THỨC GỐC MATHML - TRÁNH DÍNH CHỮ) ---
         async function copyWord() {
             const tempDiv = document.createElement('div');
@@ -1164,6 +1190,9 @@ $$
                     const clonedMath = mathEl.cloneNode(true);
                     clonedMath.setAttribute('xmlns', 'http://www.w3.org/1998/Math/MathML');
 
+                    // MỤC SỬA LỖI ĐỘT PHÁ TOÀN DIỆN VẠN NĂNG: Dọn sạch mọi thuộc tính class rác của MathJax để Word hiển thị đúng hệ cases dọc lộng lẫy
+                    cleanMathMLForWord(clonedMath);
+
                     // MỤC SỬA LỖI ĐỘT PHÁ VẠN NĂNG: Giải quyết triệt thế lỗi dính chữ mspace và mtext của Word
                     // 1. Chuyển đổi mspace (quad, qquad) sang mtext chứa dấu cách cứng
                     const mspaces = clonedMath.querySelectorAll('mspace');
@@ -1189,7 +1218,7 @@ $$
                     const mtexts = clonedMath.querySelectorAll('mtext');
                     mtexts.forEach(mtext => {
                         if (mtext.textContent) {
-                            mtext.textContent = mtext.textContent.replace(/^\s+/g, (match) => '\u00A0').replace(/\s+$/g, (match) => '\u00A0');
+                            mtext.textContent = mtext.textContent.replace(/^\s+/g, (match) => '\u00A0').replace(/\s+$/, (match) => '\u00A0');
                         }
                     });
 
@@ -1319,7 +1348,7 @@ ${styleTags}
     }
     
     /* --- CSS KHẮC PHỤC TRÀN VIỀN CÔNG THỨC KHỐI KHI IN --- */
-    mjx-container[display="true"] {
+    mjx-container[display=\"true\"] {
         overflow-x: auto !important;
         overflow-y: hidden !important;
         max-width: 100% !important;

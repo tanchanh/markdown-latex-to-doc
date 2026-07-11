@@ -237,9 +237,14 @@
         /* --- Output Area --- */
         #latex-output {
             flex: 1;
-            padding: 2.0rem;
+            padding: 1.2rem 2.0rem 2.0rem 2.0rem; /* MỤC SỬA LỖI: Giảm đệm lề trên từ 2.0rem về đúng 1.2rem để căn bằng trục ngang */
             overflow-y: auto;
             word-wrap: break-word;
+        }
+
+        /* MỤC SỬA LỖI: Triệt tiêu hoàn toàn khoảng cách lề trên của thẻ tiêu đề đầu tiên trong trang Kết Quả */
+        #latex-output > :first-child {
+            margin-top: 0 !important;
         }
 
         /* --- Markdown Styles --- */
@@ -623,24 +628,6 @@ A = \begin{pmatrix}
 0 & 1
 \end{pmatrix}
 $$
-
-## 4. Sơ đồ
-```mermaid
-flowchart TD
-    Start([Bắt đầu]) --> Input[/Nhập a, b, c với a != 0/]
-    Input --> Calc[Tính Delta = b*b - 4*a*c]
-    Calc --> Check{Delta >= 0?}
-    
-    Check -- Không --> NoReal([Delta < 0: Vô nghiệm thực])
-    Check -- Có --> Check2{Delta == 0?}
-    
-    Check2 -- Có --> OneNghiem[Tính x = -b / 2a]
-    Check2 -- Không --> TwoNghiem[Tính x1, x2]
-    
-    OneNghiem --> End([Kết thúc])
-    TwoNghiem --> End
-    NoReal --> End
-```
             </textarea>
         </div>
 
@@ -666,7 +653,7 @@ flowchart TD
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25z" />
+                                d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125 1.125 1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25z" />
                         </svg>
                         <span>Chép KQ</span>
                     </button>
@@ -684,8 +671,7 @@ flowchart TD
         // --- BỘ LỌC ĐỒNG BỘ \displaystyle TOÀN DIỆN CHO CẢ INLINE VÀ DISPLAY MATH ---
         function escapeMath(text) {
             const mathBlocks = [];
-            const regex = /\Sky\$$([\s\S]*?)\$\$|\\\[([\s\S]*?)\\\]|\$([^$\n]*?)\$|\\\(([\s\S]*?)\\\)/g;
-            const correctRegex = /\$\$([\s\S]*?)\$\$|\\\[([\s\S]*?)\\\]|\$([^$\n]*?)\$|\\\(([\s\S]*?)\\\)/g;
+            const correctRegex = /\$$([\s\S]*?)\$\$|\\\[([\s\S]*?)\\\]|\$([^$\n]*?)\$|\\\(([\s\S]*?)\\\)/g;
 
             const protectedText = text.replace(correctRegex, (match, g1, g2, g3, g4) => {
                 const content = g1 || g2 || g3 || g4;
@@ -1178,7 +1164,7 @@ flowchart TD
                     const clonedMath = mathEl.cloneNode(true);
                     clonedMath.setAttribute('xmlns', 'http://www.w3.org/1998/Math/MathML');
 
-                    // MỤC SỬA LỖI ĐỘT PHÁ VẠN NĂNG: Giải quyết triệt để lỗi dính chữ mspace và mtext của Word
+                    // MỤC SỬA LỖI ĐỘT PHÁ VẠN NĂNG: Giải quyết triệt thế lỗi dính chữ mspace và mtext của Word
                     // 1. Chuyển đổi mspace (quad, qquad) sang mtext chứa dấu cách cứng
                     const mspaces = clonedMath.querySelectorAll('mspace');
                     mspaces.forEach(mspace => {
@@ -1203,7 +1189,7 @@ flowchart TD
                     const mtexts = clonedMath.querySelectorAll('mtext');
                     mtexts.forEach(mtext => {
                         if (mtext.textContent) {
-                            mtext.textContent = mtext.textContent.replace(/^\s+/g, (match) => '\u00A0'.repeat(match.length)).replace(/\s+$/g, (match) => '\u00A0'.repeat(match.length));
+                            mtext.textContent = mtext.textContent.replace(/^\s+/g, (match) => '\u00A0').replace(/\s+$/g, (match) => '\u00A0');
                         }
                     });
 

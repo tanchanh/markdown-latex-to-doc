@@ -623,6 +623,23 @@ A = \begin{pmatrix}
 0 & 1
 \end{pmatrix}
 $$
+
+```mermaid
+flowchart TD
+    Start([Bắt đầu]) --> Input[/Nhập a, b, c với a != 0/]
+    Input --> Calc[Tính Delta = b*b - 4*a*c]
+    Calc --> Check{Delta >= 0?}
+    
+    Check -- Không --> NoReal([Delta < 0: Vô nghiệm thực])
+    Check -- Có --> Check2{Delta == 0?}
+    
+    Check2 -- Có --> OneNghiem[Tính x = -b / 2a]
+    Check2 -- Không --> TwoNghiem[Tính x1, x2]
+    
+    OneNghiem --> End([Kết thúc])
+    TwoNghiem --> End
+    NoReal --> End
+```
             </textarea>
         </div>
 

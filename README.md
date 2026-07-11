@@ -1,44 +1,51 @@
-# 📝 Ứng Dụng Chuyển Đổi Markdown & LaTeX Sang Word / Docs
+# 📝 Công Cụ Chép Công Thức Toán & Sơ Đồ Từ ChatGPT/Gemini Sang Word và Google Docs
 
-Ứng dụng web công cụ hiệu năng cao chạy hoàn toàn offline, giúp biên dịch nội dung văn bản định dạng Markdown kết hợp công thức toán học LaTeX phức tạp sang định dạng tương thích để sao chép chuẩn xác vào Microsoft Word hoặc Google Docs mà không bị lỗi font hay dính chữ.
-
----
-
-## ✨ Tính Năng Nổi Bật
-
-* **Đồng bộ tự động thông minh:** Tự động tối ưu hoá và bổ sung bộ lọc `\displaystyle` cho toàn bộ các công thức toán học (cả dạng cùng dòng - Inline và dạng khối tách dòng - Block Math) giúp hiển thị công thức trực quan, sắc nét.
-
-* **Sao chép đa định dạng nâng cao:** Tích hợp hộp thoại tuỳ chọn sao chép chuyên dụng giải quyết triệt để bài toán định dạng:
-
-* **Microsoft Word:** Xuất công thức dưới dạng mã MathML gốc, tự động nhận diện thành *Word Equation* kèm đệm khoảng trắng không ngắt (`\u00A0`) chống dính chữ.
-
-* **Google Docs:** Chuyển đổi các ký tự toán học thành dạng hình ảnh PNG độ nét cao (nhân hệ số scale 3x) giữ nguyên tỷ lệ hiển thị.
-
-* **Markdown:** Sao chép chuỗi mã nguồn thô nhanh chóng.
-
-* **Giao diện đối xứng hoàn mỹ:** Thiết kế khung nhìn kép (Split View) song song giữa màn hình soạn thảo và kết quả. Hỗ trợ chế độ phóng to/thu nhỏ độc lập cho từng phân khu và bộ giao diện Responsive tối ưu cho cả máy tính lẫn điện thoại.
-
-* **Tự động lưu bản nháp:** Cơ chế ghi nhớ thông minh tự động lưu lại nội dung đang gõ vào bộ nhớ trình duyệt trình tự theo chu kỳ 1 phút một lần để phòng tránh mất mát dữ liệu khi lỡ tay đóng tab hoặc tải lại trang.
-
-* **Kéo thả nhập file:** Hỗ trợ nạp nhanh nội dung văn bản bằng cách kéo và thả trực tiếp các tệp tin có định dạng `.md` hoặc `.txt` vào vùng làm việc.
+Đây là công cụ trực tuyến giúp bạn dễ dàng sao chép các câu trả lời chứa công thức toán học và sơ đồ từ ChatGPT, Gemini hoặc các trợ lý AI khác rồi dán vào Microsoft Word hoặc Google Docs. Công cụ giúp định dạng văn bản đẹp mắt, không bị lỗi font, mất ký tự hay dính chữ vào nhau.
 
 ---
 
-## 🛠️ Hướng Dẫn Sử Dụng
+## ✨ Điểm Nổi Bật Dành Cho Bạn
 
-* **Soạn thảo dữ liệu:** Nhập trực tiếp nội dung Markdown kết hợp các công thức toán học vào khung **Soạn Thảo** ở bên trái. Sử dụng dấu `$` cho công thức cùng dòng (Ví dụ: `$E=mc^2$`) và `$$` cho công thức khối (Block).
+* **Công thức toán hiển thị đẹp mắt:**
+  * Các công thức nằm chung dòng với chữ sẽ nhỏ gọn vừa vặn, không làm hàng chữ bị dãn cách quá xa nhau theo chiều dọc.
+  * Các công thức toán lớn, phức tạp sẽ tự động được căn giữa và hiển thị to rõ ràng.
 
-* **Quản lý file:**
-* Nhấp chọn nút **Xóa** để xóa toàn bộ nội dung (Nhấn lần 2 để xác nhận xóa vĩnh viễn bản nháp).
+* **Hỗ trợ vẽ sơ đồ bằng chữ (Mới):** Bạn có thể vẽ sơ đồ, lưu đồ đơn giản (sử dụng cú pháp Mermaid). Khi copy sang Word hay Google Docs, sơ đồ sẽ tự động chuyển thành hình ảnh chất lượng cao vô cùng sắc nét, không lo bị nhòe hay vỡ hình.
 
-* Nhấp chọn nút **Tải File** để tải bài viết về máy tính dưới dạng file nguồn `.md` hoặc file trang web đóng gói `.html` (Đã được xử lý tự động gỡ bỏ chữ ẩn và tối ưu thuộc tính in ấn `@media print`).
+* **Sao chép thông minh theo từng phần mềm:**
+  * **Sao chép sang MS Word:** Công thức toán sẽ được chuyển đổi trực tiếp thành **công thức chuẩn của Word (Word Equation)** để bạn có thể chỉnh sửa tiếp nếu muốn. Đồng thời tự động sửa lỗi dính chữ và tự động căn lề sơ đồ.
+  * **Sao chép sang Google Docs:** Công thức toán và sơ đồ sẽ được chuyển thành **hình ảnh sắc nét** giúp trang văn bản hiển thị đồng bộ và chuyên nghiệp nhất.
+  * **Sao chép Markdown:** Copy văn bản thô kèm mã nguồn để lưu trữ nhanh.
 
-* **Sao chép kết quả:** Nhấp chọn nút **Chép KQ** (Copy) ở thanh công cụ bên phải, lựa chọn định dạng đích mong muốn (**MS Word** hoặc **Google Docs**) rồi mở ứng dụng văn phòng của bạn lên và nhấn tổ hợp phím `Ctrl + V` để dán trực tiếp.
+* **Không lo mất dữ liệu:** Công cụ tự động lưu lại những gì bạn đang viết mỗi phút và lưu ngay lập tức khi bạn đóng trang. Nếu lỡ tay tải lại trang, nội dung vẫn sẽ được giữ nguyên.
+
+* **Mở và lưu file tiện lợi:**
+  * Chỉ cần kéo và thả file văn bản (`.md` hoặc `.txt`) vào trang web để mở nhanh.
+  * Dễ dàng tải bài viết về máy dưới dạng tệp văn bản `.md` hoặc trang web `.html` (đã được tối ưu sẵn để bạn có thể in ra giấy đẹp nhất).
+
+* **Giao diện dễ nhìn, linh hoạt:** Màn hình được chia làm hai bên (trái là Soạn thảo, phải là Kết quả). Bạn có thể dễ dàng phóng to toàn màn hình bên trái để tập trung viết, hoặc phóng to bên phải để xem kết quả rõ hơn.
 
 ---
 
-## 📝 Thông Tin Phát Triển
+## 🛠️ Hướng Dẫn Sử Dụng Nhanh
+
+1. **Nhập nội dung:** Nhập hoặc dán nội dung văn bản kèm công thức toán vào khung **Soạn Thảo** ở bên trái.
+   * Viết công thức toán cùng dòng bằng cách đặt giữa hai dấu đô la (Ví dụ: `$E=mc^2$`).
+   * Viết công thức toán dòng riêng bằng cách đặt giữa hai cặp dấu đô la (Ví dụ: `$$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$`).
+   * Vẽ sơ đồ bằng cách dùng khối mã ` ```mermaid `.
+
+2. **Sao chép sang Word / Docs:**
+   * Nhấn nút **Chép KQ** ở thanh công cụ bên phải.
+   * Chọn **MS Word** hoặc **Google Docs** tùy vào phần mềm bạn định dán.
+   * Mở Word hoặc Google Docs lên và nhấn tổ hợp phím **Ctrl + V** (hoặc Cmd + V trên Mac) để dán.
+
+3. **Tải file hoặc xóa nội dung:**
+   * Nhấn **Tải File** để lưu bài viết về máy (dạng `.md` hoặc `.html`).
+   * Nhấn **Xóa** để xóa toàn bộ nội dung (Nhấn thêm một lần nữa để xác nhận xóa).
+
+---
+
+## 👥 Thông Tin Phát Triển
 
 * **Tác giả:** Dương Tấn Chánh
-
-* **Công nghệ tích hợp:** HTML5, CSS3 (Flexbox & Custom Split Grid), JavaScript Thuần (Vanilla JS), tích hợp bộ thư viện phân rã mã nguồn mở `Marked` (Xử lý Markdown) và `MathJax 3` (Xử lý SVG Toán học).
+* **Thư viện hỗ trợ:** Marked (đọc văn bản), MathJax (vẽ công thức toán), Mermaid (vẽ sơ đồ).

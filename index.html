@@ -237,13 +237,14 @@
         /* --- Output Area --- */
         #latex-output {
             flex: 1;
-            padding: 1.2rem 2.0rem 2.0rem 2.0rem; /* MỤC SỬA LỖI: Giảm đệm lề trên từ 2.0rem về đúng 1.2rem để căn bằng trục ngang */
+            padding: 1.2rem 2.0rem 2.0rem 2.0rem;
+            /* MỤC SỬA LỖI: Giảm đệm lề trên từ 2.0rem về đúng 1.2rem để căn bằng trục ngang */
             overflow-y: auto;
             word-wrap: break-word;
         }
 
         /* MỤC SỬA LỖI: Triệt tiêu hoàn toàn khoảng cách lề trên của thẻ tiêu đề đầu tiên trong trang Kết Quả */
-        #latex-output > :first-child {
+        #latex-output> :first-child {
             margin-top: 0 !important;
         }
 
@@ -339,22 +340,27 @@
 
         /* MỤC SỬA LỖI ĐỘT PHÁ: Định dạng bảng biểu dọn sạch cell spacing và kẻ viền đen phẳng phiu 1 pt */
         .markdown-body table {
-            border-collapse: collapse !important; /* Loại bỏ khoảng hở cell */
+            border-collapse: collapse !important;
+            /* Loại bỏ khoảng hở cell */
             width: 100%;
             margin-top: 0;
             margin-bottom: 1.0rem;
             font-size: 1.0rem;
         }
 
-        .markdown-body th, .markdown-body td {
-            border: 1px solid #000000 !important; /* Viền đen phẳng phiu 1 pt */
+        .markdown-body th,
+        .markdown-body td {
+            border: 1px solid #000000 !important;
+            /* Viền đen phẳng phiu 1 pt */
             padding: 0.6rem 1.0rem;
             text-align: left;
         }
 
         /* Sơ đồ Mermaid */
-        .mermaid, .mermaid * {
-            font-family: 'Consolas', 'Courier New', monospace !important; /* Ép phông chữ sơ đồ về Consolas lộng lẫy */
+        .mermaid,
+        .mermaid * {
+            font-family: 'Consolas', 'Courier New', monospace !important;
+            /* Ép phông chữ sơ đồ về Consolas lộng lẫy */
         }
 
         /* --- MathJax Fixes --- */
@@ -628,6 +634,31 @@ A = \begin{pmatrix}
 0 & 1
 \end{pmatrix}
 $$
+
+## 4. Bảng
+| Điều kiện | Số nghiệm thực | Công thức nghiệm |
+| --- | --- | --- |
+| $\Delta > 0$ | 2 nghiệm phân biệt | $x_1 = \frac{-b + \sqrt{\Delta}}{2a}$<br>$x_2 = \frac{-b - \sqrt{\Delta}}{2a}$ |
+| $\Delta = 0$ | 1 nghiệm kép | $x_1 = x_2 = -\frac{b}{2a}$ |
+| $\Delta < 0$ | Vô nghiệm ||
+
+*Trong đó:* $\ \Delta = b^2 - 4ac$
+
+## 5. Sơ đồ
+```mermaid
+flowchart TD
+    A([Bắt đầu]) --> B[/Nhập a, b, c<br>với a khác 0/]
+    B --> C[Delta = b^2 - 4*a*c]
+    C --> D{Kiểm tra<br>Delta}
+    
+    D -->|> 0| E["x1, x2 =<br>(-b+/-sqrt(Delta))<br>/ 2a"]
+    D -->|= 0| F["Nghiệm kép<br>x = -b / 2a"]
+    D -->|< 0| G[Vô nghiệm]
+    
+    E --> H([Kết thúc])
+    F --> H
+    G --> H
+```
             </textarea>
         </div>
 
@@ -991,7 +1022,7 @@ $$
                         imgTag.src = pngData;
 
                         const rect = svgEl.getBoundingClientRect();
-                        
+
                         // Co lề hiển thị đúng 50% quy mô so với ảnh 2x (bằng 100% kích thước logic)
                         const displayWidth = Math.ceil(rect.width);
                         const displayHeight = Math.ceil(rect.height);
@@ -1090,8 +1121,8 @@ $$
 
             // Danh sách các thuộc tính MathML tiêu chuẩn được Word hỗ trợ cực tốt
             const allowedAttrs = [
-                'xmlns', 'display', 'width', 'height', 'depth', 'align', 
-                'rowalign', 'columnalign', 'fence', 'form', 'separator', 
+                'xmlns', 'display', 'width', 'height', 'depth', 'align',
+                'rowalign', 'columnalign', 'fence', 'form', 'separator',
                 'stretchy', 'symmetric', 'largeop', 'movablelimits', 'accent'
             ];
 
@@ -1198,7 +1229,7 @@ $$
                     const mspaces = clonedMath.querySelectorAll('mspace');
                     mspaces.forEach(mspace => {
                         if (mspace.hasAttribute('linebreak')) return; // Không can thiệp nếu là lệnh xuống dòng phương trình
-                        
+
                         const widthAttr = mspace.getAttribute('width') || '';
                         let spaceText = '\u00A0\u00A0'; // mặc định dãn 2 khoảng trắng
                         if (widthAttr.includes('em')) {
@@ -1513,7 +1544,7 @@ ${cleanContent}
                         const ctx = canvas.getContext("2d");
                         ctx.clearRect(0, 0, width, height); // LUÔN ĐÚNG DẤU PHẨY, SỬA TRIỆT ĐỂ LỖI CÚ PHÁP
                         ctx.drawImage(img, 0, 0, width, height);
-                        
+
                         // MỤC SỬA LỖI ĐỘT PHÁ: Ép cứng phông Consolas cho toàn bộ sơ đồ khi nạp vào Canvas để nét ảnh luôn có phông đồng nhất
                         clonedSvg.querySelectorAll('text, tspan, .labelText, .node label').forEach(node => {
                             node.style.setProperty('font-family', "'Consolas', monospace", 'important');

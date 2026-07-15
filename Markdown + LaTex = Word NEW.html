@@ -1,0 +1,1802 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chép câu trả lời của Gemini/ChatGPT (Markdown/LaTeX/Mermaid) dùng cho Word / Docs - D.T.Chánh</title>
+
+    <!-- Thư viện Marked (Xử lý Markdown) -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        if (typeof marked === 'undefined') {
+            document.write('<script src="js/marked.min.js"><\/script>');
+        }
+    </script>
+
+    <!-- Cấu hình MathJax -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                packages: { '[+]': ['ams'] }
+            },
+            svg: {
+                fontCache: 'none',
+                scale: 1,
+                minScale: 1
+            },
+            startup: { typeset: false }
+        };
+    </script>
+    <!-- Thư viện MathJax (Xử lý Toán) -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <script>
+        if (typeof MathJax === 'undefined' || !MathJax.typesetPromise) {
+            document.write('<script id="MathJax-script" async src="js/tex-svg.js"><\/script>');
+        }
+    </script>
+
+    <!-- Thư viện Mermaid (Xử lý Sơ đồ) -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        if (typeof mermaid === 'undefined') {
+            document.write('<script src="js/mermaid.min.js"><\/script>');
+        }
+    </script>
+    <script>
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: false,
+                theme: 'neutral',
+                securityLevel: 'loose',
+                themeVariables: {
+                    fontFamily: 'Consolas, monospace' // Áp dụng phông Consolas cho toàn bộ sơ đồ Mermaid
+                }
+            });
+        }
+    </script>
+
+    <style>
+        /* --- CSS TỰ VIẾT (NO EXTERNAL LIBS) --- */
+
+        :root {
+            --primary-color: #0a00d1;
+            /* Indigo 600 */
+            --primary-hover: #4338ca;
+            /* Indigo 700 */
+            --bg-color: #f8fafc;
+            /* Slate 50 */
+            --border-color: #b5d5ff;
+            /* Slate 200 */
+            --text-color: #000000;
+            /* Slate 700 */
+            --toolbar-bg: #f1f5f9;
+            /* Slate 100 */
+            --toolbar-text: #475569;
+            --btn-border: #cbcbcb;
+            --btn-hover-bg: #eef2ff;
+            --code-color: #000000;
+            /* CHUYỂN TOÀN BỘ MÀU CHỮ SANG ĐEN #000000 */
+            --code-bg: rgba(0, 0, 0, 0.125);
+            /* NỀN XÁM NHẸ CHIẾM ĐÚNG 12.5% TRÊN MÀN HÌNH */
+            --divider-color: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-size: 1.1rem;
+        }
+
+        /* --- Header --- */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1.0rem;
+            box-shadow: 0 0.1rem 0.3rem rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            z-index: 10;
+            flex-shrink: 0;
+        }
+
+        header svg {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.3rem;
+        }
+
+        /* --- Main Layout --- */
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: row;
+            overflow: hidden;
+        }
+
+        .column {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid var(--border-color);
+            background-color: white;
+        }
+
+        .column:last-child {
+            border-right: none;
+        }
+
+        /* --- Toolbar --- */
+        .toolbar {
+            background-color: var(--toolbar-bg);
+            padding: 0.5rem 1.0rem;
+            border-bottom: 2px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.0rem;
+            font-weight: bold;
+            color: var(--toolbar-text);
+            flex-shrink: 0;
+        }
+
+        .toolbar-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* --- Button Style --- */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.3rem;
+            background-color: white;
+            color: var(--primary-color);
+            border: 2px solid var(--btn-border);
+            padding: 0.5rem 0.5rem;
+            border-radius: 0.3rem;
+            font-size: 0.8rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 0.1rem 0.1rem rgba(0, 0, 0, 0.05);
+            font-family: inherit;
+            height: 2.4rem;
+            /* Giữ chiều cao cố định để không bị giật khi ẩn SVG */
+            line-height: 1;
+        }
+
+        .btn:hover {
+            background-color: var(--btn-hover-bg);
+            border-color: var(--primary-color);
+        }
+
+        .btn svg {
+            width: 1.0rem;
+            height: 1.0rem;
+            flex-shrink: 0;
+        }
+
+        .btn span {
+            display: inline-block;
+        }
+
+        /* --- CĂN LỀ NÚT TRONG HỘP THOẠI CHUẨN XÁC --- */
+        .modal-btn {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: flex-start !important;
+            width: 100% !important;
+            height: 3.2rem !important;
+            font-size: 0.95rem !important;
+            padding: 0 1.2rem !important;
+            border-radius: 0.4rem !important;
+        }
+
+        .modal-btn svg {
+            margin-right: 0.8rem !important;
+            width: 1.3rem !important;
+            height: 1.3rem !important;
+            flex-shrink: 0 !important;
+        }
+
+        /* --- Input Area --- */
+        #latex-input {
+            flex: 1;
+            width: 100%;
+            padding: 1.0rem;
+            border: none;
+            resize: none;
+            outline: none;
+            font-family: "Consolas", "Monaco", "Courier New", monospace;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        /* --- Output Area --- */
+        #latex-output {
+            flex: 1;
+            padding: 1.2rem 2.0rem 5.0rem 2.0rem;
+            /* MỤC SỬA LỖI: Giảm đệm lề trên từ 2.0rem về đúng 1.2rem để căn bằng trục ngang */
+            overflow-y: auto;
+            word-wrap: break-word;
+        }
+
+        /* MỤC SỬA LỖI: Triệt tiêu hoàn toàn khoảng cách lề trên của thẻ tiêu đề đầu tiên trong trang Kết Quả */
+        #latex-output> :first-child {
+            margin-top: 0 !important;
+        }
+
+        /* --- Markdown Styles --- */
+        .markdown-body {
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+
+        /* Tự động giãn dòng rộng rãi hơn khi dòng chứa công thức Toán để tránh dính sát chữ */
+        .markdown-body p:has(mjx-container),
+        .markdown-body li:has(mjx-container),
+        .markdown-body td:has(mjx-container) {
+            line-height: 1.8 !important;
+        }
+
+        /* Gộp chung thuộc tính của tiêu đề */
+        .markdown-body h1,
+        .markdown-body h2,
+        .markdown-body h3 {
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: var(--text-color);
+        }
+
+        /* Gộp đường gạch chân của h1 và h2 */
+        .markdown-body h1,
+        .markdown-body h2 {
+            border-bottom: 2px solid var(--divider-color);
+            padding-bottom: 0.3rem;
+        }
+
+        .markdown-body h1 {
+            font-size: 1.5rem;
+        }
+
+        .markdown-body h2 {
+            font-size: 1.4rem;
+        }
+
+        .markdown-body h3 {
+            font-size: 1.3rem;
+        }
+
+        .markdown-body p {
+            margin-bottom: 1.0rem;
+        }
+
+        .markdown-body ul,
+        .markdown-body ol {
+            padding-left: 2.0rem;
+            margin-bottom: 1.0rem;
+        }
+
+        .markdown-body li {
+            margin-bottom: 0.8rem;
+        }
+
+        /* --- MỤC CẢI TIẾN: SỬA LỖI CÚ PHÁP PHÂN TÁCH INLINE CODE VÀ BLOCK CODE CHUẨN GITHUB & WORD --- */
+
+        /* 1. Chỉ áp dụng cho inline code thường (ví dụ: `E=mc^2`) */
+        .markdown-body :not(pre)>code {
+            background-color: var(--code-bg) !important;
+            /* Xám nhẹ 12.5% */
+            color: var(--code-color) !important;
+            /* Màu đen tuyền #000000 */
+            padding: 0.2rem 0.4rem !important;
+            border-radius: 0.3rem !important;
+            font-family: "Consolas", "Monaco", "Courier New", monospace !important;
+            /* Ưu tiên Consolas */
+            font-size: 0.95em !important;
+            border: 1px solid rgba(0, 0, 0, 0.08) !important;
+            /* Khung viền siêu mịn */
+        }
+
+        /* 2. Áp dụng cho khối Block Code trong pre (Ví dụ: khối phiếu tính lương) */
+        .markdown-body pre {
+            background-color: var(--code-bg) !important;
+            /* Xám nhẹ 12.5% */
+            padding: 1.0rem !important;
+            border-radius: 0.4rem !important;
+            border: 1px solid #cbd5e1 !important;
+            /* Khung viền border xám bao quanh chống lệch chữ */
+            overflow-x: auto !important;
+            margin-bottom: 1.0rem !important;
+        }
+
+        .markdown-body pre code {
+            background-color: transparent !important;
+            /* Xoá nền sọc trùng lặp */
+            padding: 0 !important;
+            border-radius: 0 !important;
+            border: none !important;
+            color: var(--code-color) !important;
+            /* Màu đen tuyền #000000 */
+            font-family: "Consolas", "Monaco", "Courier New", monospace !important;
+            /* Ưu tiên Consolas */
+            font-size: 0.95rem !important;
+            line-height: 1.5 !important;
+            white-space: pre !important;
+            /* Giữ nguyên toàn bộ khoảng trắng thụt lề */
+        }
+
+        /* MỤC SỬA LỖI ĐỘT PHÁ: Định dạng bảng biểu dọn sạch cell spacing và kẻ viền đen phẳng phiu 1 pt */
+        .markdown-body table {
+            border-collapse: collapse !important;
+            /* Loại bỏ khoảng hở cell */
+            width: 100%;
+            margin-top: 0;
+            margin-bottom: 1.0rem;
+            font-size: 1.0rem;
+        }
+
+        .markdown-body th,
+        .markdown-body td {
+            border: 1px solid #000000 !important;
+            /* Viền đen phẳng phiu 1 pt */
+            padding: 0.6rem 1.0rem;
+            text-align: left;
+        }
+
+        /* Sơ đồ Mermaid */
+        .mermaid,
+        .mermaid * {
+            font-family: 'Consolas', 'Courier New', monospace !important;
+            /* Ép phông chữ sơ đồ về Consolas lộng lẫy */
+        }
+
+        /* --- MathJax Fixes --- */
+        mjx-container[display="false"] {
+            margin: 0.15rem 0.4rem !important;
+            /* Tạo khoảng đệm dọc dọc 0.15rem và đệm ngang 0.4rem giúp các công thức cùng dòng không bị sát nhau quá */
+            padding: 0.05rem 0 !important;
+            vertical-align: middle !important;
+        }
+
+        /* --- CSS KHẮC PHỤC TRÀN VIỀN CÔNG THỨC KHỐI TRÊN MÀN HÌNH --- */
+        mjx-container[display="true"] {
+            display: block !important;
+            margin: 1.5rem 0 !important;
+            overflow-x: auto !important;
+            overflow-y: hidden !important;
+            max-width: 100% !important;
+        }
+
+        /* --- Scrollbar Customization --- */
+        ::-webkit-scrollbar {
+            width: 0.5rem;
+            height: 0.5rem;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 0.3rem;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* --- Tên tác giả --- */
+        header .author {
+            font-style: normal;
+            font-size: 1.2rem;
+            color: white;
+            margin-left: auto;
+        }
+
+        /* --- CSS PHÓNG TO KẾT QUẢ --- */
+        body.fullscreen-active header,
+        body.fullscreen-active .author {
+            display: none !important;
+        }
+
+        body.fullscreen-active main .column:first-child {
+            display: none !important;
+        }
+
+        body.fullscreen-active main .column:last-child {
+            width: 100% !important;
+            border-right: none !important;
+        }
+
+        /* --- CSS PHÓNG TO SOẠN THẢO MỚI --- */
+        body.editor-fullscreen-active header,
+        body.editor-fullscreen-active .author {
+            display: none !important;
+        }
+
+        body.editor-fullscreen-active main .column:last-child {
+            display: none !important;
+        }
+
+        body.editor-fullscreen-active main .column:first-child {
+            width: 100% !important;
+            border-right: none !important;
+        }
+
+        @media (max-width: 48.0rem) {
+            main {
+                flex-direction: column;
+            }
+
+            .column {
+                width: 100%;
+                height: 50%;
+                border-right: none;
+                border-bottom: 2px solid var(--border-color);
+            }
+
+            body.fullscreen-active main .column:last-child {
+                height: 100% !important;
+            }
+
+            body.editor-fullscreen-active main .column:first-child {
+                height: 100% !important;
+            }
+
+            header h1 {
+                font-size: 1.0rem;
+            }
+
+            #latex-input,
+            #latex-output {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Overlay kéo thả file -->
+    <div id="drag-overlay"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10, 0, 209, 0.15); backdrop-filter: blur(4px); z-index: 1000; border: 4px dashed var(--primary-color); align-items: center; justify-content: center; pointer-events: none; transition: all 0.2s;">
+        <div
+            style="background: white; padding: 2.0rem; border-radius: 0.8rem; box-shadow: 0 1.0rem 2.0rem rgba(0,0,0,0.1); text-align: center; border: 2px solid var(--border-color);">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor"
+                style="width: 3.0rem; height: 3.0rem; color: var(--primary-color); margin-bottom: 1.0rem; display: inline-block;">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
+            </svg>
+            <h2 style="margin: 0; font-size: 1.5rem; color: var(--primary-color); font-weight: bold;">Thả file vào đây
+            </h2>
+            <p style="margin: 0.5rem 0 0 0; color: #475569; font-size: 1.0rem;">Hỗ trợ file định dạng .md và .txt</p>
+        </div>
+    </div>
+
+    <!-- Input chọn file ẩn -->
+    <input type="file" id="file-selector" accept=".md,.txt,.MD,.TXT,text/plain,text/markdown" style="display: none;"
+        onchange="handleFileSelect(event)">
+
+    <!-- Header -->
+    <header>
+        <h1>Chép câu trả lời của Gemini/ChatGPT (Markdown/LaTeX/Mermaid) dùng cho Word / Docs</h1>
+        <div class="author">D.T.Chánh</div>
+    </header>
+
+    <!-- HỘP THOẠI LỰA CHỌN PHƯƠNG THỨC SAO CHÉP (MODAL OVERLAY) -->
+    <div id="copy-modal"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 2000; align-items: center; justify-content: center; backdrop-filter: blur(2px);">
+        <div
+            style="background: white; padding: 2.0rem; border-radius: 0.8rem; box-shadow: 0 1.0rem 2.0rem rgba(0,0,0,0.15); border: 2px solid var(--border-color); max-width: 25rem; width: 90%;">
+            <h3
+                style="margin: 0 0 1.5rem 0; font-size: 1.2rem; color: var(--primary-color); font-weight: bold; text-align: center;">
+                Chọn định dạng sao chép</h3>
+            <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                <button onclick="executeCopy('markdown')" class="btn modal-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" style="color:#475569;">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                    </svg>
+                    <span>1. Markdown</span>
+                </button>
+                <button onclick="executeCopy('gdocs')" class="btn modal-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" style="color:#2563eb;">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                    </svg>
+                    <span>2. Google Docs (Ảnh PNG)</span>
+                </button>
+                <button onclick="executeCopy('word')" class="btn modal-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" style="color:#16a34a;">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                    </svg>
+                    <span>3. MS Word (Công thức gốc)</span>
+                </button>
+            </div>
+            <button onclick="closeCopyModal()" class="btn"
+                style="width: 100%; margin-top: 1.2rem; background-color: #f1f5f9; border-color: #cbd5e1; color: #475569; justify-content: center;">Huỷ
+                bỏ</button>
+        </div>
+    </div>
+
+    <!-- HỘP THOẠI LỰA CHỌN PHƯƠNG THỨC TẢI VỀ (MODAL OVERLAY) -->
+    <div id="download-modal"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 2000; align-items: center; justify-content: center; backdrop-filter: blur(2px);">
+        <div
+            style="background: white; padding: 2.0rem; border-radius: 0.8rem; box-shadow: 0 1.0rem 2.0rem rgba(0,0,0,0.15); border: 2px solid var(--border-color); max-width: 25rem; width: 90%;">
+            <h3
+                style="margin: 0 0 1.5rem 0; font-size: 1.2rem; color: var(--primary-color); font-weight: bold; text-align: center;">
+                Chọn định dạng tải về</h3>
+            <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                <button onclick="executeDownload('md')" class="btn modal-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" style="color:#475569;">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                    </svg>
+                    <span>1. Markdown (.md)</span>
+                </button>
+                <button onclick="executeDownload('html')" class="btn modal-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" style="color:#ea580c;">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
+                    </svg>
+                    <span>2. HTML (.html)</span>
+                </button>
+            </div>
+            <button onclick="closeDownloadModal()" class="btn"
+                style="width: 100%; margin-top: 1.2rem; background-color: #f1f5f9; border-color: #cbd5e1; color: #475569; justify-content: center;">Huỷ
+                bỏ</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+
+        <!-- Cột Trái: Input -->
+        <div class="column">
+            <div class="toolbar">
+                <div class="toolbar-group">
+                    <span>Soạn Thảo:</span>
+                    <!-- Nút Xoá chuẩn chính tả mới -->
+                    <button onclick="clearInput()" id="btn-clear" class="btn" title="Xoá toàn bộ nội dung">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                        </svg>
+                        <span>Xoá</span>
+                    </button>
+                </div>
+                <div class="toolbar-group">
+                    <!-- NÚT PHÓNG TO SOẠN THẢO (ĐỐI XỨNG HOÀN MỸ) -->
+                    <button onclick="toggleEditorFullscreen()" id="btn-editor-fullscreen" class="btn"
+                        title="Phóng to / Thu nhỏ khung soạn thảo">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" id="editor-fullscreen-icon">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
+                        </svg>
+                        <span>Phóng To</span>
+                    </button>
+                    <!-- Nút Tải File -->
+                    <button onclick="openDownloadModal()" id="btn-download-file" class="btn" title="Tải file về máy">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                        </svg>
+                        <span>Tải File</span>
+                    </button>
+                </div>
+            </div>
+            <textarea id="latex-input" spellcheck="false" placeholder="Nhập nội dung Markdown & LaTeX vào đây...">
+# Bộ Soạn Thảo Toán Học Markdown ✨
+
+Trình biên tập **markdown toán học** chuyên nghiệp với tính năng xem trước tức thì. Soạn thảo tài liệu **toán học trực tuyến** với các phương trình LaTeX, ký tự Hy Lạp và công thức phức tạp. Công cụ hỗ trợ đầy đủ **xem trước trực tiếp** (live preview).
+
+## Ví Dụ Trực Quan Về Toán Học
+
+### Cách Dùng Cơ Bản
+
+**Toán học trên cùng dòng (Inline)**: Phương trình nổi tiếng của Einstein $E = mc^2$ thể hiện sự tương đương khối lượng - năng lượng.
+
+**Toán học dạng khối (Display)** - Định luật 2 Newton:
+
+
+$$F = ma$$
+
+### Các Trường Hợp Phổ Biến
+
+#### 1. Giải Tích & Đạo Hàm
+
+$$\frac{d}{dx}(x^2) = 2x \quad \text{và} \quad \int x^2 dx = \frac{x^3}{3} + C$$
+
+#### 2. Phân Số
+
+$$\frac{a}{b} + \frac{c}{d} = \frac{ad + bc}{bd}$$
+
+#### 3. Căn Thức
+
+$$\sqrt{16} = 4 \quad \text{và} \quad \sqrt[3]{27} = 3$$
+
+#### 4. Ký Tự Hy Lạp
+
+$$\alpha + \beta = \gamma \quad \theta = 45^\circ \quad \pi \approx 3,14159$$
+
+Ký tự thông dụng: $\alpha$, $\beta$, $\gamma$, $\delta$, $\epsilon$, $\theta$, $\lambda$, $\mu$, $\pi$, $\sigma$, $\omega$
+
+#### 5. Tổng & Tích Phép Số
+
+$$\sum_{i=1}^{n} i = \frac{n(n+1)}{2} \quad \prod_{i=1}^{n} i = n!$$
+
+#### 6. Ma Trận Toán Học
+
+$$\begin{pmatrix} a & b \\ c & d \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} ax + by \\ cx + dy \end{pmatrix}$$
+
+#### 7. Giới Hạn (Giới Hạn Hàm Số)
+
+$$\lim_{x \to 0} \frac{\sin x}{x} = 1$$
+
+#### 8. Tích Phân Xác Định
+
+$$\int_0^{\pi} \sin x \, dx = 2$$
+
+#### 9. Thống Kê & Xác Suất
+
+$$\mu = \frac{1}{n}\sum_{i=1}^n x_i \quad \sigma^2 = \frac{1}{n}\sum_{i=1}^n (x_i - \mu)^2$$
+
+#### 10. Phương Trình Bậc Hai
+
+$$x = \frac{-b \pm \sqrt{b^2-4ac}}{2a}$$
+
+## Tính Năng Nâng Cao
+
+### Hệ Phương Trình Căn Chỉnh (Aligned)
+
+$$\begin{align*} (x+y)^2 &= x^2 + 2xy + y^2 \\ (x-y)^2 &= x^2 - 2xy + y^2 \\ (x+y)(x-y) &= x^2 - y^2 \end{align*}$$
+
+### Hàm Số Cho Bởi Nhiều Công Thức
+
+$$f(x) = \begin{cases} x^2 & \text{nếu } x \geq 0 \\ -x^2 & \text{nếu } x < 0 \end{cases}$$
+
+### Hệ Phương Trình Bậc Nhất
+
+$$\begin{cases} x + 2y = 5 \\ 3x - y = 4 \end{cases}$$
+
+### Lượng Giác
+
+$$\sin^2\theta + \cos^2\theta = 1 \quad \tan\theta = \frac{\sin\theta}{\cos\theta}$$
+
+## Lập Trình Và Toán Học
+
+Kết hợp mã nguồn và công thức toán học dễ dàng. Xuất bản tài liệu sang **PDF** hoặc **Word** giữ nguyên định dạng công thức.
+
+```python
+def quadratic_formula(a, b, c):
+    """
+    Giải phương trình: ax² + bx + c = 0
+    Công thức: x = (-b ± √(b²-4ac)) / 2a
+    """
+    discriminant = b**2 - 4*a*c
+    x1 = (-b + discriminant**0.5) / (2*a)
+    x2 = (-b - discriminant**0.5) / (2*a)
+    return x1, x2
+
+# Ví dụ: x² - 5x + 6 = 0
+print(quadratic_formula(1, -5, 6))  # Kết quả: (3.0, 2.0)
+
+```
+
+Đánh giá độ phức tạp thuật toán:
+
+| Thuật toán | Độ phức tạp thời gian | Không gian lưu trữ | Công thức gốc |
+| --- | --- | --- | --- |
+| Tìm kiếm nhị phân | $O(\log n)$ | $O(1)$ | $\log_2 n$ |
+| Sắp xếp nhanh (Quick Sort) | $O(n \log n)$ | $O(\log n)$ | $n \log_2 n$ |
+| Sắp xếp nổi bọt (Bubble Sort) | $O(n^2)$ | $O(1)$ | $\frac{n(n-1)}{2}$ |
+
+## Ứng Dụng Vật Lý
+
+### Cơ Học Cổ Điển
+
+$$F = ma \quad E_k = \frac{1}{2}mv^2 \quad p = mv$$
+
+### Điện Từ Học
+
+$$F = qE \quad F = q\mathbf{v} \times \mathbf{B} \quad E = mc^2$$
+
+### Phương Trình Sóng
+
+$$v = f\lambda \quad \text{với } v \text{ là vận tốc, } f \text{ là tần số}$$
+
+## Hướng Dẫn Ký Hiệu Khẩn Cấp
+
+### Viết Trên Cùng Dòng
+
+Dùng 1 dấu đô la: `$E = mc^2$` sẽ hiển thị $E = mc^2$
+
+### Viết Dạng Khối Riêng
+
+Dùng 2 dấu đô la đặt ở dòng riêng:
+
+```
+$$
+x = \frac{-b \pm \sqrt{b^2-4ac}}{2a}
+$$
+
+```
+
+### Ký Tự Đặc Biệt
+
+* Phân số: `\frac{a}{b}` $\rightarrow \frac{a}{b}$
+* Căn bậc hai: `\sqrt{x}` $\rightarrow \sqrt{x}$
+* Mũ số: `x^2` $\rightarrow x^2$
+* Chỉ số dưới: `x_i` $\rightarrow x_i$
+* Dấu tổng: `\sum_{i=1}^n` $\rightarrow \sum_{i=1}^n$
+* Tích phân: `\int_a^b` $\rightarrow \int_a^b$
+
+## Sơ Đồ Quy Trình Minh Họa
+
+### Lưu Đồ Đơn Giản
+```mermaid
+flowchart TD
+    A([Bắt đầu])
+    B[/Nhập a, b/]
+    C{a = 0?}
+    D{b = 0?}
+    E[\Vô số nghiệm\]
+    F[\Vô nghiệm\]
+    G[Tính x = -b / a]
+    H[\Hiển thị x\]
+    I([Kết thúc])
+    A --> B
+    B --> C
+    C -- Có --> D
+    C -- Không --> G
+    D -- Có --> E
+    D -- Không --> F
+    G --> H
+    E --> I
+    F --> I
+    H --> I
+```
+
+## Mẹo Soạn Thảo Nhỏ
+
+> **💡 Mẹo nhỏ**: Hãy nhân đôi dấu gạch chéo ngược `\\` nếu hệ thống của bạn yêu cầu thoát ký tự trong mã code.
+
+> **⚠️ Lỗi thường gặp**:
+> * Thiếu dấu ngoặc nhọn kết thúc `{...}`
+> * Không thoát các ký tự đặc biệt trùng với Markdown: `$`, `%`, `&`
+> * Phân số lồng nhau cần bao bọc kỹ bằng nhiều tầng dấu ngoặc nhọn.
+> 
+> 
+
+## Ví Dụ Thực Tế Khác
+
+### Khoa Học Máy Tính (Độ Phức Tạp Đệ Quy)
+
+$$T(n) = \begin{cases} 1 & \text{nếu } n = 1 \\ 2T(\frac{n}{2}) + n & \text{nếu } n > 1 \end{cases}$$
+
+Giải phương trình đệ quy: $T(n) = O(n \log n)$
+
+### Tài Chính Kinh Tế (Lãi Kép)
+
+$$FV = PV \times (1 + r)^n \quad CI = P \left(1 + \frac{r}{n}\right)^{nt} - P$$
+
+### Xác Suất Đại Cương
+
+$$P(A \cup B) = P(A) + P(B) - P(A \cap B)$$
+
+$$E(X) = \sum_{i=1}^n x_i \cdot P(x_i)$$
+
+---
+
+## 🚀 Trải Nghiệm Trình Soạn Thảo Ngay!
+
+**Khung bên trái**: Nhập nội dung Markdown và LaTeX của bạn
+**Khung bên phải**: Theo dõi kết quả hiển thị tức thì
+
+### Ưu Điểm Nổi Bật
+
+✅ **Toán học chuẩn hóa** - Hỗ trợ thư viện LaTeX
+
+✅ **Xem trực quan** - Thay đổi hiển thị theo thời gian thực
+
+✅ **Ký tự đầy đủ** - Tích hợp toàn bộ hệ ký tự Hy Lạp cổ đại
+
+✅ **Sơ đồ thông minh** - Tạo biểu đồ trực quan cùng Mermaid
+
+✅ **Đa nền tảng** - Sao lưu dữ liệu dễ dàng, bảo mật cao
+
+### Hướng Dẫn Nhanh
+
+1. Kẹp công thức giữa cặp `$...$` hoặc `$$...$$`
+2. Dùng các thẻ định hình như `\frac{}{}`, `\sqrt{}`, ký tự `\alpha`, `\beta`
+3. Quan sát màn hình bên phải tự động cập nhật
+
+**Bắt đầu ngay** - Xóa nội dung ví dụ này và nhập bài viết của bạn! 📝                
+            </textarea>
+        </div>
+
+        <!-- Cột Phải: Output -->
+        <div class="column">
+            <div class="toolbar">
+                <div class="toolbar-group">
+                    <span>Kết Quả:</span>
+                </div>
+                <div class="toolbar-group">
+                    <!-- Nút Phóng To Kết Quả -->
+                    <button onclick="toggleFullscreen()" id="btn-fullscreen" class="btn"
+                        title="Phóng to / Thu nhỏ kết quả">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" id="fullscreen-icon">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
+                        </svg>
+                        <span>Phóng To</span>
+                    </button>
+
+                    <button onclick="copyOutput()" id="btn-copy-output" class="btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125 1.125 1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25z" />
+                        </svg>
+                        <span>Chép KQ</span>
+                    </button>
+                </div>
+            </div>
+            <div id="latex-output" class="markdown-body"></div>
+        </div>
+    </main>
+
+    <script>
+        const input = document.getElementById('latex-input');
+        const output = document.getElementById('latex-output');
+        let promise = Promise.resolve();
+
+        // --- BỘ LỌC ĐỒNG BỘ \displaystyle TOÀN DIỆN CHO CẢ INLINE VÀ DISPLAY MATH ---
+        function escapeMath(text) {
+            const mathBlocks = [];
+            const correctRegex = /\$\$([\s\S]*?)\$\$|\\\[([\s\S]*?)\\\]|\$([^$\n]*?)\$|\\\(([\s\S]*?)\\\)/g;
+
+            const protectedText = text.replace(correctRegex, (match, g1, g2, g3, g4) => {
+                const content = g1 || g2 || g3 || g4;
+                if (content && (content.includes('\n#') || content.trim().startsWith('#'))) {
+                    return match;
+                }
+
+                // 1. Tự động đồng bộ \displaystyle cho công thức khối $$ (g1)
+                if (g1) {
+                    let trimmed = g1.trim();
+                    if (!trimmed.startsWith('\\displaystyle')) {
+                        trimmed = `\\displaystyle ${trimmed}`;
+                    }
+                    mathBlocks.push(`$$${trimmed}$$`);
+                    const placeholder = `MATHJAXBLOCKPLACEHOLDER${mathBlocks.length - 1}`;
+                    return `\n\n${placeholder}\n\n`;
+                }
+
+                // 2. Tự động đồng bộ \displaystyle cho công thức khối \[ (g2)
+                if (g2) {
+                    let trimmed = g2.trim();
+                    if (!trimmed.startsWith('\\displaystyle')) {
+                        trimmed = `\\displaystyle ${trimmed}`;
+                    }
+                    mathBlocks.push(`\\[${trimmed}\\]`);
+                    const placeholder = `MATHJAXBLOCKPLACEHOLDER${mathBlocks.length - 1}`;
+                    return `\n\n${placeholder}\n\n`;
+                }
+
+                // MỤC SỬA LỖI ĐỘT PHÁ VẠN NĂNG: Loại bỏ hoàn toàn cơ chế tự động ép cứng \displaystyle cho toán cùng dòng g3 và g4
+                // Để bảo tồn cỡ chữ nhỏ gọn (\textstyle) chuẩn sách giáo khoa, triệt tiêu 100% hiện tượng phình dòng / dãn dòng dọc trong Word!
+
+                // 3. Công thức cùng dòng $ (g3) - KHÔNG ép \displaystyle nữa
+                if (g3) {
+                    mathBlocks.push(`$${g3.trim()}$`);
+                    const placeholder = `MATHJAXBLOCKPLACEHOLDER${mathBlocks.length - 1}`;
+                    return placeholder;
+                }
+
+                // 4. Công thức cùng dòng \( (g4) - KHÔNG ép \displaystyle nữa
+                if (g4) {
+                    mathBlocks.push(`\\(${g4.trim()}\\)`);
+                    const placeholder = `MATHJAXBLOCKPLACEHOLDER${mathBlocks.length - 1}`;
+                    return placeholder;
+                }
+
+                return match;
+            });
+            return { protectedText, mathBlocks };
+        }
+
+        function escapeHtmlLite(text) {
+            return text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+
+        function renderContent() {
+            const rawText = input.value;
+
+            // MỤC SỬA LỖI ĐỘT PHÁ: Tạm ẩn toàn bộ khối code ra ngoài hành lang an toàn TRƯỚC KHI xử lý toán học
+            const codeBlocks = [];
+            const codeRegex = /```[\s\S]*?```|`[^`\n]*?`/g;
+            const tempText = rawText.replace(codeRegex, (match) => {
+                codeBlocks.push(match);
+                return `CODEBLOCKPLACEHOLDER${codeBlocks.length - 1}`;
+            });
+
+            // Tiến hành bảo vệ toán học trên phần văn bản thường còn lại
+            const { protectedText, mathBlocks } = escapeMath(tempText);
+
+            // Khôi phục lại khối code thô để trình Marked biên dịch chuẩn cấu trúc Markdown
+            let restoredText = protectedText;
+            for (let i = codeBlocks.length - 1; i >= 0; i--) {
+                restoredText = restoredText.replace(`CODEBLOCKPLACEHOLDER${i}`, () => codeBlocks[i]);
+            }
+
+            let htmlContent = marked.parse(restoredText);
+
+            // Khôi phục lại công thức toán bằng hàm mũi tên để tránh dính lỗi ký tự đặc biệt $
+            for (let i = mathBlocks.length - 1; i >= 0; i--) {
+                const safeBlock = escapeHtmlLite(mathBlocks[i]);
+                htmlContent = htmlContent.replace(`MATHJAXBLOCKPLACEHOLDER${i}`, () => safeBlock);
+            }
+
+            // MỤC TÍCH HỢP SƠ ĐỒ MERMAID CHUẨN HOÁ: Chuyển đổi khối mã nguồn sơ đồ thành thẻ vẽ SVG
+            htmlContent = htmlContent.replace(/<pre><code class="language-mermaid">([\s\S]*?)<\/code><\/pre>/gi, (match, codeText) => {
+                const decoded = codeText.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+                return `<div class="mermaid">${decoded}</div>`;
+            });
+
+            output.innerHTML = htmlContent;
+
+            // Kích hoạt vẽ Sơ đồ động Mermaid trực tiếp trên Web
+            if (window.mermaid) {
+                try {
+                    mermaid.run({ nodes: output.querySelectorAll('.mermaid') });
+                } catch (e) {
+                    console.error("Mermaid run error", e);
+                }
+            }
+
+            if (window.MathJax) {
+                promise = promise.then(() => {
+                    return MathJax.typesetPromise([output]);
+                }).catch((err) => console.log('MathJax Error:', err));
+            }
+        }
+
+        // --- CẤU HÌNH THỜI GIAN LƯU BẢN NHÁP TRÁNH LAG MÁY ---
+        let lastSaveTime = Date.now();
+        const SAVE_INTERVAL = 60000; // Tròn 1 phút (60 giây) mới lưu bộ nhớ một lần
+
+        let timeoutId;
+        input.addEventListener('input', () => {
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => {
+                renderContent(); // Vẽ công thức mượt mà sau 50ms khi dừng gõ
+
+                // Thao tác gõ: Kiểm tra nếu đủ 1 phút mới lưu ổ đĩa một lần
+                const now = Date.now();
+                if (now - lastSaveTime >= SAVE_INTERVAL) {
+                    localStorage.setItem('latex_input', input.value);
+                    lastSaveTime = now;
+                }
+            }, 50);
+        });
+
+        // --- THAO TÁC ĐÓNG/TẢI LẠI TRANG: TỰ ĐỘNG LƯU LẬP TỨC ĐỂ KHÔNG MẤT CHỮ ---
+        window.addEventListener('beforeunload', () => {
+            localStorage.setItem('latex_input', input.value);
+        });
+
+        // Tự động phục hồi bản nháp khi nạp lại trang
+        window.addEventListener('load', () => {
+            const savedContent = localStorage.getItem('latex_input');
+            if (savedContent !== null && savedContent.trim() !== "") {
+                input.value = savedContent;
+            }
+            renderContent();
+        });
+
+        let clearTimeoutId;
+        function clearInput() {
+            const btn = document.getElementById('btn-clear');
+            const span = btn.querySelector('span');
+            const svg = btn.querySelector('svg');
+
+            if (btn.dataset.confirm === "true") {
+                input.value = "";
+                renderContent();
+                localStorage.removeItem('latex_input'); // Xoá bản nháp khi nhấn nút xoá toàn bộ
+                input.focus();
+                resetClearBtn(btn);
+            } else {
+                btn.dataset.confirm = "true";
+                btn.dataset.originalText = span.innerHTML;
+
+                span.innerHTML = 'Chắc chắn?';
+                span.style.color = '#dc2626';
+                span.style.fontWeight = 'bold';
+                btn.style.borderColor = '#dc2626';
+                svg.style.display = 'none';
+
+                clearTimeoutId = setTimeout(() => {
+                    resetClearBtn(btn);
+                }, 3000);
+            }
+        }
+
+        function resetClearBtn(btn) {
+            clearTimeout(clearTimeoutId);
+            const span = btn.querySelector('span');
+            const svg = btn.querySelector('svg');
+
+            btn.dataset.confirm = "false";
+            span.innerHTML = btn.dataset.originalText;
+            span.style.color = '';
+            span.style.fontWeight = '';
+            btn.style.borderColor = '';
+            svg.style.display = '';
+        }
+
+        // --- CHỨC NĂNG ĐIỀU HƯỚNG HIỂN THỊ HỘP THOẠI CHỌN SAO CHÉP ---
+        function copyOutput() {
+            document.getElementById('copy-modal').style.display = 'flex';
+        }
+
+        function closeCopyModal() {
+            document.getElementById('copy-modal').style.display = 'none';
+        }
+
+        // --- THỰC THI SAO CHÉP ĐA ĐỊNH DẠNG THEO PHƯƠNG PHÁP CHỌN ---
+        async function executeCopy(format) {
+            closeCopyModal();
+            const btn = document.getElementById('btn-copy-output');
+            const span = btn.querySelector('span');
+            const svg = btn.querySelector('svg');
+            const originalText = span.innerHTML;
+
+            span.innerHTML = 'Đang chép...';
+            span.style.color = '#4f46e5';
+            svg.style.display = 'none';
+
+            try {
+                if (format === 'markdown') {
+                    await copyMarkdown();
+                } else if (format === 'gdocs') {
+                    await copyGoogleDocs();
+                } else if (format === 'word') {
+                    await copyWord();
+                }
+                span.innerHTML = '✓ Đã chép!';
+                span.style.color = '#16a34a';
+            } catch (err) {
+                console.error(err);
+                span.innerHTML = 'Lỗi copy!';
+                span.style.color = '#ef4444';
+            }
+
+            setTimeout(() => {
+                span.innerHTML = originalText;
+                span.style.color = '';
+                svg.style.display = '';
+            }, 2000);
+        }
+
+        // --- 1. CHÉP DẠNG MARKDOWN ---
+        async function copyMarkdown() {
+            const rawText = input.value;
+            const blobText = new Blob([rawText], { type: 'text/plain' });
+            const data = [new ClipboardItem({ 'text/plain': blobText })];
+            await navigator.clipboard.write(data);
+        }
+
+        // --- 2. CHÉP DẠNG GOOGLE DOCS (DÙNG ẢNH PNG ĐỘ NÉT CAO) ---
+        async function copyGoogleDocs() {
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = output.innerHTML;
+            tempDiv.classList.add('markdown-body');
+            tempDiv.style.fontFamily = getComputedStyle(document.body).fontFamily;
+            document.body.appendChild(tempDiv);
+
+            if (window.MathJax) {
+                await MathJax.typesetPromise([tempDiv]);
+            }
+
+            // MỤC SƠ ĐỒ CHUYỂN PNG KHI COPY GDOCS (CO GỌN ĐÚNG 50% KÍCH THƯỚC GỐC PHÓNG ĐẠI 2X -> TƯƠNG ĐƯƠNG 100% CỠ LOGIC):
+            const mermaidContainers = tempDiv.querySelectorAll('.mermaid');
+            const diagramPromises = Array.from(mermaidContainers).map(async (container) => {
+                const svgEl = container.querySelector('svg');
+                if (svgEl) {
+                    try {
+                        let origWidth = 0;
+                        let origHeight = 0;
+
+                        const viewBox = svgEl.getAttribute('viewBox');
+                        if (viewBox) {
+                            const parts = viewBox.trim().split(/[\s,]+/).map(Number);
+                            if (parts.length === 4 && parts[2] > 0 && parts[3] > 0) {
+                                origWidth = parts[2];
+                                origHeight = parts[3];
+                            }
+                        }
+
+                        if (!origWidth || !origHeight) {
+                            const attrWidth = parseFloat(svgEl.getAttribute('width'));
+                            const attrHeight = parseFloat(svgEl.getAttribute('height'));
+                            if (!isNaN(attrWidth) && !isNaN(attrHeight) && attrWidth > 0 && attrHeight > 0) {
+                                origWidth = attrWidth;
+                                origHeight = attrHeight;
+                            }
+                        }
+
+                        if (!origWidth || !origHeight) {
+                            const rect = svgEl.getBoundingClientRect();
+                            origWidth = Math.max(100, Math.round(rect.width));
+                            origHeight = Math.max(100, Math.round(rect.height));
+                        }
+
+                        const pngData = await svgToPngDataUrl(svgEl);
+                        if (pngData) {
+                            const imgTag = document.createElement('img');
+                            imgTag.src = pngData;
+
+                            // Giảm kích thước hiển thị đúng 50% so với ảnh PNG nguồn 2x (bằng 100% kích thước logic)
+                            const displayWidth = Math.round(origWidth);
+                            const displayHeight = Math.round(origHeight);
+
+                            imgTag.setAttribute('width', String(displayWidth));
+                            imgTag.setAttribute('height', String(displayHeight));
+                            imgTag.style.width = displayWidth + 'px';
+                            imgTag.style.height = displayHeight + 'px';
+
+                            const divWrapper = document.createElement('div');
+                            divWrapper.style.textAlign = 'center';
+                            divWrapper.style.margin = '16px 0';
+                            divWrapper.appendChild(imgTag);
+                            container.replaceWith(divWrapper);
+                        }
+                    } catch (e) {
+                        console.error("Mermaid GDocs export error", e);
+                    }
+                }
+            });
+            await Promise.all(diagramPromises);
+
+            // MỤC CÔNG THỨC TOÁN CHUYỂN PNG KHI COPY GDOCS (CO GỌN ĐÚNG 50% SO VỚI ẢNH PNG NGUỒN 2X):
+            const realSvgs = tempDiv.querySelectorAll('mjx-container svg');
+            const tempContainers = tempDiv.querySelectorAll('mjx-container');
+
+            const conversionPromises = Array.from(realSvgs).map(async (svgEl, index) => {
+                try {
+                    const pngData = await svgToPngDataUrl(svgEl);
+                    const container = tempContainers[index];
+
+                    if (pngData && container) {
+                        const imgTag = document.createElement('img');
+                        imgTag.src = pngData;
+
+                        const rect = svgEl.getBoundingClientRect();
+
+                        // Co lề hiển thị đúng 50% quy mô so với ảnh 2x (bằng 100% kích thước logic)
+                        const displayWidth = Math.ceil(rect.width);
+                        const displayHeight = Math.ceil(rect.height);
+
+                        imgTag.setAttribute('width', displayWidth);
+                        imgTag.setAttribute('height', displayHeight);
+                        imgTag.style.width = displayWidth + 'px';
+                        imgTag.style.height = displayHeight + 'px';
+                        imgTag.style.verticalAlign = '-0.5ex';
+
+                        const isDisplay = container.getAttribute('display') === 'true';
+
+                        if (isDisplay) {
+                            const divWrapper = document.createElement('div');
+                            divWrapper.style.textAlign = 'center';
+                            divWrapper.style.margin = '12px 0';
+                            divWrapper.appendChild(imgTag);
+                            container.replaceWith(divWrapper);
+                        } else {
+                            container.innerHTML = '';
+                            container.appendChild(document.createTextNode('\u00A0'));
+                            container.appendChild(imgTag);
+                            container.appendChild(document.createTextNode('\u00A0'));
+                        }
+                    }
+                } catch (e) {
+                    console.error("Skip error SVG", index);
+                }
+            });
+
+            await Promise.all(conversionPromises);
+
+            // Ép cấu trúc code block và table cho đồng đều khi dán vào Google Docs
+            const codeEls = tempDiv.querySelectorAll('code');
+            codeEls.forEach(el => {
+                el.style.fontFamily = "Consolas, 'Courier New', monospace";
+                el.style.fontSize = "11pt";
+                el.style.color = "#000000";
+
+                if (el.parentNode.tagName === 'PRE') {
+                    const pre = el.parentNode;
+                    pre.style.backgroundColor = '#dfdfdf'; // Nền xám 12.5% chuẩn xác
+                    pre.style.border = '1px solid #cbd5e1';
+                    pre.style.padding = '12px';
+                    pre.style.borderRadius = '0px';
+                    pre.style.fontFamily = "Consolas, 'Courier New', monospace";
+                    pre.style.fontSize = '11pt';
+                    pre.style.color = '#000000';
+                    pre.style.whiteSpace = 'pre-wrap';
+                    pre.style.wordBreak = 'break-all';
+                    pre.style.marginBottom = '12px';
+                    pre.style.marginLeft = '0px';
+                    pre.style.borderLeft = '4px solid #cbd5e1'; // Thanh vạch kẻ lề trái chuẩn Github
+                } else {
+                    el.style.backgroundColor = '#dfdfdf';
+                    el.style.padding = '2px 4px';
+                    el.style.border = '1px solid rgba(0,0,0,0.08)';
+                }
+            });
+
+            const tables = tempDiv.querySelectorAll('table');
+            tables.forEach(table => {
+                table.setAttribute('border', '1');
+                table.setAttribute('cellspacing', '0'); // Triệt tiêu khoảng hở cell thô rườm rà
+                table.setAttribute('cellpadding', '6');
+                table.style.borderCollapse = 'collapse'; // Loại bỏ viền hở cell đôi chuẩn Word
+                table.style.border = '1px solid #000000'; // Viền đen phẳng phiu 1 pt
+                table.style.width = '100%';
+            });
+
+            const ths = tempDiv.querySelectorAll('th');
+            ths.forEach(th => {
+                th.style.border = '1px solid #000000'; // Viền đen phẳng phiu 1 pt
+                th.style.padding = '6px 10px';
+                th.style.backgroundColor = '#f1f5f9';
+                th.style.fontWeight = 'bold';
+            });
+
+            const tds = tempDiv.querySelectorAll('td');
+            tds.forEach(td => {
+                td.style.border = '1px solid #000000'; // Viền đen phẳng phiu 1 pt
+                td.style.padding = '6px 10px';
+            });
+
+            const blobHtml = new Blob([tempDiv.innerHTML], { type: 'text/html' });
+            const blobText = new Blob([tempDiv.innerText], { type: 'text/plain' });
+            const data = [new ClipboardItem({ 'text/html': blobHtml, 'text/plain': blobText })];
+            await navigator.clipboard.write(data);
+
+            document.body.removeChild(tempDiv);
+        }
+
+        // --- ĐỆ QUY DỌN SẠCH THUỘC TÍNH RÁC MATHML ĐỂ WORD ĐỌC MTABLE/CASES PHẲNG PHIU CHUẨN XÁC ---
+        function cleanMathMLForWord(element) {
+            if (!element || element.nodeType !== 1) return;
+
+            // Danh sách các thuộc tính MathML tiêu chuẩn được Word hỗ trợ cực tốt
+            const allowedAttrs = [
+                'xmlns', 'display', 'width', 'height', 'depth', 'align',
+                'rowalign', 'columnalign', 'fence', 'form', 'separator',
+                'stretchy', 'symmetric', 'largeop', 'movablelimits', 'accent'
+            ];
+
+            // Lấy danh sách tất cả thuộc tính hiện tại của thẻ
+            const attrs = Array.from(element.attributes);
+            attrs.forEach(attr => {
+                // Xoá sạch mọi thuộc tính không nằm trong danh sách an toàn (như class, style, id, data-*)
+                if (!allowedAttrs.includes(attr.name.toLowerCase())) {
+                    element.removeAttribute(attr.name);
+                }
+            });
+
+            // Đệ quy dọn dẹp tất cả các thẻ con bên trong
+            Array.from(element.children).forEach(child => {
+                cleanMathMLForWord(child);
+            });
+        }
+
+        // --- 3. CHÉP DẠNG MS WORD (CÔNG THỨC GỐC MATHML - TRÁNH DÍNH CHỮ) ---
+        async function copyWord() {
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = output.innerHTML;
+            tempDiv.classList.add('markdown-body');
+            tempDiv.style.fontFamily = getComputedStyle(document.body).fontFamily;
+            document.body.appendChild(tempDiv);
+
+            if (window.MathJax) {
+                await MathJax.typesetPromise([tempDiv]);
+            }
+
+            // MỤC SƠ ĐỒ CHUYỂN PNG KHI COPY WORD (CO GỌN ĐÚNG 50% KÍCH THƯỚC GỐC PHÓNG ĐẠI 2X -> TƯƠNG ĐƯƠNG 100% CỠ LOGIC):
+            const mermaidContainers = tempDiv.querySelectorAll('.mermaid');
+            const diagramPromises = Array.from(mermaidContainers).map(async (container) => {
+                const svgEl = container.querySelector('svg');
+                if (svgEl) {
+                    try {
+                        let origWidth = 0;
+                        let origHeight = 0;
+
+                        const viewBox = svgEl.getAttribute('viewBox');
+                        if (viewBox) {
+                            const parts = viewBox.trim().split(/[\s,]+/).map(Number);
+                            if (parts.length === 4 && parts[2] > 0 && parts[3] > 0) {
+                                origWidth = parts[2];
+                                origHeight = parts[3];
+                            }
+                        }
+
+                        if (!origWidth || !origHeight) {
+                            const attrWidth = parseFloat(svgEl.getAttribute('width'));
+                            const attrHeight = parseFloat(svgEl.getAttribute('height'));
+                            if (!isNaN(attrWidth) && !isNaN(attrHeight) && attrWidth > 0 && attrHeight > 0) {
+                                origWidth = attrWidth;
+                                origHeight = attrHeight;
+                            }
+                        }
+
+                        if (!origWidth || !origHeight) {
+                            const rect = svgEl.getBoundingClientRect();
+                            origWidth = Math.max(100, Math.round(rect.width));
+                            origHeight = Math.max(100, Math.round(rect.height));
+                        }
+
+                        const pngData = await svgToPngDataUrl(svgEl);
+                        if (pngData) {
+                            const imgTag = document.createElement('img');
+                            imgTag.src = pngData;
+
+                            // Giảm còn chính xác 50% so với ảnh PNG nguồn 2x (bằng 100% kích thước logic)
+                            const displayWidth = Math.round(origWidth);
+                            const displayHeight = Math.round(origHeight);
+
+                            imgTag.setAttribute('width', String(displayWidth));
+                            imgTag.setAttribute('height', String(displayHeight));
+                            imgTag.style.width = displayWidth + 'px';
+                            imgTag.style.height = displayHeight + 'px';
+
+                            const divWrapper = document.createElement('div');
+                            divWrapper.style.textAlign = 'center';
+                            divWrapper.style.margin = '16px 0';
+                            divWrapper.appendChild(imgTag);
+                            container.replaceWith(divWrapper);
+                        }
+                    } catch (e) {
+                        console.error("Mermaid Word export error", e);
+                    }
+                }
+            });
+            await Promise.all(diagramPromises);
+
+            // Thay thế mjx-container bằng thẻ MathML gốc <math> để Word tự động nhận dạng thành Word Equation
+            const mjxContainers = tempDiv.querySelectorAll('mjx-container');
+            mjxContainers.forEach(container => {
+                const mathEl = container.querySelector('mjx-assistive-mml math');
+                if (mathEl) {
+                    const clonedMath = mathEl.cloneNode(true);
+                    clonedMath.setAttribute('xmlns', 'http://www.w3.org/1998/Math/MathML');
+
+                    // MỤC SỬA LỖI ĐỘT PHÁ TOÀN DIỆN VẠN NĂNG: Dọn sạch mọi thuộc tính class rác của MathJax để Word hiển thị đúng hệ cases dọc lộng lẫy
+                    cleanMathMLForWord(clonedMath);
+
+                    // MỤC SỬA LỖI ĐỘT PHÁ VẠN NĂNG: Giải quyết triệt thế lỗi dính chữ mspace và mtext của Word
+                    // 1. Chuyển đổi mspace (quad, qquad) sang mtext chứa dấu cách cứng
+                    const mspaces = clonedMath.querySelectorAll('mspace');
+                    mspaces.forEach(mspace => {
+                        if (mspace.hasAttribute('linebreak')) return; // Không can thiệp nếu là lệnh xuống dòng phương trình
+
+                        const widthAttr = mspace.getAttribute('width') || '';
+                        let spaceText = '\u00A0\u00A0'; // mặc định dãn 2 khoảng trắng
+                        if (widthAttr.includes('em')) {
+                            const emValue = parseFloat(widthAttr) || 0;
+                            if (emValue >= 2) {
+                                spaceText = '\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0'; // \qquad -> 8 khoảng trắng cứng
+                            } else if (emValue >= 1) {
+                                spaceText = '\u00A0\u00A0\u00A0\u00A0'; // \quad -> 4 khoảng trắng cứng dãn lề rộng rãi
+                            }
+                        }
+                        const mtext = document.createElementNS('http://www.w3.org/1998/Math/MathML', 'mtext');
+                        mtext.textContent = spaceText;
+                        mspace.replaceWith(mtext);
+                    });
+
+                    // 2. Chuyển đổi khoảng trắng ở đầu và cuối thẻ mtext thành dấu cách cứng để tránh bị Word tự động co chữ dính biên
+                    const mtexts = clonedMath.querySelectorAll('mtext');
+                    mtexts.forEach(mtext => {
+                        if (mtext.textContent) {
+                            mtext.textContent = mtext.textContent.replace(/^\s+/g, (match) => '\u00A0').replace(/\s+$/, (match) => '\u00A0');
+                        }
+                    });
+
+                    const isDisplay = container.getAttribute('display') === 'true';
+                    if (isDisplay) {
+                        clonedMath.setAttribute('display', 'block');
+                        const divWrapper = document.createElement('div');
+                        divWrapper.style.textAlign = 'center';
+                        divWrapper.style.margin = '12px 0';
+                        divWrapper.appendChild(clonedMath);
+                        container.replaceWith(divWrapper);
+                    } else {
+                        clonedMath.setAttribute('display', 'inline');
+
+                        // SỬA LỖI DÍNH CHỮ: Chèn thêm đệm khoảng trắng không ngắt (\u00A0) xung quanh thẻ MathML
+                        const spaceBefore = document.createTextNode('\u00A0');
+                        const spaceAfter = document.createTextNode('\u00A0');
+                        container.replaceWith(spaceBefore, clonedMath, spaceAfter);
+                    }
+                }
+            });
+
+            // Ép cấu trúc code block và table cho đồng đều khi dán vào Word
+            const codeEls = tempDiv.querySelectorAll('code');
+            codeEls.forEach(el => {
+                el.style.fontFamily = "Consolas, 'Courier New', monospace";
+                el.style.fontSize = "11pt";
+                el.style.color = "#000000";
+
+                if (el.parentNode.tagName === 'PRE') {
+                    const pre = el.parentNode;
+                    pre.style.backgroundColor = '#dfdfdf'; // Nền xám 12.5% chuẩn xác
+                    pre.style.border = '1px solid #cbd5e1';
+                    pre.style.padding = '12px';
+                    pre.style.borderRadius = '0px';
+                    pre.style.fontFamily = "Consolas, 'Courier New', monospace";
+                    pre.style.fontSize = '11pt';
+                    pre.style.color = '#000000';
+                    pre.style.whiteSpace = 'pre-wrap';
+                    pre.style.wordBreak = 'break-all';
+                    pre.style.marginBottom = '12px';
+                    pre.style.marginLeft = '0px';
+                    pre.style.borderLeft = '4px solid #cbd5e1'; // Thanh vạch kẻ lề trái chuẩn Github
+                } else {
+                    el.style.backgroundColor = '#dfdfdf';
+                    el.style.padding = '2px 4px';
+                    el.style.border = '1px solid rgba(0,0,0,0.08)';
+                }
+            });
+
+            const tables = tempDiv.querySelectorAll('table');
+            tables.forEach(table => {
+                table.setAttribute('border', '1');
+                table.setAttribute('cellspacing', '0'); // Triệt tiêu khoảng hở cell thô rườm rà
+                table.setAttribute('cellpadding', '6');
+                table.style.borderCollapse = 'collapse'; // Loại bỏ viền hở cell đôi chuẩn Word
+                table.style.border = '1px solid #000000'; // Viền đen phẳng phiu 1 pt
+                table.style.width = '100%';
+            });
+
+            const ths = tempDiv.querySelectorAll('th');
+            ths.forEach(th => {
+                th.style.border = '1px solid #000000'; // Viền đen phẳng phiu 1 pt
+                th.style.padding = '6px 10px';
+                th.style.backgroundColor = '#f1f5f9';
+                th.style.fontWeight = 'bold';
+            });
+
+            const tds = tempDiv.querySelectorAll('td');
+            tds.forEach(td => {
+                td.style.border = '1px solid #000000'; // Viền đen phẳng phiu 1 pt
+                td.style.padding = '6px 10px';
+            });
+
+            const blobHtml = new Blob([tempDiv.innerHTML], { type: 'text/html' });
+            const blobText = new Blob([tempDiv.innerText], { type: 'text/plain' });
+            const data = [new ClipboardItem({ 'text/html': blobHtml, 'text/plain': blobText })];
+            await navigator.clipboard.write(data);
+
+            document.body.removeChild(tempDiv);
+        }
+
+        // --- CHỨC NĂNG ĐIỀU HƯỚNG HIỂN THỊ HỘP THOẠI CHỌN TẢI FILE ---
+        function openDownloadModal() {
+            document.getElementById('download-modal').style.display = 'flex';
+        }
+
+        function closeDownloadModal() {
+            document.getElementById('download-modal').style.display = 'none';
+        }
+
+        function executeDownload(type) {
+            closeDownloadModal();
+            if (type === 'md') {
+                downloadMd();
+            } else if (type === 'html') {
+                saveHtml();
+            }
+        }
+
+        // --- HÀM XUẤT HTML VÁ LỖI IN ẤN VÀ LOẠI BỎ CHỮ ẨN ---
+        function saveHtml() {
+            const content = document.getElementById('latex-output').innerHTML;
+
+            // DÙNG REGEX XOÁ SẠCH CHỮ ẨN LẶP AN TOÀN 100%
+            const cleanContent = content.replace(/<mjx-assistive-mml[\s\S]*?<\/mjx-assistive-mml>/gi, '');
+
+            const styleTags = Array.from(document.querySelectorAll('style'))
+                .map(s => s.outerHTML)
+                .join('\n');
+
+            const html = `<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kết quả xuất HTML</title>
+${styleTags}
+<style>
+    body { 
+        padding: 2.0rem; 
+        background-color: #fff; 
+        max-width: 100% !important; 
+        margin: 0;                  
+        height: auto !important;    
+        overflow: auto !important;  
+    }
+    
+    /* --- CSS KHẮC PHỤC TRÀN VIỀN CÔNG THỨC KHỐI KHI IN --- */
+    mjx-container[display=\"true\"] {
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        max-width: 100% !important;
+    }
+    
+    /* --- CSS VÁ LỖI NHẢY CÔNG THỨC KHI IN --- */
+    @media print {
+        body { 
+            padding: 0 !important; 
+            margin: 0 !important; 
+            background-color: #fff !important;
+            color: #000 !important;
+        }
+        .markdown-body { 
+            max-width: 100% !important; 
+        }
+        mjx-container {
+            page-break-inside: avoid !important;
+            break-inside: avoid !important;
+        }
+        mjx-container svg {
+            display: inline-block !important;
+            vertical-align: middle !important;
+            max-width: 100% !important;
+        }
+    }
+</style>
+</head>
+<body>
+<div class="markdown-body">
+${cleanContent}
+</div>
+</body>
+</html>`;
+            const blob = new Blob([html], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+
+            const fileName = `Ket_Qua_${year}-${month}-${day}_${hours}-${minutes}-${seconds}.html`;
+
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileName;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function downloadMd() {
+            const content = input.value;
+            const blob = new Blob([content], { type: 'text/markdown;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+
+            const fileName = `Bai_Viet_${year}-${month}-${day}_${hours}-${minutes}-${seconds}.md`;
+
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileName;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // --- CHỨC NĂNG PHÓNG TO KẾT QUẢ ---
+        function toggleFullscreen() {
+            const bodyEl = document.body;
+            const btn = document.getElementById('btn-fullscreen');
+            const icon = document.getElementById('fullscreen-icon');
+
+            // Tự động tắt phóng to soạn thảo nếu đang mở
+            if (bodyEl.classList.contains('editor-fullscreen-active')) {
+                toggleEditorFullscreen();
+            }
+
+            const isFullscreen = bodyEl.classList.toggle('fullscreen-active');
+
+            if (isFullscreen) {
+                btn.querySelector('span').textContent = 'Thu Nhỏ';
+                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" d="M9 9V4.5M9 9H4.5M9 9L3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9V4.5M15 9h4.5M15 9l5.25-5.25M15 15v4.5M15 15h4.5M15 15l5.25 5.25" />';
+            } else {
+                btn.querySelector('span').textContent = 'Phóng To';
+                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />';
+            }
+            if (window.MathJax) {
+                MathJax.typesetPromise([document.getElementById('latex-output')]);
+            }
+        }
+
+        // --- CHỨC NĂNG PHÓNG TO KHUNG SOẠN THẢO MỚI ---
+        function toggleEditorFullscreen() {
+            const bodyEl = document.body;
+            const btn = document.getElementById('btn-editor-fullscreen');
+            const icon = document.getElementById('editor-fullscreen-icon');
+
+            // Tự động tắt phóng to kết quả nếu đang mở
+            if (bodyEl.classList.contains('fullscreen-active')) {
+                toggleFullscreen();
+            }
+
+            const isFullscreen = bodyEl.classList.toggle('editor-fullscreen-active');
+
+            if (isFullscreen) {
+                btn.querySelector('span').textContent = 'Thu Nhỏ';
+                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" d="M9 9V4.5M9 9H4.5M9 9L3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9V4.5M15 9h4.5M15 9l5.25-5.25M15 15v4.5M15 15h4.5M15 15l5.25 5.25" />';
+            } else {
+                btn.querySelector('span').textContent = 'Phóng To';
+                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />';
+            }
+        }
+
+        async function svgToPngDataUrl(svgElement) {
+            return new Promise((resolve, reject) => {
+                try {
+                    const rect = svgElement.getBoundingClientRect();
+                    const scaleFactor = 2; // ÉP CỨNG ẢNH PNG NGUỒN VỀ 2X ĐỂ ĐẢM BẢO ĐỘ NÉT IN ẤN SIÊU VIỆT
+
+                    if (rect.width === 0 || rect.height === 0) { resolve(null); return; }
+
+                    const width = Math.ceil(rect.width * scaleFactor);
+                    const height = Math.ceil(rect.height * scaleFactor);
+
+                    const clonedSvg = svgElement.cloneNode(true);
+
+                    const computedStyle = window.getComputedStyle(svgElement);
+                    clonedSvg.style.cssText = `
+                        font-family: ${computedStyle.fontFamily};
+                        font-size: ${computedStyle.fontSize};
+                        font-weight: ${computedStyle.fontWeight};
+                        color: ${computedStyle.color};
+                        width: ${width}px;
+                        height: ${height}px;
+                    `;
+
+                    clonedSvg.setAttribute("width", width + "px");
+                    clonedSvg.setAttribute("height", height + "px");
+
+                    if (!clonedSvg.getAttribute('xmlns')) clonedSvg.setAttribute('xmlns', "http://www.w3.org/2000/svg");
+                    if (!clonedSvg.getAttribute('xmlns:xlink')) clonedSvg.setAttribute('xmlns:xlink', "http://www.w3.org/1999/xlink");
+
+                    const svgData = new XMLSerializer().serializeToString(clonedSvg);
+                    const blob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
+                    const url = URL.createObjectURL(blob);
+
+                    const img = new Image();
+                    img.onload = function () {
+                        const canvas = document.createElement("canvas");
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext("2d");
+                        ctx.clearRect(0, 0, width, height); // LUÔN ĐÚNG DẤU PHẨY, SỬA TRIỆT ĐỂ LỖI CÚ PHÁP
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        // MỤC SỬA LỖI ĐỘT PHÁ: Ép cứng phông Consolas cho toàn bộ sơ đồ khi nạp vào Canvas để nét ảnh luôn có phông đồng nhất
+                        clonedSvg.querySelectorAll('text, tspan, .labelText, .node label').forEach(node => {
+                            node.style.setProperty('font-family', "'Consolas', monospace", 'important');
+                        });
+
+                        URL.revokeObjectURL(url);
+                        resolve(canvas.toDataURL("image/png"));
+                    };
+                    img.onerror = (e) => reject(new Error("Image failed to load"));
+                    img.src = url;
+                } catch (e) {
+                    reject(e);
+                }
+            });
+        }
+
+        // --- CHỨC NĂNG KÉO THẢ FILE ---
+        const dragOverlay = document.getElementById('drag-overlay');
+
+        window.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            if (e.dataTransfer.types.includes('Files')) {
+                dragOverlay.style.display = 'flex';
+            }
+        });
+
+        window.addEventListener('dragleave', (e) => {
+            if (e.relatedTarget === null || !document.documentElement.contains(e.relatedTarget)) {
+                dragOverlay.style.display = 'none';
+            }
+        });
+
+        window.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dragOverlay.style.display = 'none';
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFileImport(files[0]);
+            }
+        });
+
+        window.addEventListener('dragend', () => {
+            dragOverlay.style.display = 'none';
+        });
+
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                handleFileImport(file);
+            }
+            event.target.value = ''; // Giải phóng bộ nhớ đệm
+        }
+
+        function handleFileImport(file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                input.value = e.target.result;
+                renderContent();
+                localStorage.setItem('latex_input', input.value);
+            };
+            reader.readAsText(file);
+        }
+    </script>
+</body>
+
+</html>

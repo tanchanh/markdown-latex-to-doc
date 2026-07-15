@@ -376,7 +376,8 @@
 
         /* --- MathJax Fixes --- */
         mjx-container[display="false"] {
-            margin: 0.15rem 0.4rem !important; /* Tạo khoảng đệm dọc dọc 0.15rem và đệm ngang 0.4rem giúp các công thức cùng dòng không bị sát nhau quá */
+            margin: 0.15rem 0.4rem !important;
+            /* Tạo khoảng đệm dọc dọc 0.15rem và đệm ngang 0.4rem giúp các công thức cùng dòng không bị sát nhau quá */
             padding: 0.05rem 0 !important;
             vertical-align: middle !important;
         }
@@ -621,61 +622,233 @@
                 </div>
             </div>
             <textarea id="latex-input" spellcheck="false" placeholder="Nhập nội dung Markdown & LaTeX vào đây...">
-# Hướng dẫn sử dụng
+# Bộ Soạn Thảo Toán Học Markdown ✨
 
-<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" fill="currentColor" viewBox="0 0 16 16">
-    <path
-        d="M14 3a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z" />
-    <path fill-rule="evenodd"
-        d="M9.146 8.146a.5.5 0 0 1.708 0L11.5 9.793l1.646-1.647a.5.5 0 0 1.708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 0-.708" />
-    <path fill-rule="evenodd" d="M11.5 5a.5.5 0 0 1.5.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 1.5-.5" />
-    <path
-        d="M3.56 11V7.01h.056l1.428 3.239h.774l1.42-3.24h.056V11h1.073V5.001h-1.2l-1.71 3.894h-.039l-1.71-3.894H2.5V11z" />
-</svg>
+Trình biên tập **markdown toán học** chuyên nghiệp với tính năng xem trước tức thì. Soạn thảo tài liệu **toán học trực tuyến** với các phương trình LaTeX, ký tự Hy Lạp và công thức phức tạp. Công cụ hỗ trợ đầy đủ **xem trước trực tiếp** (live preview).
 
-## 1. Công thức cùng dòng (Inline)
-Phương trình: $E=mc^2$
+## Ví Dụ Trực Quan Về Toán Học
 
-Nếu muốn công thức to hơn thì thêm `\displaystyle` ở trước công thức.
+### Cách Dùng Cơ Bản
 
-Ví dụ:
-$\displaystyle \int_{a}^{b} x^2 dx$
+**Toán học trên cùng dòng (Inline)**: Phương trình nổi tiếng của Einstein $E = mc^2$ thể hiện sự tương đương khối lượng - năng lượng.
 
-## 2. Công thức tách dòng (Block)
-$$\displaystyle x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a} $$
+**Toán học dạng khối (Display)** - Định luật 2 Newton:
 
-## 3. Ma trận
+
+$$F = ma$$
+
+### Các Trường Hợp Phổ Biến
+
+#### 1. Giải Tích & Đạo Hàm
+
+$$\frac{d}{dx}(x^2) = 2x \quad \text{và} \quad \int x^2 dx = \frac{x^3}{3} + C$$
+
+#### 2. Phân Số
+
+$$\frac{a}{b} + \frac{c}{d} = \frac{ad + bc}{bd}$$
+
+#### 3. Căn Thức
+
+$$\sqrt{16} = 4 \quad \text{và} \quad \sqrt[3]{27} = 3$$
+
+#### 4. Ký Tự Hy Lạp
+
+$$\alpha + \beta = \gamma \quad \theta = 45^\circ \quad \pi \approx 3,14159$$
+
+Ký tự thông dụng: $\alpha$, $\beta$, $\gamma$, $\delta$, $\epsilon$, $\theta$, $\lambda$, $\mu$, $\pi$, $\sigma$, $\omega$
+
+#### 5. Tổng & Tích Phép Số
+
+$$\sum_{i=1}^{n} i = \frac{n(n+1)}{2} \quad \prod_{i=1}^{n} i = n!$$
+
+#### 6. Ma Trận Toán Học
+
+$$\begin{pmatrix} a & b \\ c & d \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} ax + by \\ cx + dy \end{pmatrix}$$
+
+#### 7. Giới Hạn (Giới Hạn Hàm Số)
+
+$$\lim_{x \to 0} \frac{\sin x}{x} = 1$$
+
+#### 8. Tích Phân Xác Định
+
+$$\int_0^{\pi} \sin x \, dx = 2$$
+
+#### 9. Thống Kê & Xác Suất
+
+$$\mu = \frac{1}{n}\sum_{i=1}^n x_i \quad \sigma^2 = \frac{1}{n}\sum_{i=1}^n (x_i - \mu)^2$$
+
+#### 10. Phương Trình Bậc Hai
+
+$$x = \frac{-b \pm \sqrt{b^2-4ac}}{2a}$$
+
+## Tính Năng Nâng Cao
+
+### Hệ Phương Trình Căn Chỉnh (Aligned)
+
+$$\begin{align*} (x+y)^2 &= x^2 + 2xy + y^2 \\ (x-y)^2 &= x^2 - 2xy + y^2 \\ (x+y)(x-y) &= x^2 - y^2 \end{align*}$$
+
+### Hàm Số Cho Bởi Nhiều Công Thức
+
+$$f(x) = \begin{cases} x^2 & \text{nếu } x \geq 0 \\ -x^2 & \text{nếu } x < 0 \end{cases}$$
+
+### Hệ Phương Trình Bậc Nhất
+
+$$\begin{cases} x + 2y = 5 \\ 3x - y = 4 \end{cases}$$
+
+### Lượng Giác
+
+$$\sin^2\theta + \cos^2\theta = 1 \quad \tan\theta = \frac{\sin\theta}{\cos\theta}$$
+
+## Lập Trình Và Toán Học
+
+Kết hợp mã nguồn và công thức toán học dễ dàng. Xuất bản tài liệu sang **PDF** hoặc **Word** giữ nguyên định dạng công thức.
+
+```python
+def quadratic_formula(a, b, c):
+    """
+    Giải phương trình: ax² + bx + c = 0
+    Công thức: x = (-b ± √(b²-4ac)) / 2a
+    """
+    discriminant = b**2 - 4*a*c
+    x1 = (-b + discriminant**0.5) / (2*a)
+    x2 = (-b - discriminant**0.5) / (2*a)
+    return x1, x2
+
+# Ví dụ: x² - 5x + 6 = 0
+print(quadratic_formula(1, -5, 6))  # Kết quả: (3.0, 2.0)
+
+```
+
+Đánh giá độ phức tạp thuật toán:
+
+| Thuật toán | Độ phức tạp thời gian | Không gian lưu trữ | Công thức gốc |
+| --- | --- | --- | --- |
+| Tìm kiếm nhị phân | $O(\log n)$ | $O(1)$ | $\log_2 n$ |
+| Sắp xếp nhanh (Quick Sort) | $O(n \log n)$ | $O(\log n)$ | $n \log_2 n$ |
+| Sắp xếp nổi bọt (Bubble Sort) | $O(n^2)$ | $O(1)$ | $\frac{n(n-1)}{2}$ |
+
+## Ứng Dụng Vật Lý
+
+### Cơ Học Cổ Điển
+
+$$F = ma \quad E_k = \frac{1}{2}mv^2 \quad p = mv$$
+
+### Điện Từ Học
+
+$$F = qE \quad F = q\mathbf{v} \times \mathbf{B} \quad E = mc^2$$
+
+### Phương Trình Sóng
+
+$$v = f\lambda \quad \text{với } v \text{ là vận tốc, } f \text{ là tần số}$$
+
+## Hướng Dẫn Ký Hiệu Khẩn Cấp
+
+### Viết Trên Cùng Dòng
+
+Dùng 1 dấu đô la: `$E = mc^2$` sẽ hiển thị $E = mc^2$
+
+### Viết Dạng Khối Riêng
+
+Dùng 2 dấu đô la đặt ở dòng riêng:
+
+```
 $$
-A = \begin{pmatrix}
-1 & 0 \\
-0 & 1
-\end{pmatrix}
+x = \frac{-b \pm \sqrt{b^2-4ac}}{2a}
 $$
 
-## 4. Bảng
-| Điều kiện | Số nghiệm thực | Công thức nghiệm |
-| --- | --- | --- |
-| $\Delta > 0$ | 2 nghiệm phân biệt | $x_1 = \frac{-b + \sqrt{\Delta}}{2a}$<br>$x_2 = \frac{-b - \sqrt{\Delta}}{2a}$ |
-| $\Delta = 0$ | 1 nghiệm kép | $x_1 = x_2 = -\frac{b}{2a}$ |
-| $\Delta < 0$ | Vô nghiệm ||
+```
 
-*Trong đó:* $\ \Delta = b^2 - 4ac$
+### Ký Tự Đặc Biệt
 
-## 5. Sơ đồ Mermaid
+* Phân số: `\frac{a}{b}` $\rightarrow \frac{a}{b}$
+* Căn bậc hai: `\sqrt{x}` $\rightarrow \sqrt{x}$
+* Mũ số: `x^2` $\rightarrow x^2$
+* Chỉ số dưới: `x_i` $\rightarrow x_i$
+* Dấu tổng: `\sum_{i=1}^n` $\rightarrow \sum_{i=1}^n$
+* Tích phân: `\int_a^b` $\rightarrow \int_a^b$
+
+## Sơ Đồ Quy Trình Minh Họa
+
+### Lưu Đồ
+
 ```mermaid
 flowchart TD
-    A([Bắt đầu]) --> B[/Nhập a, b, c<br>với a khác 0/]
-    B --> C[Delta = b^2 - 4*a*c]
-    C --> D{Kiểm tra<br>Delta}
-    
-    D -->|> 0| E["x1, x2 =<br>(-b+/-sqrt(Delta))<br>/ 2a"]
-    D -->|= 0| F["Nghiệm kép<br>x = -b / 2a"]
-    D -->|< 0| G[Vô nghiệm]
-    
-    E --> H([Kết thúc])
-    F --> H
+    A([Bắt đầu])
+    B[Nhập a, b]
+    C{a = 0?}
+    D{b = 0?}
+    E[PT có<br>vô số nghiệm]
+    F[PT<br>vô nghiệm]
+    G[Tính<br>x = -b / a]
+    H[Hiển thị<br>nghiệm x]
+    I([Kết thúc])
+    A --> B
+    B --> C
+    C -- Có --> D
+    C -- Không --> G
+    D -- Có --> E
+    D -- Không --> F
+    E --> I
+    F --> I
     G --> H
+    H --> I
 ```
+
+## Mẹo Soạn Thảo Nhỏ
+
+> **💡 Mẹo nhỏ**: Hãy nhân đôi dấu gạch chéo ngược `\\` nếu hệ thống của bạn yêu cầu thoát ký tự trong mã code.
+
+> **⚠️ Lỗi thường gặp**:
+> * Thiếu dấu ngoặc nhọn kết thúc `{...}`
+> * Không thoát các ký tự đặc biệt trùng với Markdown: `$`, `%`, `&`
+> * Phân số lồng nhau cần bao bọc kỹ bằng nhiều tầng dấu ngoặc nhọn.
+> 
+> 
+
+## Ví Dụ Thực Tế Khác
+
+### Khoa Học Máy Tính (Độ Phức Tạp Đệ Quy)
+
+$$T(n) = \begin{cases} 1 & \text{nếu } n = 1 \\ 2T(\frac{n}{2}) + n & \text{nếu } n > 1 \end{cases}$$
+
+Giải phương trình đệ quy: $T(n) = O(n \log n)$
+
+### Tài Chính Kinh Tế (Lãi Kép)
+
+$$FV = PV \times (1 + r)^n \quad CI = P \left(1 + \frac{r}{n}\right)^{nt} - P$$
+
+### Xác Suất Đại Cương
+
+$$P(A \cup B) = P(A) + P(B) - P(A \cap B)$$
+
+$$E(X) = \sum_{i=1}^n x_i \cdot P(x_i)$$
+
+---
+
+## 🚀 Trải Nghiệm Trình Soạn Thảo Ngay!
+
+**Khung bên trái**: Nhập nội dung Markdown và LaTeX của bạn
+**Khung bên phải**: Theo dõi kết quả hiển thị tức thì
+
+### Ưu Điểm Nổi Bật
+
+✅ **Toán học chuẩn hóa** - Hỗ trợ thư viện LaTeX
+
+✅ **Xem trực quan** - Thay đổi hiển thị theo thời gian thực
+
+✅ **Ký tự đầy đủ** - Tích hợp toàn bộ hệ ký tự Hy Lạp cổ đại
+
+✅ **Sơ đồ thông minh** - Tạo biểu đồ trực quan cùng Mermaid
+
+✅ **Đa nền tảng** - Sao lưu dữ liệu dễ dàng, bảo mật cao
+
+### Hướng Dẫn Nhanh
+
+1. Kẹp công thức giữa cặp `$...$` hoặc `$$...$$`
+2. Dùng các thẻ định hình như `\frac{}{}`, `\sqrt{}`, ký tự `\alpha`, `\beta`
+3. Quan sát màn hình bên phải tự động cập nhật
+
+**Bắt đầu ngay** - Xóa nội dung ví dụ này và nhập bài viết của bạn! 📝                
             </textarea>
         </div>
 

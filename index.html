@@ -237,7 +237,7 @@
         /* --- Output Area --- */
         #latex-output {
             flex: 1;
-            padding: 1.2rem 2.0rem 2.0rem 2.0rem;
+            padding: 1.2rem 2.0rem 5.0rem 2.0rem;
             /* MỤC SỬA LỖI: Giảm đệm lề trên từ 2.0rem về đúng 1.2rem để căn bằng trục ngang */
             overflow-y: auto;
             word-wrap: break-word;
@@ -252,6 +252,13 @@
         .markdown-body {
             line-height: 1.6;
             font-size: 1.1rem;
+        }
+
+        /* Tự động giãn dòng rộng rãi hơn khi dòng chứa công thức Toán để tránh dính sát chữ */
+        .markdown-body p:has(mjx-container),
+        .markdown-body li:has(mjx-container),
+        .markdown-body td:has(mjx-container) {
+            line-height: 1.8 !important;
         }
 
         /* Gộp chung thuộc tính của tiêu đề */
@@ -291,6 +298,10 @@
         .markdown-body ol {
             padding-left: 2.0rem;
             margin-bottom: 1.0rem;
+        }
+
+        .markdown-body li {
+            margin-bottom: 0.8rem;
         }
 
         /* --- MỤC CẢI TIẾN: SỬA LỖI CÚ PHÁP PHÂN TÁCH INLINE CODE VÀ BLOCK CODE CHUẨN GITHUB & WORD --- */
@@ -365,7 +376,8 @@
 
         /* --- MathJax Fixes --- */
         mjx-container[display="false"] {
-            margin: 0 0.1rem !important;
+            margin: 0.15rem 0.4rem !important; /* Tạo khoảng đệm dọc dọc 0.15rem và đệm ngang 0.4rem giúp các công thức cùng dòng không bị sát nhau quá */
+            padding: 0.05rem 0 !important;
             vertical-align: middle !important;
         }
 
@@ -531,7 +543,7 @@
                 </button>
             </div>
             <button onclick="closeCopyModal()" class="btn"
-                style="width: 100%; margin-top: 1.2rem; background-color: #f1f5f9; border-color: #cbd5e1; color: #475569; justify-content: center;">Hủy
+                style="width: 100%; margin-top: 1.2rem; background-color: #f1f5f9; border-color: #cbd5e1; color: #475569; justify-content: center;">Huỷ
                 bỏ</button>
         </div>
     </div>
@@ -563,7 +575,7 @@
                 </button>
             </div>
             <button onclick="closeDownloadModal()" class="btn"
-                style="width: 100%; margin-top: 1.2rem; background-color: #f1f5f9; border-color: #cbd5e1; color: #475569; justify-content: center;">Hủy
+                style="width: 100%; margin-top: 1.2rem; background-color: #f1f5f9; border-color: #cbd5e1; color: #475569; justify-content: center;">Huỷ
                 bỏ</button>
         </div>
     </div>

@@ -14,6 +14,14 @@
         }
     </script>
 
+    <!-- Thư viện Highlight.js (Tô màu mã nguồn) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>
+        if (typeof hljs === 'undefined') {
+            document.write('<script src="js/highlight.min.js"><\/script>');
+        }
+    </script>
+
     <!-- Cấu hình MathJax -->
     <script>
         window.MathJax = {
@@ -254,6 +262,88 @@
             font-size: 1.1rem;
         }
 
+        /* --- Custom Highlight.js GitHub Light Theme --- */
+        .hljs {
+            color: #24292e !important;
+            background: #ffffff !important;
+        }
+        .hljs-doctag,
+        .hljs-keyword,
+        .hljs-meta .hljs-keyword,
+        .hljs-template-tag,
+        .hljs-template-variable,
+        .hljs-type,
+        .hljs-variable.language_ {
+            color: #d73a49 !important;
+            font-weight: bold !important;
+        }
+        .hljs-title,
+        .hljs-title.class_,
+        .hljs-title.class_.inherited__,
+        .hljs-title.function_ {
+            color: #6f42c1 !important;
+            font-weight: bold !important;
+        }
+        .hljs-attr,
+        .hljs-attribute,
+        .hljs-literal,
+        .hljs-meta,
+        .hljs-number,
+        .hljs-operator,
+        .hljs-variable,
+        .hljs-selector-attr,
+        .hljs-selector-id,
+        .hljs-selector-class {
+            color: #005cc5 !important;
+        }
+        .hljs-regexp,
+        .hljs-string,
+        .hljs-meta .hljs-string {
+            color: #032f62 !important;
+        }
+        .hljs-built_in,
+        .hljs-symbol {
+            color: #e36209 !important;
+        }
+        .hljs-comment,
+        .hljs-code,
+        .hljs-formula {
+            color: #6a737d !important;
+            font-style: italic !important;
+        }
+        .hljs-name,
+        .hljs-quote,
+        .hljs-selector-tag,
+        .hljs-selector-pseudo {
+            color: #22863a !important;
+        }
+        .hljs-subst {
+            color: #24292e !important;
+        }
+        .hljs-section {
+            color: #005cc5 !important;
+            font-weight: bold !important;
+        }
+        .hljs-bullet {
+            color: #735c0f !important;
+        }
+        .hljs-emphasis {
+            color: #24292e !important;
+            font-style: italic !important;
+        }
+        .hljs-strong {
+            color: #24292e !important;
+            font-weight: bold !important;
+        }
+        .hljs-addition {
+            color: #22863a !important;
+            background-color: #f0fff4 !important;
+        }
+        .hljs-deletion {
+            color: #b31d28 !important;
+            background-color: #ffeef0 !important;
+        }
+
         /* Tự động giãn dòng rộng rãi hơn khi dòng chứa công thức Toán để tránh dính sát chữ */
         .markdown-body p:has(mjx-container),
         .markdown-body li:has(mjx-container),
@@ -339,8 +429,8 @@
             padding: 0 !important;
             border-radius: 0 !important;
             border: none !important;
-            color: var(--code-color) !important;
-            /* Màu đen tuyền #000000 */
+            color: var(--code-color);
+            /* Màu đen tuyền #000000 cho văn bản thường, cho phép các thẻ con tô màu riêng */
             font-family: "Consolas", "Monaco", "Courier New", monospace !important;
             /* Ưu tiên Consolas */
             font-size: 0.95rem !important;
@@ -376,8 +466,7 @@
 
         /* --- MathJax Fixes --- */
         mjx-container[display="false"] {
-            margin: 0.15rem 0.4rem !important;
-            /* Tạo khoảng đệm dọc dọc 0.15rem và đệm ngang 0.4rem giúp các công thức cùng dòng không bị sát nhau quá */
+            margin: 0.15rem 0.4rem !important; /* Tạo khoảng đệm dọc dọc 0.15rem và đệm ngang 0.4rem giúp các công thức cùng dòng không bị sát nhau quá */
             padding: 0.05rem 0 !important;
             vertical-align: middle !important;
         }
@@ -847,7 +936,7 @@ $$E(X) = \sum_{i=1}^n x_i \cdot P(x_i)$$
 2. Dùng các thẻ định hình như `\frac{}{}`, `\sqrt{}`, ký tự `\alpha`, `\beta`
 3. Quan sát màn hình bên phải tự động cập nhật
 
-**Bắt đầu ngay** - Xóa nội dung ví dụ này và nhập bài viết của bạn! 📝                
+**Bắt đầu ngay** - Xóa nội dung ví dụ này và nhập bài viết của bạn! 📝
             </textarea>
         </div>
 
@@ -982,6 +1071,17 @@ $$E(X) = \sum_{i=1}^n x_i \cdot P(x_i)$$
             });
 
             output.innerHTML = htmlContent;
+
+            // Kích hoạt tô màu mã nguồn với Highlight.js
+            if (window.hljs) {
+                try {
+                    output.querySelectorAll('pre code').forEach((block) => {
+                        hljs.highlightElement(block);
+                    });
+                } catch (e) {
+                    console.error("HighlightJS run error", e);
+                }
+            }
 
             // Kích hoạt vẽ Sơ đồ động Mermaid trực tiếp trên Web
             if (window.mermaid) {
@@ -1244,6 +1344,9 @@ $$E(X) = \sum_{i=1}^n x_i \cdot P(x_i)$$
 
             await Promise.all(conversionPromises);
 
+            // Áp dụng màu sắc highlight.js trước khi xử lý chung cho code block
+            convertHljsToInlineStyles(tempDiv);
+
             // Ép cấu trúc code block và table cho đồng đều khi dán vào Google Docs
             const codeEls = tempDiv.querySelectorAll('code');
             codeEls.forEach(el => {
@@ -1302,6 +1405,66 @@ $$E(X) = \sum_{i=1}^n x_i \cdot P(x_i)$$
             await navigator.clipboard.write(data);
 
             document.body.removeChild(tempDiv);
+        }
+
+        // --- CHUYỂN ĐỔI CLASS HIGHLIGHT.JS SANG INLINE STYLE ĐỂ GIỮ NGUYÊN MÀU KHI COPY SANG GDOCS/WORD ---
+        function convertHljsToInlineStyles(container) {
+            const hljsSpans = container.querySelectorAll('[class^="hljs-"], [class*=" hljs-"]');
+            hljsSpans.forEach(span => {
+                const classes = Array.from(span.classList);
+                classes.forEach(cls => {
+                    if (cls.startsWith('hljs-')) {
+                        switch (cls) {
+                            case 'hljs-keyword':
+                            case 'hljs-doctag':
+                            case 'hljs-template-tag':
+                            case 'hljs-template-variable':
+                            case 'hljs-type':
+                                span.style.color = '#d73a49';
+                                span.style.fontWeight = 'bold';
+                                break;
+                            case 'hljs-title':
+                            case 'hljs-title.class_':
+                            case 'hljs-title.function_':
+                                span.style.color = '#6f42c1';
+                                span.style.fontWeight = 'bold';
+                                break;
+                            case 'hljs-attr':
+                            case 'hljs-attribute':
+                            case 'hljs-literal':
+                            case 'hljs-number':
+                            case 'hljs-operator':
+                            case 'hljs-variable':
+                                span.style.color = '#005cc5';
+                                break;
+                            case 'hljs-string':
+                            case 'hljs-regexp':
+                                span.style.color = '#032f62';
+                                break;
+                            case 'hljs-built_in':
+                            case 'hljs-symbol':
+                                span.style.color = '#e36209';
+                                break;
+                            case 'hljs-comment':
+                            case 'hljs-code':
+                            case 'hljs-formula':
+                                span.style.color = '#6a737d';
+                                span.style.fontStyle = 'italic';
+                                break;
+                            case 'hljs-name':
+                            case 'hljs-quote':
+                            case 'hljs-selector-tag':
+                            case 'hljs-selector-pseudo':
+                                span.style.color = '#22863a';
+                                break;
+                            case 'hljs-section':
+                                span.style.color = '#005cc5';
+                                span.style.fontWeight = 'bold';
+                                break;
+                        }
+                    }
+                });
+            });
         }
 
         // --- ĐỆ QUY DỌN SẠCH THUỘC TÍNH RÁC MATHML ĐỂ WORD ĐỌC MTABLE/CASES PHẲNG PHIU CHUẨN XÁC ---
@@ -1460,6 +1623,9 @@ $$E(X) = \sum_{i=1}^n x_i \cdot P(x_i)$$
                     }
                 }
             });
+
+            // Áp dụng màu sắc highlight.js trước khi xử lý chung cho code block
+            convertHljsToInlineStyles(tempDiv);
 
             // Ép cấu trúc code block và table cho đồng đều khi dán vào Word
             const codeEls = tempDiv.querySelectorAll('code');

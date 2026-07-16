@@ -1,6 +1,6 @@
-# 📝 Công Cụ Chép Công Thức Toán & Sơ Đồ Từ AI Sang Word và Google Docs
+# 📝 Công Cụ Chép Công Thức Toán & Sơ Đồ Từ Trợ Lý AI Sang Word và Google Docs
 
-Đây là công cụ hỗ trợ sao chép nội dung văn bản chứa công thức toán (Markdown, LaTeX) và sơ đồ (Mermaid) từ các trợ lý AI (Gemini, ChatGPT) để dán vào Microsoft Word hoặc Google Docs một cách dễ dàng và đẹp mắt.
+Đây là công cụ hỗ trợ sao chép nội dung văn bản chứa công thức toán (Markdown, LaTeX) và sơ đồ (Mermaid) từ các trợ lý AI (Gemini, ChatGPT...) để dán vào Microsoft Word hoặc Google Docs một cách dễ dàng và đẹp mắt.
 
 ---
 

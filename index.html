@@ -10,7 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
         if (typeof marked === 'undefined') {
-            document.write('<script src="js/marked.min.js"><\/script>');
+            document.write('<script src="js/marked.min.js"></' + 'script>');
         }
     </script>
 
@@ -18,7 +18,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     <script>
         if (typeof hljs === 'undefined') {
-            document.write('<script src="js/highlight.min.js"><\/script>');
+            document.write('<script src="js/highlight.min.js"></' + 'script>');
         }
     </script>
 
@@ -42,7 +42,7 @@
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
     <script>
         if (typeof MathJax === 'undefined' || !MathJax.typesetPromise) {
-            document.write('<script id="MathJax-script" async src="js/tex-svg.js"><\/script>');
+            document.write('<script id="MathJax-script" async src="js/tex-svg.js"></' + 'script>');
         }
     </script>
 
@@ -50,7 +50,7 @@
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>
         if (typeof mermaid === 'undefined') {
-            document.write('<script src="js/mermaid.min.js"><\/script>');
+            document.write('<script src="js/mermaid.min.js"></' + 'script>');
         }
     </script>
     <script>
@@ -934,7 +934,9 @@ $$E(X) = \sum_{i=1}^n x_i \cdot P(x_i)$$
 ### Hướng Dẫn Nhanh
 
 1. Kẹp công thức giữa cặp `$...$` hoặc `$$...$$`
+
 2. Dùng các thẻ định hình như `\frac{}{}`, `\sqrt{}`, ký tự `\alpha`, `\beta`
+
 3. Quan sát màn hình bên phải tự động cập nhật
 
 **Bắt đầu ngay** - Xóa nội dung ví dụ này và nhập bài viết của bạn! 📝
@@ -1670,7 +1672,6 @@ $$E(X) = \sum_{i=1}^n x_i \cdot P(x_i)$$
             ths.forEach(th => {
                 th.style.border = '1px solid #000000'; // Viền đen phẳng phiu 1 pt
                 th.style.padding = '6px 10px';
-                th.style.backgroundColor = '#f1f5f9';
                 th.style.fontWeight = 'bold';
             });
 
@@ -1735,7 +1736,7 @@ ${styleTags}
     }
     
     /* --- CSS KHẮC PHỤC TRÀN VIỀN CÔNG THỨC KHỐI KHI IN --- */
-    mjx-container[display=\"true\"] {
+    mjx-container[display='true'] {
         overflow-x: auto !important;
         overflow-y: hidden !important;
         max-width: 100% !important;

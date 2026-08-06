@@ -7,20 +7,10 @@
     <title>Chép câu trả lời của Gemini/ChatGPT (Markdown/LaTeX/Mermaid) dùng cho Word / Docs - D.T.Chánh</title>
 
     <!-- Thư viện Marked (Xử lý Markdown) -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script>
-        if (typeof marked === 'undefined') {
-            document.write('<script src="js/marked.min.js"></' + 'script>');
-        }
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" onerror="this.onerror=null;this.src='js/marked.min.js';"></script>
 
     <!-- Thư viện Highlight.js (Tô màu mã nguồn) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-    <script>
-        if (typeof hljs === 'undefined') {
-            document.write('<script src="js/highlight.min.js"></' + 'script>');
-        }
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" onerror="this.onerror=null;this.src='js/highlight.min.js';"></script>
 
     <!-- Cấu hình MathJax -->
     <script>
@@ -39,20 +29,10 @@
         };
     </script>
     <!-- Thư viện MathJax (Xử lý Toán) -->
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
-    <script>
-        if (typeof MathJax === 'undefined' || !MathJax.typesetPromise) {
-            document.write('<script id="MathJax-script" async src="js/tex-svg.js"></' + 'script>');
-        }
-    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" onerror="this.onerror=null;this.src='js/tex-svg.js';"></script>
 
     <!-- Thư viện Mermaid (Xử lý Sơ đồ) -->
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <script>
-        if (typeof mermaid === 'undefined') {
-            document.write('<script src="js/mermaid.min.js"></' + 'script>');
-        }
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js" onerror="this.onerror=null;this.src='js/mermaid.min.js';"></script>
     <script>
         if (typeof mermaid !== 'undefined') {
             mermaid.initialize({
@@ -1096,7 +1076,7 @@ $$E(X) = \sum_{i=1}^n x_i \cdot P(x_i)$$
                 }
             }
 
-            if (window.MathJax) {
+            if (window.MathJax && MathJax.typesetPromise) {
                 promise = promise.then(() => {
                     return MathJax.typesetPromise([output]);
                 }).catch((err) => console.log('MathJax Error:', err));
@@ -1237,7 +1217,7 @@ $$E(X) = \sum_{i=1}^n x_i \cdot P(x_i)$$
             tempDiv.style.fontFamily = getComputedStyle(document.body).fontFamily;
             document.body.appendChild(tempDiv);
 
-            if (window.MathJax) {
+            if (window.MathJax && MathJax.typesetPromise) {
                 await MathJax.typesetPromise([tempDiv]);
             }
 
@@ -1505,7 +1485,7 @@ $$E(X) = \sum_{i=1}^n x_i \cdot P(x_i)$$
             tempDiv.style.fontFamily = getComputedStyle(document.body).fontFamily;
             document.body.appendChild(tempDiv);
 
-            if (window.MathJax) {
+            if (window.MathJax && MathJax.typesetPromise) {
                 await MathJax.typesetPromise([tempDiv]);
             }
 
@@ -1834,7 +1814,7 @@ ${cleanContent}
                 btn.querySelector('span').textContent = 'Phóng To';
                 icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />';
             }
-            if (window.MathJax) {
+            if (window.MathJax && MathJax.typesetPromise) {
                 MathJax.typesetPromise([document.getElementById('latex-output')]);
             }
         }

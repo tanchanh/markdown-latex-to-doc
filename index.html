@@ -229,7 +229,11 @@
             padding: 1.2rem 2.0rem 5.0rem 2.0rem;
             /* MỤC SỬA LỖI: Giảm đệm lề trên từ 2.0rem về đúng 1.2rem để căn bằng trục ngang */
             overflow-y: auto;
+            overflow-x: hidden;
+            max-width: 100%;
             word-wrap: break-word;
+            overflow-wrap: break-word;
+            box-sizing: border-box;
         }
 
         /* MỤC SỬA LỖI: Triệt tiêu hoàn toàn khoảng cách lề trên của thẻ tiêu đề đầu tiên trong trang Kết Quả */
@@ -241,6 +245,11 @@
         .markdown-body {
             line-height: 1.4;
             font-size: 1.0rem;
+            max-width: 100%;
+            overflow-x: hidden;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            box-sizing: border-box;
         }
 
         /* --- Custom Highlight.js GitHub Light Theme --- */
@@ -340,6 +349,9 @@
             margin-bottom: 0.5rem;
             font-weight: bold;
             color: var(--text-color);
+            overflow-wrap: break-word;
+            word-break: break-word;
+            max-width: 100%;
         }
 
         /* Gộp đường gạch chân của h1 và h2 */
@@ -364,16 +376,23 @@
         .markdown-body p {
             margin-top: 0;
             margin-bottom: 0.5rem;
+            overflow-wrap: break-word;
+            word-break: break-word;
+            max-width: 100%;
         }
 
         .markdown-body ul,
         .markdown-body ol {
             padding-left: 2.0rem;
             margin-bottom: 1.0rem;
+            max-width: 100%;
         }
 
         .markdown-body li {
             margin-bottom: 0.5rem;
+            overflow-wrap: break-word;
+            word-break: break-word;
+            max-width: 100%;
         }
 
         /* --- MỤC CẢI TIẾN: SỬA LỖI CÚ PHÁP PHÂN TÁCH INLINE CODE VÀ BLOCK CODE CHUẨN GITHUB & WORD --- */
@@ -425,6 +444,9 @@
         .markdown-body table {
             border-collapse: collapse !important;
             /* Loại bỏ khoảng hở cell */
+            display: block !important;
+            overflow-x: auto !important;
+            max-width: 100% !important;
             width: 100%;
             margin-top: 0;
             margin-bottom: 1.0rem;
@@ -444,6 +466,11 @@
         .mermaid * {
             font-family: 'Consolas', 'Courier New', monospace !important;
             /* Ép phông chữ sơ đồ về Consolas lộng lẫy */
+        }
+
+        .mermaid {
+            overflow-x: auto !important;
+            max-width: 100% !important;
         }
 
         /* --- MathJax Fixes --- */
@@ -522,14 +549,19 @@
         @media (max-width: 48.0rem) {
             main {
                 flex-direction: column;
+                max-width: 100%;
+                overflow-x: hidden;
             }
 
             .column {
                 width: 100%;
+                max-width: 100%;
                 height: auto;
                 min-height: 25rem;
                 border-right: none;
                 border-bottom: 2px solid var(--border-color);
+                overflow-x: hidden;
+                box-sizing: border-box;
             }
 
             body.fullscreen-active main .column:last-child {
@@ -547,6 +579,9 @@
             #latex-input,
             #latex-output {
                 padding: 1rem;
+                max-width: 100%;
+                box-sizing: border-box;
+                overflow-x: hidden;
             }
         }
     </style>
@@ -1056,6 +1091,7 @@ $$E(X) = \sum_{i=1}^n x_i \cdot P(x_i)$$
             });
 
             output.innerHTML = htmlContent;
+            output.scrollLeft = 0;
 
             // Kích hoạt tô màu mã nguồn với Highlight.js
             if (window.hljs) {

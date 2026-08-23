@@ -348,6 +348,13 @@
             text-decoration: underline;
         }
 
+        .markdown-body hr {
+            border: none;
+            border-top: 2px solid var(--divider-color);
+            margin: 1.0rem 0;
+        }
+
+        /* KHUNG GHI CHÚ ĐÃ TINH GỌN ĐÁY ÔM SÁT GỌN GÀNG */
         .markdown-body blockquote {
             border-left: 4px solid var(--blockquote-border);
             background-color: var(--blockquote-bg);
@@ -355,6 +362,15 @@
             padding: 0.5rem 1.0rem;
             margin: 0.8rem 0;
             border-radius: 0.2rem;
+        }
+
+        .markdown-body blockquote > :last-child {
+            margin-bottom: 0;
+        }
+
+        .markdown-body blockquote ul,
+        .markdown-body blockquote ol {
+            margin-bottom: 0.3rem;
         }
 
         .markdown-body ul,
@@ -450,7 +466,7 @@
         .markdown-body td {
             border: 0.75pt solid var(--table-border-color);
             padding: 0.5rem 0.8rem;
-            vertical-align: top; /* ĐÃ SỬA: Căn bám từ trên xuống dưới, không căn giữa dọc */
+            vertical-align: top;
         }
 
         .markdown-body th {
@@ -688,17 +704,17 @@
             <textarea id="latex-input" spellcheck="false" placeholder="Nhập nội dung Markdown & LaTeX vào đây, hoặc kéo thả / dán file tại đây..."></textarea>
         </div>
 
-        <!-- Cột Phải: Output -->
+        <!-- Cột Phải: Output (NÚT "Chép" VÀ NÚT "Phóng To") -->
         <div class="column">
             <div class="toolbar">
                 <div class="toolbar-group">
                     <span>Kết Quả:</span>
-                    <!-- 1. Nút Chép KQ -->
+                    <!-- 1. Nút Chép -->
                     <button onclick="copyOutput()" id="btn-copy-output" class="btn" title="Sao chép kết quả">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125 1.125 1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25z" />
                         </svg>
-                        <span>Chép KQ</span>
+                        <span>Chép</span>
                     </button>
                 </div>
                 <div class="toolbar-group">
@@ -710,6 +726,7 @@
                     </button>
                 </div>
             </div>
+            
             <div id="latex-output" class="markdown-body"></div>
         </div>
     </main>
@@ -739,7 +756,7 @@
             syntaxTag:        '#009911'
         };
 
-        // --- HẰNG SỐ VĂN BẢN VÍ DỤ MẪU GỐC ---
+        // --- HẰNG SỐ VĂN BẢN VÍ DỤ MẪU MỚI (ĐÃ CẬP NHẬT 100% THEO YÊU CẦU) ---
         const DEFAULT_TEMPLATE = `# Bộ Soạn Thảo Toán Học Markdown ✨
 
 Trình biên tập **markdown toán học** chuyên nghiệp với tính năng xem trước tức thì. Soạn thảo tài liệu **toán học trực tuyến** với các phương trình LaTeX, ký tự Hy Lạp và công thức phức tạp. Công cụ hỗ trợ đầy đủ **xem trước trực tiếp** (live preview).
@@ -798,7 +815,7 @@ $$\\mu = \\frac{1}{n}\\sum_{i=1}^n x_i \\quad \\sigma^2 = \\frac{1}{n}\\sum_{i=1
 
 $$x = \\frac{-b \\pm \\sqrt{b^2-4ac}}{2a}$$
 
-## Tính Nâng Cao
+## Tính Năng Nâng Cao
 
 ### Hệ Phương Trình Căn Chỉnh (Aligned)
 
@@ -838,7 +855,7 @@ print(quadratic_formula(1, -5, 6))  # Kết quả: (3.0, 2.0)
 Đánh giá độ phức tạp thuật toán:
 
 | Thuật toán | Độ phức tạp thời gian | Không gian lưu trữ | Công thức gốc |
-| :--- | :---: | :---: | ---: |
+| ---: | :--- | :--- | :---: |
 | Tìm kiếm nhị phân | $O(\\log n)$ | $O(1)$ | $\\log_2 n$ |
 | Sắp xếp nhanh (Quick Sort) | $O(n \\log n)$ | $O(\\log n)$ | $n \\log_2 n$ |
 | Sắp xếp nổi bọt (Bubble Sort) | $O(n^2)$ | $O(1)$ | $\\frac{n(n-1)}{2}$ |
@@ -885,27 +902,17 @@ $$
 ## Sơ Đồ Quy Trình Minh Họa
 
 ### Lưu Đồ Đơn Giản
+
 \`\`\`mermaid
 flowchart TD
-    A([Bắt đầu])
-    B[/Nhập a, b/]
-    C{a = 0?}
-    D{b = 0?}
-    E[\\Vô số nghiệm\\]
-    F[\\Vô nghiệm\\]
-    G[Tính x = -b / a]
-    H[\\Hiển thị x\\]
-    I([Kết thúc])
-    A --> B
-    B --> C
-    C -- Có --> D
-    C -- Không --> G
-    D -- Có --> E
-    D -- Không --> F
-    G --> H
-    E --> I
-    F --> I
-    H --> I
+    A([Bắt đầu]) --> B[/Nhập số nguyên n/]
+    B --> C{n chia hết cho 2?}
+    
+    C -- Đúng --> D[\\In ra: n là số chẵn\\]
+    C -- Sai --> E[\\In ra: n là số lẻ\\]
+    
+    D --> F([Kết thúc])
+    E --> F([Kết thúc])
 \`\`\`
 
 ## Mẹo Soạn Thảo Nhỏ
@@ -958,9 +965,7 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
 ### Hướng Dẫn Nhanh
 
 1. Kẹp công thức giữa cặp \`$...\` hoặc \`$$...\`
-
 2. Dùng các thẻ định hình như \`\\frac{}{}\`, \`\\sqrt{}\`, ký tự \`\\alpha\`, \`\\beta\`
-
 3. Quan sát màn hình bên phải tự động cập nhật
 
 **Bắt đầu ngay** - Xóa nội dung ví dụ này và nhập bài viết của bạn! 📝`;
@@ -1005,7 +1010,7 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
             if (isSampleMode) {
                 input.value = DEFAULT_TEMPLATE;
                 renderContent();
-                localStorage.setItem('latex_input_v2', input.value);
+                localStorage.setItem('latex_input_v3', input.value);
                 updateActionBtnState();
 
                 input.scrollTop = 0;
@@ -1017,7 +1022,7 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
             if (btnClearSample.dataset.confirm === "true") {
                 input.value = "";
                 renderContent();
-                localStorage.removeItem('latex_input_v2');
+                localStorage.removeItem('latex_input_v3');
                 clearTimeout(clearTimeoutId);
                 updateActionBtnState();
 
@@ -1158,7 +1163,7 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
                 renderContent();
                 const now = Date.now();
                 if (now - lastSaveTime >= SAVE_INTERVAL) {
-                    localStorage.setItem('latex_input_v2', input.value);
+                    localStorage.setItem('latex_input_v3', input.value);
                     lastSaveTime = now;
                 }
             }, 50);
@@ -1194,11 +1199,11 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
         });
 
         window.addEventListener('beforeunload', () => {
-            localStorage.setItem('latex_input_v2', input.value);
+            localStorage.setItem('latex_input_v3', input.value);
         });
 
         window.addEventListener('load', () => {
-            const savedContent = localStorage.getItem('latex_input_v2');
+            const savedContent = localStorage.getItem('latex_input_v3');
             input.value = (savedContent !== null && savedContent.trim() !== "") ? savedContent : DEFAULT_TEMPLATE;
             updateActionBtnState();
             renderContent();
@@ -1707,12 +1712,6 @@ ${styleTags}
 <style>
     body { padding: 1.0rem; background-color: #FFFFFF; font-size: 1.0rem; }
     mjx-container[display='true'] { overflow-x: auto; overflow-y: hidden; max-width: 100%; }
-    @media print {
-        body { padding: 0; background-color: #FFFFFF; color: #000000; }
-        .markdown-body { max-width: 100%; }
-        mjx-container { page-break-inside: avoid; break-inside: avoid; }
-        mjx-container svg { display: inline-block; vertical-align: middle; max-width: 100%; }
-    }
 </style>
 </head>
 <body>
@@ -1882,7 +1881,7 @@ ${cleanContent}
                 reader.onload = function (e) {
                     input.value = e.target.result;
                     renderContent();
-                    localStorage.setItem('latex_input_v2', input.value);
+                    localStorage.setItem('latex_input_v3', input.value);
                     updateActionBtnState();
                     input.scrollTop = 0;
                     output.scrollTop = 0;

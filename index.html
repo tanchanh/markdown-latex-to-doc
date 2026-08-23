@@ -96,15 +96,14 @@
             --warning-color: #FF7000;
         }
 
-        /* --- 3. GENERAL LAYOUT & TYPOGRAPHY --- */
+        /* --- 3. GENERAL LAYOUT & TYPOGRAPHY (KHÓA MÁY TÍNH VỪA KHÍT 100vh) --- */
         body {
             margin: 0;
-            padding: 0.5rem 0.5rem 5.0rem 0.5rem;
-            min-height: 100vh;
+            padding: 0.3rem 0.3rem 0.3rem 0.3rem;
+            height: 100vh;
             display: flex;
             flex-direction: column;
-            overflow-x: hidden;
-            overflow-y: auto;
+            overflow: hidden; /* Khóa thanh cuộn tổng trên máy tính */
             background-color: var(--bg-color);
             color: var(--text-color);
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -117,9 +116,9 @@
         }
 
         h1 {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             font-weight: bold;
-            text-align: center;
+            text-align: left;
             margin: 0;
         }
 
@@ -141,26 +140,29 @@
             margin: 0.8rem 0 0.4rem 0;
         }
 
-        /* --- 4. HEADER & AUTHOR --- */
+        /* --- 4. HEADER SIÊU MỎNG 1 HÀNG NGANG DUY NHẤT --- */
         header {
             background-color: var(--primary-color);
             color: #FFFFFF;
-            padding: 0.8rem 1.0rem;
-            border-radius: 0.4rem;
-            margin-bottom: 0.5rem;
+            padding: 0.35rem 0.8rem;
+            border-radius: 0.3rem;
+            margin-bottom: 0.3rem;
             display: flex;
-            flex-direction: column;
-            gap: 0.2rem;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
             border: 2px solid var(--primary-color);
+            flex-shrink: 0;
         }
 
         header .author {
             font-size: 1.0rem;
             color: #FFFFFF;
-            text-align: right;
+            white-space: nowrap;
+            margin-left: 0.5rem;
         }
 
-        /* --- 5. MAIN CONTENT LAYOUT --- */
+        /* --- 5. MAIN CONTENT LAYOUT (CUỘN ĐỘC LẬP TỪNG CỘT) --- */
         main {
             flex: 1;
             display: flex;
@@ -169,14 +171,18 @@
             border-radius: 0.4rem;
             background-color: #FFFFFF;
             overflow: hidden;
+            min-height: 0; /* Quan trọng để flexbox tính đúng chiều cao bên trong */
         }
 
         .column {
             width: 50%;
+            height: 100%;
             display: flex;
             flex-direction: column;
             border-right: 2px solid var(--border-color);
             background-color: #FFFFFF;
+            overflow: hidden;
+            min-height: 0;
         }
 
         .column:last-child {
@@ -186,7 +192,7 @@
         /* --- 6. TOOLBAR --- */
         .toolbar {
             background-color: var(--toolbar-bg);
-            padding: 0.5rem 1.0rem;
+            padding: 0.4rem 0.8rem;
             border-bottom: 2px solid var(--border-color);
             display: flex;
             justify-content: space-between;
@@ -219,13 +225,13 @@
             cursor: pointer;
             transition: all 0.2s;
             font-family: inherit;
-            height: 2.6rem;
+            height: 2.4rem;
             line-height: 1;
         }
 
         .btn-icon-only {
-            width: 2.6rem;
-            height: 2.6rem;
+            width: 2.4rem;
+            height: 2.4rem;
             padding: 0;
             flex-shrink: 0;
         }
@@ -294,10 +300,11 @@
             color: #FFFFFF;
         }
 
-        /* --- 9. INPUT & OUTPUT AREA --- */
+        /* --- 9. INPUT & OUTPUT AREA (CUỘN ĐỘC LẬP TỪNG Ô) --- */
         #latex-input {
             flex: 1;
             width: 100%;
+            height: 100%;
             padding: 1.0rem;
             border: none;
             resize: none;
@@ -307,13 +314,15 @@
             line-height: 1.5;
             color: var(--text-color);
             background-color: #FFFFFF;
+            overflow-y: auto; /* Cuộn riêng ô nhập */
             transition: background-color 0.2s;
         }
 
         #latex-output {
             flex: 1;
-            padding: 1.0rem 1.0rem 5.0rem 1.0rem;
-            overflow-y: auto;
+            height: 100%;
+            padding: 1.0rem 1.0rem 2.0rem 1.0rem;
+            overflow-y: auto; /* Cuộn riêng ô kết quả */
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
             max-width: 100%;
@@ -515,6 +524,7 @@
         }
         body.fullscreen-active main .column:last-child {
             width: 100%;
+            height: 100%;
             border-right: none;
         }
 
@@ -524,29 +534,56 @@
         }
         body.editor-fullscreen-active main .column:first-child {
             width: 100%;
+            height: 100%;
             border-right: none;
         }
 
-        /* --- 15. RESPONSIVE MEDIA QUERIES --- */
+        /* --- 15. RESPONSIVE MEDIA QUERIES (TỐI ƯU MÀN HÌNH ĐIỆN THOẠI) --- */
         @media (max-width: 48.0rem) {
+            body {
+                height: auto;
+                min-height: 100vh;
+                overflow-y: auto;
+                padding: 0.3rem 0.3rem 2.0rem 0.3rem;
+            }
+
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.2rem;
+            }
+
+            header .author {
+                margin-left: 0;
+                align-self: flex-end;
+            }
+
             main {
                 flex-direction: column;
+                height: auto;
+                overflow: visible;
             }
 
             .column {
                 width: 100%;
-                min-height: 25.0rem;
+                height: 48vh; /* Mỗi khung cao 48vh trên điện thoại, cuộn độc lập */
+                min-height: 18.0rem;
                 border-right: none;
                 border-bottom: 2px solid var(--border-color);
+                overflow: hidden;
+            }
+
+            .column:last-child {
+                border-bottom: none;
             }
 
             body.fullscreen-active main .column:last-child,
             body.editor-fullscreen-active main .column:first-child {
-                height: 100%;
+                height: 100vh;
             }
 
             #latex-input, #latex-output {
-                padding: 1.0rem;
+                padding: 0.8rem;
             }
         }
 
@@ -566,17 +603,23 @@
                 margin: 0 !important;
                 background-color: #FFFFFF !important;
                 color: #000000 !important;
+                height: auto !important;
+                overflow: visible !important;
             }
 
             main, .column {
                 border: none !important;
                 display: block !important;
                 width: 100% !important;
+                height: auto !important;
+                overflow: visible !important;
             }
 
             #latex-output {
                 padding: 0 !important;
                 max-width: 100% !important;
+                height: auto !important;
+                overflow: visible !important;
             }
         }
     </style>
@@ -604,7 +647,7 @@
     <input type="file" id="file-selector" accept=".md,.txt,.MD,.TXT,text/plain,text/markdown" style="display: none;"
         onchange="handleFileSelect(event)">
 
-    <!-- Header -->
+    <!-- Header siêu mỏng 1 hàng ngang -->
     <header>
         <h1>Chép câu trả lời của Gemini/ChatGPT (Markdown/LaTeX/Mermaid) dùng cho Word / Docs</h1>
         <div class="author">Dương Tấn Chánh</div>
@@ -746,7 +789,7 @@
                         </svg>
                         <span>Chép</span>
                     </button>
-                    <!-- 2. Nút In (Gọi trực tiếp window.print() đơn giản) -->
+                    <!-- 2. Nút In (In đơn giản) -->
                     <button onclick="printOutput()" id="btn-print-output" class="btn" title="In">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.536 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.656l10.5 0z" />
@@ -1193,7 +1236,7 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
             window.print();
         }
 
-        // --- LƯU NHÁP TỰ ĐỘNG ---
+        // --- LƯU NHÁP TỰ ĐỘNG & TỐI ƯU THỜI GIAN CHỜ 250ms (CHỐNG GIẬT CON TRỎ) ---
         let lastSaveTime = Date.now();
         const SAVE_INTERVAL = 60000;
         let timeoutId;
@@ -1208,7 +1251,7 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
                     localStorage.setItem('latex_input_v3', input.value);
                     lastSaveTime = now;
                 }
-            }, 50);
+            }, 250); // Nâng lên 250ms để gõ chữ êm ái, con nháy đứng im 100%
         });
 
         // --- KÉO THẢ & DÁN FILE ---
@@ -1752,7 +1795,7 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
 <title>Kết quả xuất HTML - Dương Tấn Chánh</title>
 ${styleTags}
 <style>
-    body { padding: 1.0rem; background-color: #FFFFFF; font-size: 1.0rem; }
+    body { padding: 1.0rem; background-color: #FFFFFF; font-size: 1.0rem; height: auto; overflow: visible; }
     mjx-container[display='true'] { overflow-x: auto; overflow-y: hidden; max-width: 100%; }
 </style>
 </head>

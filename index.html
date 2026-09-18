@@ -7,10 +7,12 @@
     <title>Chép câu trả lời của AI vào Word/Docs - Dương Tấn Chánh</title>
 
     <!-- Thư viện Marked (Xử lý Markdown) -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" onerror="this.onerror=null;this.src='js/marked.min.js';"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"
+        onerror="this.onerror=null;this.src='js/marked.min.js';"></script>
 
     <!-- Thư viện Highlight.js (Tô màu mã nguồn) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" onerror="this.onerror=null;this.src='js/highlight.min.js';"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"
+        onerror="this.onerror=null;this.src='js/highlight.min.js';"></script>
 
     <!-- Cấu hình MathJax -->
     <script>
@@ -29,10 +31,12 @@
         };
     </script>
     <!-- Thư viện MathJax (Xử lý Toán) -->
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" onerror="this.onerror=null;this.src='js/tex-svg.js';"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+        onerror="this.onerror=null;this.src='js/tex-svg.js';"></script>
 
     <!-- Thư viện Mermaid (Xử lý Sơ đồ) -->
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js" onerror="this.onerror=null;this.src='js/mermaid.min.js';"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"
+        onerror="this.onerror=null;this.src='js/mermaid.min.js';"></script>
     <script>
         if (typeof mermaid !== 'undefined') {
             mermaid.initialize({
@@ -48,7 +52,9 @@
 
     <style>
         /* --- 1. RESET & BOX-SIZING --- */
-        *, *::before, *::after {
+        *,
+        *::before,
+        *::after {
             box-sizing: border-box;
         }
 
@@ -107,7 +113,7 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            font-size: 1.0rem;
+            font-size: 1.2rem;
             font-weight: normal;
             line-height: 1.5;
             overflow-wrap: break-word;
@@ -116,26 +122,26 @@
         }
 
         h1 {
-            font-size: 1.2rem;
+            font-size: 1.6rem;
             font-weight: bold;
             text-align: left;
             margin: 0;
         }
 
         h2 {
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             font-weight: bold;
             margin: 1.0rem 0 0.5rem 0;
         }
 
         h3 {
-            font-size: 1.1rem;
+            font-size: 1.3rem;
             font-weight: bold;
             margin: 1.0rem 0 0.5rem 0;
         }
 
         h4 {
-            font-size: 1.0rem;
+            font-size: 1.2rem;
             font-weight: bold;
             margin: 0.8rem 0 0.4rem 0;
         }
@@ -156,7 +162,7 @@
         }
 
         header .author {
-            font-size: 1.0rem;
+            font-size: 1.2rem;
             color: #FFFFFF;
             white-space: nowrap;
             margin-left: 0.5rem;
@@ -312,7 +318,7 @@
             resize: none;
             outline: none;
             font-family: "Consolas", "Monaco", "Courier New", monospace;
-            font-size: 1.0rem;
+            font-size: 1.1rem;
             line-height: 1.5;
             color: var(--text-color);
             background-color: #FFFFFF;
@@ -332,13 +338,13 @@
             background-color: #FFFFFF;
         }
 
-        #latex-output > :first-child {
+        #latex-output> :first-child {
             margin-top: 0;
         }
 
         /* --- 10. MARKDOWN STYLES --- */
         .markdown-body {
-            font-size: 1.0rem;
+            font-size: 1.2rem;
             line-height: 1.6;
             color: var(--text-color);
         }
@@ -375,7 +381,7 @@
             border-radius: 0.2rem;
         }
 
-        .markdown-body blockquote > :last-child {
+        .markdown-body blockquote> :last-child {
             margin-bottom: 0;
         }
 
@@ -395,7 +401,7 @@
         }
 
         /* --- 11. CODE & SYNTAX HIGHLIGHT --- */
-        .markdown-body :not(pre) > code {
+        .markdown-body :not(pre)>code {
             background-color: var(--code-bg);
             color: var(--code-color);
             padding: 0.2rem 0.4rem;
@@ -429,39 +435,81 @@
             color: var(--text-color);
             background: transparent;
         }
-        .hljs-doctag, .hljs-keyword, .hljs-meta .hljs-keyword, .hljs-template-tag, .hljs-template-variable, .hljs-type, .hljs-variable.language_ {
-            color: var(--syntax-keyword); font-weight: bold;
+
+        .hljs-doctag,
+        .hljs-keyword,
+        .hljs-meta .hljs-keyword,
+        .hljs-template-tag,
+        .hljs-template-variable,
+        .hljs-type,
+        .hljs-variable.language_ {
+            color: var(--syntax-keyword);
+            font-weight: bold;
         }
-        .hljs-title, .hljs-title.class_, .hljs-title.class_.inherited__, .hljs-title.function_ {
-            color: var(--syntax-function); font-weight: bold;
+
+        .hljs-title,
+        .hljs-title.class_,
+        .hljs-title.class_.inherited__,
+        .hljs-title.function_ {
+            color: var(--syntax-function);
+            font-weight: bold;
         }
-        .hljs-attr, .hljs-attribute, .hljs-literal, .hljs-meta, .hljs-number, .hljs-operator, .hljs-variable, .hljs-selector-attr, .hljs-selector-id, .hljs-selector-class {
+
+        .hljs-attr,
+        .hljs-attribute,
+        .hljs-literal,
+        .hljs-meta,
+        .hljs-number,
+        .hljs-operator,
+        .hljs-variable,
+        .hljs-selector-attr,
+        .hljs-selector-id,
+        .hljs-selector-class {
             color: var(--syntax-string);
         }
-        .hljs-regexp, .hljs-string, .hljs-meta .hljs-string {
+
+        .hljs-regexp,
+        .hljs-string,
+        .hljs-meta .hljs-string {
             color: var(--syntax-string);
         }
-        .hljs-built_in, .hljs-symbol {
+
+        .hljs-built_in,
+        .hljs-symbol {
             color: var(--syntax-builtin);
         }
-        .hljs-comment, .hljs-code, .hljs-formula {
+
+        .hljs-comment,
+        .hljs-code,
+        .hljs-formula {
             color: var(--syntax-comment);
             font-style: italic;
         }
-        .hljs-name, .hljs-quote, .hljs-selector-tag, .hljs-selector-pseudo {
+
+        .hljs-name,
+        .hljs-quote,
+        .hljs-selector-tag,
+        .hljs-selector-pseudo {
             color: var(--syntax-tag);
         }
+
         .hljs-subst {
             color: var(--text-color);
         }
+
         .hljs-section {
-            color: var(--syntax-string); font-weight: bold;
+            color: var(--syntax-string);
+            font-weight: bold;
         }
+
         .hljs-addition {
-            color: var(--success-color); background-color: #f0fff4;
+            color: var(--success-color);
+            background-color: #f0fff4;
         }
+
         .hljs-deletion {
-            color: var(--danger-color); background-color: #ffeef0;
+            color: var(--danger-color);
+            background-color: #ffeef0;
         }
 
         /* --- 12. TABLES & ALIGNMENT (VIỀN 0.75pt, CĂN TỪ TRÊN XUỐNG DƯỚI) --- */
@@ -485,18 +533,24 @@
             font-weight: bold;
         }
 
-        .markdown-body th[align="left"], .markdown-body td[align="left"] {
+        .markdown-body th[align="left"],
+        .markdown-body td[align="left"] {
             text-align: left;
         }
-        .markdown-body th[align="center"], .markdown-body td[align="center"] {
+
+        .markdown-body th[align="center"],
+        .markdown-body td[align="center"] {
             text-align: center;
         }
-        .markdown-body th[align="right"], .markdown-body td[align="right"] {
+
+        .markdown-body th[align="right"],
+        .markdown-body td[align="right"] {
             text-align: right;
         }
 
         /* --- 13. MERMAID & MATHJAX --- */
-        .mermaid, .mermaid * {
+        .mermaid,
+        .mermaid * {
             font-family: 'Consolas', 'Courier New', monospace;
         }
 
@@ -524,6 +578,7 @@
         body.fullscreen-active main .column:first-child {
             display: none;
         }
+
         body.fullscreen-active main .column:last-child {
             width: 100%;
             height: 100%;
@@ -534,6 +589,7 @@
         body.editor-fullscreen-active main .column:last-child {
             display: none;
         }
+
         body.editor-fullscreen-active main .column:first-child {
             width: 100%;
             height: 100%;
@@ -584,13 +640,15 @@
                 height: 100vh;
             }
 
-            #latex-input, #latex-output {
+            #latex-input,
+            #latex-output {
                 padding: 0.8rem;
             }
         }
 
         /* --- 16. CSS IN ẤN ĐƠN GIẢN --- */
         @media print {
+
             header,
             .toolbar,
             .column:first-child,
@@ -609,7 +667,8 @@
                 overflow: visible !important;
             }
 
-            main, .column {
+            main,
+            .column {
                 border: none !important;
                 display: block !important;
                 width: 100% !important;
@@ -640,7 +699,8 @@
                 <path stroke-linecap="round" stroke-linejoin="round"
                     d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
             </svg>
-            <h2 style="margin: 0; font-size: 1.2rem; color: var(--primary-color); font-weight: bold;">Thả file vào đây</h2>
+            <h2 style="margin: 0; font-size: 1.2rem; color: var(--primary-color); font-weight: bold;">Thả file vào đây
+            </h2>
             <p style="margin: 0.5rem 0 0 0; color: #1A1A1A; font-size: 1.0rem;">Hỗ trợ tập tin định dạng .md và .txt</p>
         </div>
     </div>
@@ -663,20 +723,26 @@
                 Chọn định dạng sao chép</h3>
             <div style="display: flex; flex-direction: column; gap: 0.8rem;">
                 <button onclick="executeCopy('markdown')" class="btn modal-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
                     </svg>
                     <span>1. Markdown</span>
                 </button>
                 <button onclick="openFontSelectorModal('gdocs')" class="btn modal-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
                     </svg>
                     <span>2. Google Docs (Ảnh PNG)</span>
                 </button>
                 <button onclick="openFontSelectorModal('word')" class="btn modal-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
                     </svg>
                     <span>3. MS Word (Công thức gốc)</span>
                 </button>
@@ -693,19 +759,24 @@
             <h3
                 style="margin: 0 0 0.3rem 0; font-size: 1.2rem; color: var(--primary-color); font-weight: bold; text-align: center;">
                 Chọn phông chữ tài liệu</h3>
-            <p style="margin: 0 0 1.0rem 0; font-size: 0.95rem; color: #475569; text-align: center;" id="font-modal-subtitle">
+            <p style="margin: 0 0 1.0rem 0; font-size: 0.95rem; color: #475569; text-align: center;"
+                id="font-modal-subtitle">
                 Áp dụng cho tài liệu xuất</p>
             <div style="display: flex; flex-direction: column; gap: 0.6rem;">
-                <button onclick="selectFontAndExecute('Times New Roman')" class="btn modal-btn" style="font-family: 'Times New Roman', serif;">
+                <button onclick="selectFontAndExecute('Times New Roman')" class="btn modal-btn"
+                    style="font-family: 'Times New Roman', serif;">
                     <span style="font-weight: bold;">Times New Roman</span>
                 </button>
-                <button onclick="selectFontAndExecute('Arial')" class="btn modal-btn" style="font-family: Arial, sans-serif;">
+                <button onclick="selectFontAndExecute('Arial')" class="btn modal-btn"
+                    style="font-family: Arial, sans-serif;">
                     <span style="font-weight: bold;">Arial</span>
                 </button>
-                <button onclick="selectFontAndExecute('Roboto')" class="btn modal-btn" style="font-family: Roboto, sans-serif;">
+                <button onclick="selectFontAndExecute('Roboto')" class="btn modal-btn"
+                    style="font-family: Roboto, sans-serif;">
                     <span style="font-weight: bold;">Roboto</span>
                 </button>
-                <button onclick="selectFontAndExecute('Noto Sans')" class="btn modal-btn" style="font-family: 'Noto Sans', sans-serif;">
+                <button onclick="selectFontAndExecute('Noto Sans')" class="btn modal-btn"
+                    style="font-family: 'Noto Sans', sans-serif;">
                     <span style="font-weight: bold;">Noto Sans</span>
                 </button>
             </div>
@@ -723,14 +794,18 @@
                 Chọn định dạng tải về</h3>
             <div style="display: flex; flex-direction: column; gap: 0.8rem;">
                 <button onclick="executeDownload('md')" class="btn modal-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
                     </svg>
                     <span>1. Markdown (.md)</span>
                 </button>
                 <button onclick="executeDownload('html')" class="btn modal-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
                     </svg>
                     <span>2. HTML (.html)</span>
                 </button>
@@ -749,34 +824,47 @@
                 <div class="toolbar-group">
                     <span>Soạn Thảo:</span>
                     <!-- 1. Nút Xoá / Mẫu -->
-                    <button onclick="handleActionBtnClick()" id="btn-clear-sample" class="btn btn-icon-only" title="Xoá toàn bộ nội dung">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                    <button onclick="handleActionBtnClick()" id="btn-clear-sample" class="btn btn-icon-only"
+                        title="Xoá toàn bộ nội dung">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                         </svg>
                     </button>
                     <!-- 2. Nút Mở File -->
-                    <button onclick="document.getElementById('file-selector').click()" id="btn-open-file" class="btn btn-icon-only" title="Mở tập tin (.md, .txt)">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 00-1.883 2.542l.857 6a2.25 2.25 0 002.227 1.932H19.05a2.25 2.25 0 002.227-1.932l.857-6a2.25 2.25 0 00-1.883-2.542m-16.5 0V6A2.25 2.25 0 016 3.75h3.879a1.5 1.5 0 011.06.44l2.122 2.12a1.5 1.5 0 001.06.44H18A2.25 2.25 0 0120.25 9v.776" />
+                    <button onclick="document.getElementById('file-selector').click()" id="btn-open-file"
+                        class="btn btn-icon-only" title="Mở tập tin (.md, .txt)">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 00-1.883 2.542l.857 6a2.25 2.25 0 002.227 1.932H19.05a2.25 2.25 0 002.227-1.932l.857-6a2.25 2.25 0 00-1.883-2.542m-16.5 0V6A2.25 2.25 0 016 3.75h3.879a1.5 1.5 0 011.06.44l2.122 2.12a1.5 1.5 0 001.06.44H18A2.25 2.25 0 0120.25 9v.776" />
                         </svg>
                     </button>
                     <!-- 3. Nút Tải File -->
-                    <button onclick="openDownloadModal()" id="btn-download-file" class="btn btn-icon-only" title="Tải tập tin về máy (.md, .html)">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                    <button onclick="openDownloadModal()" id="btn-download-file" class="btn btn-icon-only"
+                        title="Tải tập tin về máy (.md, .html)">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
                         </svg>
                     </button>
                 </div>
                 <div class="toolbar-group">
                     <!-- 4. Nút Phóng To Soạn Thảo -->
-                    <button onclick="toggleEditorFullscreen()" id="btn-editor-fullscreen" class="btn btn-icon-only" title="Phóng to khung soạn thảo">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" id="editor-fullscreen-icon">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
+                    <button onclick="toggleEditorFullscreen()" id="btn-editor-fullscreen" class="btn btn-icon-only"
+                        title="Phóng to khung soạn thảo">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
+                            stroke="currentColor" id="editor-fullscreen-icon">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
                         </svg>
                     </button>
                 </div>
             </div>
-            <textarea id="latex-input" spellcheck="false" placeholder="Nhập nội dung Markdown & LaTeX vào đây, hoặc kéo thả / dán file tại đây..."></textarea>
+            <textarea id="latex-input" spellcheck="false"
+                placeholder="Nhập nội dung Markdown & LaTeX vào đây, hoặc kéo thả / dán file tại đây..."></textarea>
         </div>
 
         <!-- Cột Phải: Output (NÚT "Chép", NÚT "In", VÀ NÚT "Phóng To") -->
@@ -786,29 +874,36 @@
                     <span>Kết Quả:</span>
                     <!-- 1. Nút Chép -->
                     <button onclick="copyOutput()" id="btn-copy-output" class="btn" title="Sao chép kết quả">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125 1.125 1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25z" />
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125 1.125 1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25z" />
                         </svg>
                         <span>Chép</span>
                     </button>
                     <!-- 2. Nút In (In đơn giản) -->
                     <button onclick="printOutput()" id="btn-print-output" class="btn" title="In">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.536 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.656l10.5 0z" />
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.536 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.656l10.5 0z" />
                         </svg>
                         <span>In</span>
                     </button>
                 </div>
                 <div class="toolbar-group">
                     <!-- 3. Nút Phóng To Kết Quả -->
-                    <button onclick="toggleFullscreen()" id="btn-fullscreen" class="btn btn-icon-only" title="Phóng to kết quả">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" id="fullscreen-icon">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
+                    <button onclick="toggleFullscreen()" id="btn-fullscreen" class="btn btn-icon-only"
+                        title="Phóng to kết quả">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
+                            stroke="currentColor" id="fullscreen-icon">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
                         </svg>
                     </button>
                 </div>
             </div>
-            
+
             <div id="latex-output" class="markdown-body"></div>
         </div>
     </main>
@@ -818,24 +913,24 @@
         // BẢNG MÀU CHUNG TOÀN HỆ THỐNG (ĐỒNG BỘ 100% WEB, MS WORD VÀ GOOGLE DOCS)
         // =========================================================================
         const APP_THEME = {
-            text:             '#000000',
-            bg:               '#FFFFFF',
-            border:           '#A5A5A5',
-            tableBorder:      '#000000',
-            tableThBg:        '#FFFFFF',
-            divider:          '#A5A5A5',
-            link:             '#0077CC',
+            text: '#000000',
+            bg: '#FFFFFF',
+            border: '#A5A5A5',
+            tableBorder: '#000000',
+            tableThBg: '#FFFFFF',
+            divider: '#A5A5A5',
+            link: '#0077CC',
             blockquoteBorder: '#009911',
-            blockquoteBg:     '#F0F0F0',
-            codeText:         '#000000',
-            codeBg:           '#F0F0F0',
-            codeBorder:       '#A5A5A5',
-            syntaxKeyword:    '#FF2040',
-            syntaxFunction:   '#550BFF',
-            syntaxString:     '#0077CC',
-            syntaxBuiltin:    '#FF7000',
-            syntaxComment:    '#969696',
-            syntaxTag:        '#009911'
+            blockquoteBg: '#F0F0F0',
+            codeText: '#000000',
+            codeBg: '#F0F0F0',
+            codeBorder: '#A5A5A5',
+            syntaxKeyword: '#FF2040',
+            syntaxFunction: '#550BFF',
+            syntaxString: '#0077CC',
+            syntaxBuiltin: '#FF7000',
+            syntaxComment: '#969696',
+            syntaxTag: '#009911'
         };
 
         // --- HẰNG SỐ VĂN BẢN VÍ DỤ MẪU MỚI (ĐÃ CẬP NHẬT 100% THEO YÊU CẦU) ---
@@ -1187,8 +1282,8 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
                 restoredText = restoredText.replace(`CODEBLOCKPLACEHOLDER${i}`, () => codeBlocks[i]);
             }
 
-            let htmlContent = (typeof marked !== 'undefined' && typeof marked.parse === 'function') 
-                ? marked.parse(restoredText) 
+            let htmlContent = (typeof marked !== 'undefined' && typeof marked.parse === 'function')
+                ? marked.parse(restoredText)
                 : escapeHtmlLite(restoredText);
 
             for (let i = mathBlocks.length - 1; i >= 0; i--) {
@@ -1310,8 +1405,8 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
             closeCopyModal();
             const subtitle = document.getElementById('font-modal-subtitle');
             if (subtitle) {
-                subtitle.textContent = format === 'gdocs' 
-                    ? 'Áp dụng cho xuất Google Docs' 
+                subtitle.textContent = format === 'gdocs'
+                    ? 'Áp dụng cho xuất Google Docs'
                     : 'Áp dụng cho xuất Microsoft Word';
             }
             const fontModal = document.getElementById('font-modal');
@@ -1393,7 +1488,7 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
                 if (!svgEl) return;
                 try {
                     let origWidth = 0, origHeight = 0;
-                    
+
                     // 1. Ưu tiên đọc viewBox
                     const viewBox = svgEl.getAttribute('viewBox');
                     if (viewBox) {
@@ -1403,7 +1498,7 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
                             origHeight = parts[3];
                         }
                     }
-                    
+
                     // 2. Dự phòng đọc thuộc tính width/height
                     if (!origWidth || !origHeight) {
                         const wAttr = parseFloat(svgEl.getAttribute('width'));
@@ -1413,7 +1508,7 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
                             origHeight = hAttr;
                         }
                     }
-                    
+
                     // 3. Dự phòng đọc bounding box thực
                     if (!origWidth || !origHeight) {
                         const rect = svgEl.getBoundingClientRect();
@@ -1422,7 +1517,7 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
                             origHeight = Math.round(rect.height);
                         }
                     }
-                    
+
                     // 4. Giá trị mặc định an toàn
                     if (!origWidth || !origHeight) {
                         origWidth = 400;

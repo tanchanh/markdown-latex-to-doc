@@ -62,7 +62,6 @@
         :root {
             /* Giao diện chính */
             --primary-color: #009911;
-            --primary-hover: #009911;
 
             /* Nút bấm (Nền #0077CC, Chữ & Icon màu Trắng #FFFFFF) */
             --btn-bg: #0077CC;
@@ -102,10 +101,10 @@
             --warning-color: #FF7000;
         }
 
-        /* --- 3. GENERAL LAYOUT & TYPOGRAPHY (MÁY TÍNH KHÓA CỐ ĐỊNH 100vh) --- */
+        /* --- 3. GENERAL LAYOUT & TYPOGRAPHY --- */
         body {
             margin: 0;
-            padding: 0.3rem;
+            padding: 0.5rem;
             height: 100vh;
             display: flex;
             flex-direction: column;
@@ -113,7 +112,7 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: normal;
             line-height: 1.5;
             overflow-wrap: break-word;
@@ -122,31 +121,32 @@
         }
 
         h1 {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             font-weight: bold;
             text-align: left;
             margin: 0;
         }
 
         h2 {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             font-weight: bold;
-            margin: 1.0rem 0 0.5rem 0;
+            margin: 1rem 0 0.5rem 0;
         }
 
         h3 {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: bold;
-            margin: 1.0rem 0 0.5rem 0;
+            margin: 1rem 0 0.5rem 0;
         }
 
         h4 {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: bold;
             margin: 0.8rem 0 0.4rem 0;
         }
 
         /* --- 4. HEADER SIÊU MỎNG 1 HÀNG NGANG --- */
+        /* Ngoại lệ theo yêu cầu của tác giả: Giữ header siêu mỏng 1 hàng ngang để tối đa không gian hiển thị */
         header {
             background-color: var(--primary-color);
             color: #FFFFFF;
@@ -169,7 +169,7 @@
             font-style: normal;
         }
 
-        /* --- 5. MAIN CONTENT LAYOUT (CUỘN ĐỘC LẬP TỪNG CỘT) --- */
+        /* --- 5. MAIN CONTENT LAYOUT --- */
         main {
             flex: 1;
             display: flex;
@@ -204,7 +204,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 1.0rem;
+            font-size: 1rem;
             font-weight: bold;
             color: var(--toolbar-text);
             flex-shrink: 0;
@@ -243,10 +243,15 @@
             flex-shrink: 0;
         }
 
-        .btn:hover {
+        .btn:hover:not(:disabled) {
             background-color: var(--btn-hover-bg);
             border-color: var(--btn-hover-bg);
             color: var(--btn-text);
+        }
+
+        .btn:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
         }
 
         .btn svg {
@@ -264,7 +269,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.4);
+            background-color: rgba(0, 0, 0, 0.4);
             z-index: 2000;
             align-items: center;
             justify-content: center;
@@ -272,12 +277,39 @@
         }
 
         .modal-card {
-            background: #FFFFFF;
-            padding: 1.0rem;
+            background-color: #FFFFFF;
+            padding: 1rem;
             border-radius: 0.8rem;
             border: 2px solid var(--border-color);
-            max-width: 25.0rem;
+            max-width: 25rem;
             width: 90%;
+        }
+
+        .modal-title {
+            margin: 0 0 1rem 0;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .modal-subtitle {
+            margin: 0 0 1rem 0;
+            font-size: 0.95rem;
+            color: #475569;
+            text-align: center;
+        }
+
+        .modal-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .modal-list-dense {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
         }
 
         .modal-btn {
@@ -287,7 +319,7 @@
             width: 100%;
             height: 3.2rem;
             font-size: 1.05rem;
-            padding: 0 1.0rem;
+            padding: 0 1rem;
             border-radius: 0.4rem;
             border: 2px solid var(--btn-border);
             background-color: var(--btn-bg);
@@ -308,12 +340,76 @@
             color: #FFFFFF;
         }
 
-        /* --- 9. INPUT & OUTPUT AREA (CUỘN ĐỘC LẬP TỪNG Ô) --- */
+        .btn-modal-cancel {
+            width: 100%;
+            margin-top: 1rem;
+            background-color: #FFFFFF;
+            border-color: var(--border-color);
+            color: #1A1A1A;
+        }
+
+        .font-times { font-family: "Times New Roman", serif; }
+        .font-arial { font-family: Arial, sans-serif; }
+        .font-roboto { font-family: Roboto, sans-serif; }
+        .font-noto { font-family: "Noto Sans", sans-serif; }
+
+        /* --- 9. DRAG & DROP OVERLAY --- */
+        .drag-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 153, 17, 0.15);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            border: 4px dashed var(--primary-color);
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            transition: all 0.2s;
+        }
+
+        .drag-overlay-card {
+            background-color: #FFFFFF;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            text-align: center;
+            border: 2px solid var(--border-color);
+        }
+
+        .drag-overlay-icon {
+            width: 3rem;
+            height: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .drag-overlay-title {
+            margin: 0;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .drag-overlay-desc {
+            margin: 0.5rem 0 0 0;
+            color: #1A1A1A;
+            font-size: 1rem;
+        }
+
+        .hidden-file-input {
+            display: none;
+        }
+
+        /* --- 10. INPUT & OUTPUT AREA --- */
         #latex-input {
             flex: 1;
             width: 100%;
             height: 100%;
-            padding: 1.0rem;
+            padding: 1rem;
             border: none;
             resize: none;
             outline: none;
@@ -329,7 +425,7 @@
         #latex-output {
             flex: 1;
             height: 100%;
-            padding: 1.0rem;
+            padding: 1rem;
             overflow-y: auto;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
@@ -342,9 +438,9 @@
             margin-top: 0;
         }
 
-        /* --- 10. MARKDOWN STYLES --- */
+        /* --- 11. MARKDOWN STYLES --- */
         .markdown-body {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             line-height: 1.6;
             color: var(--text-color);
         }
@@ -368,15 +464,20 @@
         .markdown-body hr {
             border: none;
             border-top: 2px solid var(--divider-color);
-            margin: 1.0rem 0;
+            margin: 1rem 0;
         }
 
-        /* KHUNG GHI CHÚ ĐÃ TINH GỌN ĐÁY ÔM SÁT GỌN GÀNG */
+        .markdown-body img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 0.3rem;
+        }
+
         .markdown-body blockquote {
             border-left: 4px solid var(--blockquote-border);
             background-color: var(--blockquote-bg);
             color: var(--text-color);
-            padding: 0.5rem 1.0rem;
+            padding: 0.5rem 1rem;
             margin: 0.8rem 0;
             border-radius: 0.2rem;
         }
@@ -392,32 +493,32 @@
 
         .markdown-body ul,
         .markdown-body ol {
-            padding-left: 2.0rem;
-            margin-bottom: 1.0rem;
+            padding-left: 2rem;
+            margin-bottom: 1rem;
         }
 
         .markdown-body li {
             margin-bottom: 0.4rem;
         }
 
-        /* --- 11. CODE & SYNTAX HIGHLIGHT --- */
+        /* --- 12. CODE & SYNTAX HIGHLIGHT --- */
         .markdown-body :not(pre)>code {
             background-color: var(--code-bg);
             color: var(--code-color);
             padding: 0.2rem 0.4rem;
             border-radius: 0.3rem;
             font-family: "Consolas", "Monaco", "Courier New", monospace;
-            font-size: 1.1rem;
-            border: 1px solid rgba(0, 0, 0, 0.12);
+            font-size: 1rem;
+            border: 2px solid var(--code-border);
         }
 
         .markdown-body pre {
             background-color: var(--code-bg);
-            padding: 1.0rem;
+            padding: 1rem;
             border-radius: 0.4rem;
             border: 2px solid var(--code-border);
             overflow-x: auto;
-            margin-bottom: 1.0rem;
+            margin-bottom: 1rem;
         }
 
         .markdown-body pre code {
@@ -426,7 +527,7 @@
             border: none;
             color: var(--code-color);
             font-family: "Consolas", "Monaco", "Courier New", monospace;
-            font-size: 1.1rem;
+            font-size: 1rem;
             line-height: 1.5;
             white-space: pre;
         }
@@ -512,18 +613,18 @@
             background-color: #ffeef0;
         }
 
-        /* --- 12. TABLES & ALIGNMENT (VIỀN 0.75pt, CĂN TỪ TRÊN XUỐNG DƯỚI) --- */
+        /* --- 13. TABLES & ALIGNMENT --- */
         .markdown-body table {
             border-collapse: collapse;
             width: 100%;
             margin-top: 0.5rem;
-            margin-bottom: 1.0rem;
+            margin-bottom: 1rem;
             font-size: 1.1rem;
         }
 
         .markdown-body th,
         .markdown-body td {
-            border: 0.75pt solid var(--table-border-color);
+            border: 2px solid var(--table-border-color);
             padding: 0.5rem 0.8rem;
             vertical-align: top;
         }
@@ -548,7 +649,7 @@
             text-align: right;
         }
 
-        /* --- 13. MERMAID & MATHJAX --- */
+        /* --- 14. MERMAID & MATHJAX --- */
         .mermaid,
         .mermaid * {
             font-family: 'Consolas', 'Courier New', monospace;
@@ -559,6 +660,11 @@
             max-width: 100%;
         }
 
+        .mermaid svg {
+            max-width: 100%;
+            height: auto;
+        }
+
         mjx-container[display="false"] {
             margin: 0.15rem 0.4rem;
             padding: 0.05rem 0;
@@ -567,13 +673,13 @@
 
         mjx-container[display="true"] {
             display: block;
-            margin: 1.0rem 0;
+            margin: 1rem 0;
             overflow-x: auto;
             overflow-y: hidden;
             max-width: 100%;
         }
 
-        /* --- 14. FULLSCREEN STATES --- */
+        /* --- 15. FULLSCREEN STATES --- */
         body.fullscreen-active header,
         body.fullscreen-active main .column:first-child {
             display: none;
@@ -596,13 +702,14 @@
             border-right: none;
         }
 
-        /* --- 15. RESPONSIVE MEDIA QUERIES (TỐI ƯU MÀN HÌNH ĐIỆN THOẠI) --- */
-        @media (max-width: 48.0rem) {
+        /* --- 16. RESPONSIVE MEDIA QUERIES --- */
+        @media (max-width: 48rem) {
             body {
                 height: auto;
                 min-height: 100vh;
                 overflow-y: auto;
-                padding: 0.3rem;
+                padding: 0.5rem;
+                padding-bottom: 5rem;
             }
 
             header {
@@ -625,7 +732,7 @@
             .column {
                 width: 100%;
                 height: 48vh;
-                min-height: 18.0rem;
+                min-height: 18rem;
                 border-right: none;
                 border-bottom: 2px solid var(--border-color);
                 overflow: hidden;
@@ -646,41 +753,40 @@
             }
         }
 
-        /* --- 16. CSS IN ẤN ĐƠN GIẢN --- */
+        /* --- 17. PRINT STYLES (KHÔNG DÙNG !IMPORTANT) --- */
         @media print {
-
-            header,
-            .toolbar,
-            .column:first-child,
-            #drag-overlay,
-            .modal-overlay,
-            #file-selector {
-                display: none !important;
+            body header,
+            body .toolbar,
+            body .column:first-child,
+            body .drag-overlay,
+            body .modal-overlay,
+            body .hidden-file-input {
+                display: none;
             }
 
             body {
-                padding: 0 !important;
-                margin: 0 !important;
-                background-color: #FFFFFF !important;
-                color: #000000 !important;
-                height: auto !important;
-                overflow: visible !important;
+                padding: 0;
+                margin: 0;
+                background-color: #FFFFFF;
+                color: #000000;
+                height: auto;
+                overflow: visible;
             }
 
-            main,
-            .column {
-                border: none !important;
-                display: block !important;
-                width: 100% !important;
-                height: auto !important;
-                overflow: visible !important;
+            body main,
+            body .column {
+                border: none;
+                display: block;
+                width: 100%;
+                height: auto;
+                overflow: visible;
             }
 
-            #latex-output {
-                padding: 0 !important;
-                max-width: 100% !important;
-                height: auto !important;
-                overflow: visible !important;
+            body #latex-output {
+                padding: 0;
+                max-width: 100%;
+                height: auto;
+                overflow: visible;
             }
         }
     </style>
@@ -689,27 +795,23 @@
 <body>
 
     <!-- Overlay kéo thả file toàn trang -->
-    <div id="drag-overlay"
-        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 153, 17, 0.15); backdrop-filter: blur(4px); z-index: 1000; border: 4px dashed var(--primary-color); align-items: center; justify-content: center; pointer-events: none; transition: all 0.2s;">
-        <div
-            style="background: #FFFFFF; padding: 1.0rem; border-radius: 0.8rem; text-align: center; border: 2px solid var(--border-color);">
+    <div id="drag-overlay" class="drag-overlay">
+        <div class="drag-overlay-card">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor"
-                style="width: 3.0rem; height: 3.0rem; color: var(--primary-color); margin-bottom: 0.5rem; display: inline-block;">
+                stroke="currentColor" class="drag-overlay-icon">
                 <path stroke-linecap="round" stroke-linejoin="round"
                     d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
             </svg>
-            <h2 style="margin: 0; font-size: 1.2rem; color: var(--primary-color); font-weight: bold;">Thả file vào đây
-            </h2>
-            <p style="margin: 0.5rem 0 0 0; color: #1A1A1A; font-size: 1.0rem;">Hỗ trợ tập tin định dạng .md và .txt</p>
+            <h2 class="drag-overlay-title">Thả file vào đây</h2>
+            <p class="drag-overlay-desc">Hỗ trợ tập tin định dạng .md và .txt</p>
         </div>
     </div>
 
     <!-- Input chọn file ẩn -->
-    <input type="file" id="file-selector" accept=".md,.txt,.MD,.TXT,text/plain,text/markdown" style="display: none;"
+    <input type="file" id="file-selector" class="hidden-file-input" accept=".md,.txt,.MD,.TXT,text/plain,text/markdown"
         onchange="handleFileSelect(event)">
 
-    <!-- Header siêu mỏng 1 hàng ngang -->
+    <!-- Header siêu mỏng 1 hàng ngang (Ngoại lệ theo yêu cầu của tác giả Dương Tấn Chánh: giữ nguyên để tối đa không gian hiển thị) -->
     <header>
         <h1>Chép Trả Lời Markdown Của AI vào Word/Docs</h1>
         <div class="author">Dương Tấn Chánh</div>
@@ -718,10 +820,8 @@
     <!-- HỘP THOẠI 1: LỰA CHỌN ĐỊNH DẠNG SAO CHÉP -->
     <div id="copy-modal" class="modal-overlay" onclick="if (event.target === this) closeCopyModal();">
         <div class="modal-card">
-            <h3
-                style="margin: 0 0 1.0rem 0; font-size: 1.2rem; color: var(--primary-color); font-weight: bold; text-align: center;">
-                Chọn định dạng sao chép</h3>
-            <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+            <h3 class="modal-title">Chọn định dạng sao chép</h3>
+            <div class="modal-list">
                 <button onclick="executeCopy('markdown')" class="btn modal-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor">
@@ -747,52 +847,38 @@
                     <span>3. MS Word (Công thức gốc)</span>
                 </button>
             </div>
-            <button onclick="closeCopyModal()" class="btn"
-                style="width: 100%; margin-top: 1.0rem; background-color: #FFFFFF; border-color: var(--border-color); color: #1A1A1A;">Huỷ
-                bỏ</button>
+            <button onclick="closeCopyModal()" class="btn btn-modal-cancel">Hủy bỏ</button>
         </div>
     </div>
 
     <!-- HỘP THOẠI 2: LỰA CHỌN PHÔNG CHỮ CHO WORD / GOOGLE DOCS -->
     <div id="font-modal" class="modal-overlay" onclick="if (event.target === this) closeFontModal();">
         <div class="modal-card">
-            <h3
-                style="margin: 0 0 0.3rem 0; font-size: 1.2rem; color: var(--primary-color); font-weight: bold; text-align: center;">
-                Chọn phông chữ tài liệu</h3>
-            <p style="margin: 0 0 1.0rem 0; font-size: 0.95rem; color: #475569; text-align: center;"
-                id="font-modal-subtitle">
-                Áp dụng cho tài liệu xuất</p>
-            <div style="display: flex; flex-direction: column; gap: 0.6rem;">
-                <button onclick="selectFontAndExecute('Times New Roman')" class="btn modal-btn"
-                    style="font-family: 'Times New Roman', serif;">
-                    <span style="font-weight: bold;">Times New Roman</span>
+            <h3 class="modal-title">Chọn phông chữ tài liệu</h3>
+            <p class="modal-subtitle" id="font-modal-subtitle">Áp dụng cho tài liệu xuất</p>
+            <div class="modal-list-dense">
+                <button onclick="selectFontAndExecute('Times New Roman')" class="btn modal-btn font-times">
+                    <span>Times New Roman</span>
                 </button>
-                <button onclick="selectFontAndExecute('Arial')" class="btn modal-btn"
-                    style="font-family: Arial, sans-serif;">
-                    <span style="font-weight: bold;">Arial</span>
+                <button onclick="selectFontAndExecute('Arial')" class="btn modal-btn font-arial">
+                    <span>Arial</span>
                 </button>
-                <button onclick="selectFontAndExecute('Roboto')" class="btn modal-btn"
-                    style="font-family: Roboto, sans-serif;">
-                    <span style="font-weight: bold;">Roboto</span>
+                <button onclick="selectFontAndExecute('Roboto')" class="btn modal-btn font-roboto">
+                    <span>Roboto</span>
                 </button>
-                <button onclick="selectFontAndExecute('Noto Sans')" class="btn modal-btn"
-                    style="font-family: 'Noto Sans', sans-serif;">
-                    <span style="font-weight: bold;">Noto Sans</span>
+                <button onclick="selectFontAndExecute('Noto Sans')" class="btn modal-btn font-noto">
+                    <span>Noto Sans</span>
                 </button>
             </div>
-            <button onclick="closeFontModal(); copyOutput();" class="btn"
-                style="width: 100%; margin-top: 1.0rem; background-color: #FFFFFF; border-color: var(--border-color); color: #1A1A1A;">Quay
-                lại</button>
+            <button onclick="closeFontModal(); copyOutput();" class="btn btn-modal-cancel">Quay lại</button>
         </div>
     </div>
 
     <!-- HỘP THOẠI 3: LỰA CHỌN PHƯƠNG THỨC TẢI VỀ -->
     <div id="download-modal" class="modal-overlay" onclick="if (event.target === this) closeDownloadModal();">
         <div class="modal-card">
-            <h3
-                style="margin: 0 0 1.0rem 0; font-size: 1.2rem; color: var(--primary-color); font-weight: bold; text-align: center;">
-                Chọn định dạng tải về</h3>
-            <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+            <h3 class="modal-title">Chọn định dạng tải về</h3>
+            <div class="modal-list">
                 <button onclick="executeDownload('md')" class="btn modal-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor">
@@ -810,9 +896,7 @@
                     <span>2. HTML (.html)</span>
                 </button>
             </div>
-            <button onclick="closeDownloadModal()" class="btn"
-                style="width: 100%; margin-top: 1.0rem; background-color: #FFFFFF; border-color: var(--border-color); color: #1A1A1A;">Huỷ
-                bỏ</button>
+            <button onclick="closeDownloadModal()" class="btn btn-modal-cancel">Hủy bỏ</button>
         </div>
     </div>
 
@@ -867,7 +951,7 @@
                 placeholder="Nhập nội dung Markdown & LaTeX vào đây, hoặc kéo thả / dán file tại đây..."></textarea>
         </div>
 
-        <!-- Cột Phải: Output (NÚT "Chép", NÚT "In", VÀ NÚT "Phóng To") -->
+        <!-- Cột Phải: Output -->
         <div class="column">
             <div class="toolbar">
                 <div class="toolbar-group">
@@ -881,7 +965,7 @@
                         </svg>
                         <span>Chép</span>
                     </button>
-                    <!-- 2. Nút In (In đơn giản) -->
+                    <!-- 2. Nút In -->
                     <button onclick="printOutput()" id="btn-print-output" class="btn" title="In">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
                             stroke="currentColor">
@@ -914,8 +998,6 @@
         // =========================================================================
         const APP_THEME = {
             text: '#000000',
-            bg: '#FFFFFF',
-            border: '#A5A5A5',
             tableBorder: '#000000',
             tableThBg: '#FFFFFF',
             divider: '#A5A5A5',
@@ -933,7 +1015,7 @@
             syntaxTag: '#009911'
         };
 
-        // --- HẰNG SỐ VĂN BẢN VÍ DỤ MẪU MỚI (ĐÃ CẬP NHẬT 100% THEO YÊU CẦU) ---
+        // --- HẰNG SỐ VĂN BẢN VÍ DỤ MẪU ---
         const DEFAULT_TEMPLATE = `# Bộ Soạn Thảo Toán Học Markdown ✨
 
 Trình biên tập **markdown toán học** chuyên nghiệp với tính năng xem trước tức thì. Soạn thảo tài liệu **toán học trực tuyến** với các phương trình LaTeX, ký tự Hy Lạp và công thức phức tạp. Công cụ hỗ trợ đầy đủ **xem trước trực tiếp** (live preview).
@@ -1153,12 +1235,23 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
 
         const TRASH_ICON_SVG = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" /></svg>`;
         const SAMPLE_ICON_SVG = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" /></svg>`;
-        const CONFIRM_ICON_SVG = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="color: #FFFFFF;"><path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M12 18h.008v.008H12V18z" /></svg>`;
+        const CONFIRM_ICON_SVG = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M12 18h.008v.008H12V18z" /></svg>`;
+
+        const ICON_EXPAND_PATH = '<path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />';
+        const ICON_COLLAPSE_PATH = '<path stroke-linecap="round" stroke-linejoin="round" d="M9 9V4.5M9 9H4.5M9 9L3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9V4.5M15 9h4.5M15 9l5.25-5.25M15 15v4.5M15 15h4.5M15 15l5.25 5.25" />';
 
         let isSampleMode = false;
         let clearTimeoutId = null;
         let promise = Promise.resolve();
         let targetCopyFormat = 'word';
+        let isCopying = false;
+
+        // --- HÀM TIỆN ÍCH CUỘN VỀ ĐẦU TRANG ---
+        function resetScrollPosition() {
+            input.scrollTop = 0;
+            output.scrollTop = 0;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
         // --- CẬP NHẬT TRẠNG THÁI NÚT "XOÁ" / "MẪU" ---
         function updateActionBtnState() {
@@ -1189,10 +1282,7 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
                 renderContent();
                 localStorage.setItem('latex_input_v3', input.value);
                 updateActionBtnState();
-
-                input.scrollTop = 0;
-                output.scrollTop = 0;
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                resetScrollPosition();
                 return;
             }
 
@@ -1202,10 +1292,7 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
                 localStorage.removeItem('latex_input_v3');
                 clearTimeout(clearTimeoutId);
                 updateActionBtnState();
-
-                input.scrollTop = 0;
-                output.scrollTop = 0;
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                resetScrollPosition();
             } else {
                 btnClearSample.dataset.confirm = "true";
                 btnClearSample.title = "Bấm lần nữa để chắc chắn xoá!";
@@ -1291,7 +1378,6 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
                 htmlContent = htmlContent.replace(`MATHJAXBLOCKPLACEHOLDER${i}`, () => safeBlock);
             }
 
-            // Nhận diện linh hoạt mọi định dạng class của Mermaid
             htmlContent = htmlContent.replace(/<pre><code class="(?:language-|lang-)?mermaid">([\s\S]*?)<\/code><\/pre>/gi, (match, codeText) => {
                 const decoded = codeText.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
                 return `<div class="mermaid">${decoded}</div>`;
@@ -1328,12 +1414,12 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
             }
         }
 
-        // --- TÍNH NĂNG IN ĐƠN GIẢN ---
+        // --- TÍNH NĂNG IN ---
         function printOutput() {
             window.print();
         }
 
-        // --- LƯU NHÁP TỰ ĐỘNG & TỐI ƯU THỜI GIAN CHỜ 250ms (CHỐNG GIẬT CON TRỎ) ---
+        // --- LƯU NHÁP TỰ ĐỘNG & DEBOUNCE 250ms ---
         let lastSaveTime = Date.now();
         const SAVE_INTERVAL = 60000;
         let timeoutId;
@@ -1426,7 +1512,6 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
             document.getElementById('download-modal').style.display = 'none';
         }
 
-        // HỖ TRỢ PHÍM ESC ĐÓNG MỌI CỬA SỔ
         window.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 closeCopyModal();
@@ -1442,13 +1527,17 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
         }
 
         async function executeCopy(format, chosenFont = 'Times New Roman') {
+            if (isCopying) return;
+            isCopying = true;
+
             closeCopyModal();
             closeFontModal();
             const btn = document.getElementById('btn-copy-output');
+            btn.disabled = true;
             const span = btn.querySelector('span');
-            const originalText = span.innerHTML;
+            const originalText = span ? span.innerHTML : 'Chép';
 
-            span.innerHTML = 'Đang chép...';
+            if (span) span.innerHTML = 'Đang chép...';
 
             try {
                 if (format === 'markdown') {
@@ -1458,21 +1547,23 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
                 } else if (format === 'word') {
                     await copyWord(chosenFont);
                 }
-                span.innerHTML = '✓ Đã chép!';
+                if (span) span.innerHTML = '✓ Đã chép!';
                 btn.style.backgroundColor = 'var(--success-color)';
                 btn.style.borderColor = 'var(--success-color)';
             } catch (err) {
                 console.error("Chi tiết lỗi sao chép:", err);
-                span.innerHTML = 'Lỗi copy!';
+                if (span) span.innerHTML = 'Lỗi copy!';
                 btn.style.backgroundColor = 'var(--danger-color)';
                 btn.style.borderColor = 'var(--danger-color)';
+            } finally {
+                setTimeout(() => {
+                    if (span) span.innerHTML = originalText;
+                    btn.style.backgroundColor = '';
+                    btn.style.borderColor = '';
+                    btn.disabled = false;
+                    isCopying = false;
+                }, 2000);
             }
-
-            setTimeout(() => {
-                span.innerHTML = originalText;
-                btn.style.backgroundColor = '';
-                btn.style.borderColor = '';
-            }, 2000);
         }
 
         async function copyMarkdown() {
@@ -1480,7 +1571,7 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
             await navigator.clipboard.write([new ClipboardItem({ 'text/plain': blobText })]);
         }
 
-        // --- HÀM DÙNG CHUNG: CHUYỂN MERMAID SANG ẢNH PNG (ĐỌC KÍCH THƯỚC ĐA TẦNG AN TOÀN) ---
+        // --- CHUYỂN MERMAID SANG ẢNH PNG ---
         async function convertMermaidToImages(container) {
             const mermaidContainers = container.querySelectorAll('.mermaid');
             const diagramPromises = Array.from(mermaidContainers).map(async (diagramContainer) => {
@@ -1489,7 +1580,6 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
                 try {
                     let origWidth = 0, origHeight = 0;
 
-                    // 1. Ưu tiên đọc viewBox
                     const viewBox = svgEl.getAttribute('viewBox');
                     if (viewBox) {
                         const parts = viewBox.trim().split(/[\s,]+/).map(Number);
@@ -1499,7 +1589,6 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
                         }
                     }
 
-                    // 2. Dự phòng đọc thuộc tính width/height
                     if (!origWidth || !origHeight) {
                         const wAttr = parseFloat(svgEl.getAttribute('width'));
                         const hAttr = parseFloat(svgEl.getAttribute('height'));
@@ -1509,7 +1598,6 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
                         }
                     }
 
-                    // 3. Dự phòng đọc bounding box thực
                     if (!origWidth || !origHeight) {
                         const rect = svgEl.getBoundingClientRect();
                         if (rect.width > 0 && rect.height > 0) {
@@ -1518,7 +1606,6 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
                         }
                     }
 
-                    // 4. Giá trị mặc định an toàn
                     if (!origWidth || !origHeight) {
                         origWidth = 400;
                         origHeight = 300;
@@ -1535,7 +1622,7 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
 
                         const divWrapper = document.createElement('div');
                         divWrapper.style.textAlign = 'center';
-                        divWrapper.style.margin = '16px 0';
+                        divWrapper.style.margin = '1rem 0';
                         divWrapper.appendChild(imgTag);
                         diagramContainer.replaceWith(divWrapper);
                     }
@@ -1551,16 +1638,41 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
             const fontFallback = chosenFont === 'Times New Roman' ? 'serif' : 'sans-serif';
             const fullFontFamily = `"${chosenFont}", ${fontFallback}`;
 
-            // 1. Áp dụng phông chữ được chọn và đồng bộ màu sắc văn bản
-            container.querySelectorAll('h1, h2').forEach(el => {
+            container.querySelectorAll('h1').forEach(el => {
                 el.style.fontFamily = fullFontFamily;
+                el.style.fontSize = '1.5rem';
+                el.style.fontWeight = 'bold';
                 el.style.color = APP_THEME.text;
                 el.style.borderBottom = '2px solid ' + APP_THEME.divider;
-                el.style.paddingBottom = '6px';
+                el.style.paddingBottom = '0.4rem';
             });
 
-            container.querySelectorAll('h3, h4, p, li').forEach(el => {
+            container.querySelectorAll('h2').forEach(el => {
                 el.style.fontFamily = fullFontFamily;
+                el.style.fontSize = '1.3rem';
+                el.style.fontWeight = 'bold';
+                el.style.color = APP_THEME.text;
+                el.style.borderBottom = '2px solid ' + APP_THEME.divider;
+                el.style.paddingBottom = '0.3rem';
+            });
+
+            container.querySelectorAll('h3').forEach(el => {
+                el.style.fontFamily = fullFontFamily;
+                el.style.fontSize = '1.2rem';
+                el.style.fontWeight = 'bold';
+                el.style.color = APP_THEME.text;
+            });
+
+            container.querySelectorAll('h4').forEach(el => {
+                el.style.fontFamily = fullFontFamily;
+                el.style.fontSize = '1.1rem';
+                el.style.fontWeight = 'bold';
+                el.style.color = APP_THEME.text;
+            });
+
+            container.querySelectorAll('p, li').forEach(el => {
+                el.style.fontFamily = fullFontFamily;
+                el.style.fontSize = '1.1rem';
                 el.style.color = APP_THEME.text;
             });
 
@@ -1570,16 +1682,26 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
                 el.style.textDecoration = 'underline';
             });
 
+            container.querySelectorAll('hr').forEach(el => {
+                el.style.border = 'none';
+                el.style.borderTop = '2px solid ' + APP_THEME.divider;
+                el.style.margin = '1rem 0';
+            });
+
+            container.querySelectorAll('img').forEach(el => {
+                el.style.maxWidth = '100%';
+                el.style.height = 'auto';
+            });
+
             container.querySelectorAll('blockquote').forEach(el => {
                 el.style.fontFamily = fullFontFamily;
                 el.style.borderLeft = '4px solid ' + APP_THEME.blockquoteBorder;
                 el.style.backgroundColor = APP_THEME.blockquoteBg;
                 el.style.color = APP_THEME.text;
-                el.style.padding = '8px 12px';
-                el.style.margin = '12px 0';
+                el.style.padding = '0.5rem 0.8rem';
+                el.style.margin = '0.8rem 0';
             });
 
-            // 2. Đồng bộ màu cú pháp Code (Syntax Highlight)
             const hljsMap = {
                 'hljs-keyword': APP_THEME.syntaxKeyword,
                 'hljs-doctag': APP_THEME.syntaxKeyword,
@@ -1619,7 +1741,6 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
                 });
             });
 
-            // 3. Đồng bộ Khối Code & Inline Code (CỠ CHỮ CODE = 1em BẰNG CHÍNH XÁC CỠ BODY)
             container.querySelectorAll('code').forEach(el => {
                 el.style.fontFamily = "Consolas, 'Courier New', monospace";
                 el.style.fontSize = "1em";
@@ -1628,35 +1749,35 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
                 if (el.parentNode.tagName === 'PRE') {
                     const pre = el.parentNode;
                     pre.style.backgroundColor = APP_THEME.codeBg;
-                    pre.style.border = '1px solid #cbd5e1';
-                    pre.style.padding = '12px';
+                    pre.style.border = '2px solid ' + APP_THEME.codeBorder;
+                    pre.style.padding = '0.8rem';
                     pre.style.fontFamily = "Consolas, 'Courier New', monospace";
                     pre.style.fontSize = "1em";
                     pre.style.whiteSpace = 'pre-wrap';
-                    pre.style.marginBottom = '12px';
-                    pre.style.borderLeft = '4px solid #cbd5e1';
+                    pre.style.marginBottom = '0.8rem';
+                    pre.style.borderLeft = '4px solid ' + APP_THEME.codeBorder;
                 } else {
                     el.style.backgroundColor = APP_THEME.codeBg;
-                    el.style.padding = '2px 4px';
-                    el.style.border = '1px solid rgba(0,0,0,0.15)';
+                    el.style.padding = '0.2rem 0.4rem';
+                    el.style.border = '2px solid ' + APP_THEME.codeBorder;
+                    el.style.display = 'inline-block';
                 }
             });
 
-            // 4. Đồng bộ Bảng biểu (Viền 0.75pt, Căn bám từ trên xuống)
             container.querySelectorAll('table').forEach(table => {
                 table.setAttribute('border', '1');
                 table.setAttribute('cellspacing', '0');
                 table.setAttribute('cellpadding', '6');
                 table.style.borderCollapse = 'collapse';
-                table.style.border = '0.75pt solid ' + APP_THEME.tableBorder;
+                table.style.border = '2px solid ' + APP_THEME.tableBorder;
                 table.style.width = '100%';
                 table.style.fontFamily = fullFontFamily;
             });
 
             container.querySelectorAll('th').forEach(th => {
                 const align = th.getAttribute('align') || th.style.textAlign || 'left';
-                th.style.border = '0.75pt solid ' + APP_THEME.tableBorder;
-                th.style.padding = '6px 10px';
+                th.style.border = '2px solid ' + APP_THEME.tableBorder;
+                th.style.padding = '0.4rem 0.6rem';
                 th.style.fontWeight = 'bold';
                 th.style.backgroundColor = APP_THEME.tableThBg;
                 th.style.color = APP_THEME.text;
@@ -1668,8 +1789,8 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
 
             container.querySelectorAll('td').forEach(td => {
                 const align = td.getAttribute('align') || td.style.textAlign || 'left';
-                td.style.border = '0.75pt solid ' + APP_THEME.tableBorder;
-                td.style.padding = '6px 10px';
+                td.style.border = '2px solid ' + APP_THEME.tableBorder;
+                td.style.padding = '0.4rem 0.6rem';
                 td.style.color = APP_THEME.text;
                 td.style.fontFamily = fullFontFamily;
                 td.style.textAlign = align;
@@ -1678,7 +1799,7 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
             });
         }
 
-        // --- 2. CHÉP DẠNG GOOGLE DOCS (GIẢI THUẬT GỐC CHUẨN XÁC 100%) ---
+        // --- CHÉP DẠNG GOOGLE DOCS ---
         async function copyGoogleDocs(chosenFont) {
             const tempDiv = document.createElement('div');
             tempDiv.innerHTML = output.innerHTML;
@@ -1691,12 +1812,9 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
                     await MathJax.typesetPromise([tempDiv]);
                 }
 
-                // 1. Chuyển đổi sơ đồ Mermaid sang ảnh PNG 2x độ nét cao
                 await convertMermaidToImages(tempDiv);
 
-                // 2. Chuyển đổi công thức Toán học MathJax sang ảnh PNG 2x
                 const containers = Array.from(tempDiv.querySelectorAll('mjx-container'));
-
                 const conversionPromises = containers.map(async (container) => {
                     const svgEl = container.querySelector('svg');
                     if (!svgEl) return;
@@ -1720,7 +1838,7 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
                             if (isDisplay) {
                                 const divWrapper = document.createElement('div');
                                 divWrapper.style.textAlign = 'center';
-                                divWrapper.style.margin = '12px 0';
+                                divWrapper.style.margin = '0.8rem 0';
                                 divWrapper.appendChild(imgTag);
                                 container.replaceWith(divWrapper);
                             } else {
@@ -1736,10 +1854,8 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
                 });
                 await Promise.all(conversionPromises);
 
-                // 3. Đồng bộ toàn bộ màu sắc, phông chữ & cỡ code = 1em
                 formatForExport(tempDiv, chosenFont);
 
-                // 4. Chuẩn hóa MIME type tuyệt đối cho Clipboard API
                 const blobHtml = new Blob([tempDiv.innerHTML], { type: 'text/html' });
                 const blobText = new Blob([tempDiv.innerText || tempDiv.textContent], { type: 'text/plain' });
                 await navigator.clipboard.write([new ClipboardItem({ 'text/html': blobHtml, 'text/plain': blobText })]);
@@ -1767,7 +1883,7 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
             Array.from(element.children).forEach(cleanMathMLForWord);
         }
 
-        // --- 3. CHÉP DẠNG MS WORD (GIẢI THUẬT GỐC CHUẨN XÁC 100% CÓ DỰ PHÒNG PNG) ---
+        // --- CHÉP DẠNG MS WORD ---
         async function copyWord(chosenFont) {
             const tempDiv = document.createElement('div');
             tempDiv.innerHTML = output.innerHTML;
@@ -1780,10 +1896,8 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
                     await MathJax.typesetPromise([tempDiv]);
                 }
 
-                // 1. Chuyển đổi sơ đồ Mermaid sang ảnh PNG 2x độ nét cao cho Word
                 await convertMermaidToImages(tempDiv);
 
-                // 2. Chuyển đổi MathJax sang MathML gốc không dính chữ (Kèm dự phòng PNG nếu lỗi)
                 const containers = Array.from(tempDiv.querySelectorAll('mjx-container'));
                 const mathPromises = containers.map(async (container) => {
                     const mathEl = container.querySelector('mjx-assistive-mml math');
@@ -1816,7 +1930,7 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
                             clonedMath.setAttribute('display', 'block');
                             const divWrapper = document.createElement('div');
                             divWrapper.style.textAlign = 'center';
-                            divWrapper.style.margin = '12px 0';
+                            divWrapper.style.margin = '0.8rem 0';
                             divWrapper.appendChild(clonedMath);
                             container.replaceWith(divWrapper);
                         } else {
@@ -1824,7 +1938,6 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
                             container.replaceWith(document.createTextNode('\u00A0'), clonedMath, document.createTextNode('\u00A0'));
                         }
                     } else {
-                        // DỰ PHÒNG: Nếu MathML không tồn tại, tự động chuyển sang ảnh PNG cho Word
                         const svgEl = container.querySelector('svg');
                         if (svgEl) {
                             try {
@@ -1848,10 +1961,8 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
                 });
                 await Promise.all(mathPromises);
 
-                // 3. Đồng bộ toàn bộ màu sắc, phông chữ & cỡ code = 1em
                 formatForExport(tempDiv, chosenFont);
 
-                // 4. Chuẩn hóa MIME type tuyệt đối cho Clipboard API
                 const blobHtml = new Blob([tempDiv.innerHTML], { type: 'text/html' });
                 const blobText = new Blob([tempDiv.innerText || tempDiv.textContent], { type: 'text/plain' });
                 await navigator.clipboard.write([new ClipboardItem({ 'text/html': blobHtml, 'text/plain': blobText })]);
@@ -1882,7 +1993,129 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
 
         function saveHtml() {
             const cleanContent = output.innerHTML.replace(/<mjx-assistive-mml[\s\S]*?<\/mjx-assistive-mml>/gi, '');
-            const styleTags = Array.from(document.querySelectorAll('style')).map(s => s.outerHTML).join('\n');
+            const mjxStyleEl = document.getElementById('MJX-SVG-styles');
+            const mjxStyle = mjxStyleEl ? mjxStyleEl.outerHTML : '';
+
+            const exportStyles = `
+    <style>
+        :root {
+            --bg-color: #FFFFFF;
+            --text-color: #000000;
+            --table-border-color: #000000;
+            --table-th-bg: #FFFFFF;
+            --divider-color: #A5A5A5;
+            --link-color: #0077CC;
+            --blockquote-border: #009911;
+            --blockquote-bg: #F0F0F0;
+            --code-color: #000000;
+            --code-bg: #F0F0F0;
+            --code-border: #A5A5A5;
+            --syntax-keyword: #FF2040;
+            --syntax-function: #550BFF;
+            --syntax-string: #0077CC;
+            --syntax-builtin: #FF7000;
+            --syntax-comment: #969696;
+            --syntax-tag: #009911;
+            --success-color: #009911;
+            --danger-color: #FF2040;
+        }
+        *, *::before, *::after { box-sizing: border-box; }
+        body {
+            margin: 0;
+            padding: 1rem;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            overflow-wrap: break-word;
+            word-break: normal;
+            height: auto;
+            overflow: visible;
+        }
+        .markdown-body h1, .markdown-body h2 {
+            border-bottom: 2px solid var(--divider-color);
+            padding-bottom: 0.3rem;
+        }
+        .markdown-body h1 { font-size: 1.5rem; font-weight: bold; }
+        .markdown-body h2 { font-size: 1.3rem; font-weight: bold; }
+        .markdown-body h3 { font-size: 1.2rem; font-weight: bold; }
+        .markdown-body h4 { font-size: 1.1rem; font-weight: bold; }
+        .markdown-body p { margin-top: 0; margin-bottom: 0.8rem; }
+        .markdown-body a { color: var(--link-color); text-decoration: underline; }
+        .markdown-body hr { border: none; border-top: 2px solid var(--divider-color); margin: 1rem 0; }
+        .markdown-body img { max-width: 100%; height: auto; border-radius: 0.3rem; }
+        .markdown-body blockquote {
+            border-left: 4px solid var(--blockquote-border);
+            background-color: var(--blockquote-bg);
+            color: var(--text-color);
+            padding: 0.5rem 1rem;
+            margin: 0.8rem 0;
+            border-radius: 0.2rem;
+        }
+        .markdown-body blockquote > :last-child { margin-bottom: 0; }
+        .markdown-body ul, .markdown-body ol { padding-left: 2rem; margin-bottom: 1rem; }
+        .markdown-body li { margin-bottom: 0.4rem; }
+        .markdown-body :not(pre) > code {
+            background-color: var(--code-bg);
+            color: var(--code-color);
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.3rem;
+            font-family: "Consolas", "Monaco", "Courier New", monospace;
+            font-size: 1rem;
+            border: 2px solid var(--code-border);
+        }
+        .markdown-body pre {
+            background-color: var(--code-bg);
+            padding: 1rem;
+            border-radius: 0.4rem;
+            border: 2px solid var(--code-border);
+            overflow-x: auto;
+            margin-bottom: 1rem;
+        }
+        .markdown-body pre code {
+            background-color: transparent;
+            padding: 0;
+            border: none;
+            color: var(--code-color);
+            font-family: "Consolas", "Monaco", "Courier New", monospace;
+            font-size: 1rem;
+            line-height: 1.5;
+            white-space: pre;
+        }
+        .markdown-body table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        .markdown-body th, .markdown-body td {
+            border: 2px solid var(--table-border-color);
+            padding: 0.5rem 0.8rem;
+            vertical-align: top;
+        }
+        .markdown-body th { background-color: var(--table-th-bg); font-weight: bold; }
+        .markdown-body th[align="left"], .markdown-body td[align="left"] { text-align: left; }
+        .markdown-body th[align="center"], .markdown-body td[align="center"] { text-align: center; }
+        .markdown-body th[align="right"], .markdown-body td[align="right"] { text-align: right; }
+        .mermaid { overflow-x: auto; max-width: 100%; font-family: "Consolas", "Courier New", monospace; }
+        .mermaid svg { max-width: 100%; height: auto; }
+        mjx-container[display="false"] { margin: 0.15rem 0.4rem; padding: 0.05rem 0; vertical-align: middle; }
+        mjx-container[display="true"] { display: block; margin: 1rem 0; overflow-x: auto; overflow-y: hidden; max-width: 100%; }
+        .hljs { color: var(--text-color); background: transparent; }
+        .hljs-keyword, .hljs-doctag, .hljs-template-tag, .hljs-template-variable, .hljs-type, .hljs-variable.language_ { color: var(--syntax-keyword); font-weight: bold; }
+        .hljs-title, .hljs-title.class_, .hljs-title.class_.inherited__, .hljs-title.function_ { color: var(--syntax-function); font-weight: bold; }
+        .hljs-attr, .hljs-attribute, .hljs-literal, .hljs-meta, .hljs-number, .hljs-operator, .hljs-variable, .hljs-selector-attr, .hljs-selector-id, .hljs-selector-class { color: var(--syntax-string); }
+        .hljs-string, .hljs-regexp, .hljs-meta .hljs-string { color: var(--syntax-string); }
+        .hljs-built_in, .hljs-symbol { color: var(--syntax-builtin); }
+        .hljs-comment, .hljs-code, .hljs-formula { color: var(--syntax-comment); font-style: italic; }
+        .hljs-name, .hljs-quote, .hljs-selector-tag, .hljs-selector-pseudo { color: var(--syntax-tag); }
+        .hljs-subst { color: var(--text-color); }
+        .hljs-section { color: var(--syntax-string); font-weight: bold; }
+        .hljs-addition { color: var(--success-color); background-color: #f0fff4; }
+        .hljs-deletion { color: var(--danger-color); background-color: #ffeef0; }
+    </style>`;
 
             const html = `<!DOCTYPE html>
 <html lang="vi">
@@ -1890,11 +2123,8 @@ $$E(X) = \\sum_{i=1}^n x_i \\cdot P(x_i)$$
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kết quả xuất HTML - Dương Tấn Chánh</title>
-${styleTags}
-<style>
-    body { padding: 1.0rem; background-color: #FFFFFF; font-size: 1.2rem; height: auto; overflow: visible; }
-    mjx-container[display='true'] { overflow-x: auto; overflow-y: hidden; max-width: 100%; }
-</style>
+${exportStyles}
+${mjxStyle}
 </head>
 <body>
 <div class="markdown-body">
@@ -1902,13 +2132,13 @@ ${cleanContent}
 </div>
 </body>
 </html>`;
-            const blob = new Blob([html], { type: 'text/html' });
+            const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
             a.download = getTimestampFilename('html');
             a.click();
-            URL.revokeObjectURL(url);
+            setTimeout(() => URL.revokeObjectURL(url), 1500);
         }
 
         function downloadMd() {
@@ -1918,7 +2148,7 @@ ${cleanContent}
             a.href = url;
             a.download = getTimestampFilename('md');
             a.click();
-            URL.revokeObjectURL(url);
+            setTimeout(() => URL.revokeObjectURL(url), 1500);
         }
 
         // --- PHÓNG TO / THU NHỎ KHUNG ---
@@ -1933,9 +2163,7 @@ ${cleanContent}
 
             const isFullscreen = bodyEl.classList.toggle('fullscreen-active');
             btn.title = isFullscreen ? 'Thu nhỏ kết quả' : 'Phóng to kết quả';
-            icon.innerHTML = isFullscreen
-                ? '<path stroke-linecap="round" stroke-linejoin="round" d="M9 9V4.5M9 9H4.5M9 9L3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9V4.5M15 9h4.5M15 9l5.25-5.25M15 15v4.5M15 15h4.5M15 15l5.25 5.25" />'
-                : '<path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />';
+            icon.innerHTML = isFullscreen ? ICON_COLLAPSE_PATH : ICON_EXPAND_PATH;
 
             if (window.MathJax && MathJax.typesetPromise) {
                 MathJax.typesetPromise([output]);
@@ -1953,13 +2181,11 @@ ${cleanContent}
 
             const isFullscreen = bodyEl.classList.toggle('editor-fullscreen-active');
             btn.title = isFullscreen ? 'Thu nhỏ khung soạn thảo' : 'Phóng to khung soạn thảo';
-            icon.innerHTML = isFullscreen
-                ? '<path stroke-linecap="round" stroke-linejoin="round" d="M9 9V4.5M9 9H4.5M9 9L3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9V4.5M15 9h4.5M15 9l5.25-5.25M15 15v4.5M15 15h4.5M15 15l5.25 5.25" />'
-                : '<path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />';
+            icon.innerHTML = isFullscreen ? ICON_COLLAPSE_PATH : ICON_EXPAND_PATH;
         }
 
-        // --- CHUYỂN SVG SANG PNG KHÔNG RÒ RỈ BỘ NHỚ ---
-        async function svgToPngDataUrl(svgElement) {
+        // --- CHUYỂN SVG SANG PNG ---
+        function svgToPngDataUrl(svgElement) {
             return new Promise((resolve, reject) => {
                 let url = null;
                 try {
@@ -2065,9 +2291,7 @@ ${cleanContent}
                     renderContent();
                     localStorage.setItem('latex_input_v3', input.value);
                     updateActionBtnState();
-                    input.scrollTop = 0;
-                    output.scrollTop = 0;
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    resetScrollPosition();
                 };
                 reader.onerror = function () {
                     alert("Không thể đọc tập tin này! Vui lòng kiểm tra lại định dạng.");
